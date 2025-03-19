@@ -2,7 +2,7 @@
 Projeto PDS + PW
 Licenciatura em Engenharia de Sistemas Informáticos 2024-25
 
-## grupo  *05*
+## Grupo  *05*
 | Número | Nome |
 | -----   | ---- |
 | 25417  | Nuno Silva  |
@@ -19,5 +19,5 @@ Licenciatura em Engenharia de Sistemas Informáticos 2024-25
 
 
 
-## Conclusão
+## Conclusão:
 
