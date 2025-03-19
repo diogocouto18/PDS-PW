@@ -8,5 +8,7 @@ namespace Objetos_de_Negocio
 {
     public class Admin
     {
+        #region atributos
+        #endregion
     }
 }
