@@ -7,8 +7,8 @@ Licenciatura em Engenharia de Sistemas Informáticos 2024-25
 | -----   | ---- |
 | 25417  | Nuno Silva  |
 | 25422  | Ricardo Ferreira |
-| 25422  | João Ribeiro |
-| 25437  | Diogo Antunes   |
+| 25437  | João Ribeiro |
+| 25441  | Diogo Antunes   |
 | 25442 | Diogo Couto  |
 | 27956 | André Braga  |
 
