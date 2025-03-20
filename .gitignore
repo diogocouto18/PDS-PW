@@ -1,0 +1,69 @@
+# Visual Studio
+.vs/
+
+# Build artifacts
+bin/
+obj/
+*.o
+*.a
+*.so
+*.out
+*.exe
+
+# User-specific files
+*.user
+*.suo
+*.csproj.user
+*.sln.docstates
+
+# Packages
+packages/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Environment settings
+.env
+
+# Rider project files
+.idea/
+
+# Mac OS files
+.DS_Store
+
+# Windows Thumbs.db
+Thumbs.db
+
+# Git settings
+.gitattributes
+
+# Diretórios de build e temporários
+/build/
+*.dSYM/
+*.idea/
+
+# Arquivos do LaTeX
+*.aux
+*.log
+*.toc
+*.synctex.gz
+*.out
+*.bbl
+.blg
+
+# Arquivos de debug
+gmon.out
+vgcore.
+
+# Binários
+bin/
+*.bin
+
+# Makefile temporários
+Makefile~
