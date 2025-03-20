@@ -25,6 +25,7 @@ namespace Objetos_de_Negocio
         private int idAdmin;
         private string nome;
         private string email;
+        private string username;
         private string password;
 
         #endregion
@@ -41,6 +42,7 @@ namespace Objetos_de_Negocio
             idAdmin = 0;
             nome = "";
             email = "";
+            username = "";
             password = "";
         }
 
@@ -50,12 +52,14 @@ namespace Objetos_de_Negocio
         /// <param name="idAdmin"></param>
         /// <param name="nome"></param>
         /// <param name="email"></param>
+        /// <param name="username"></param>
         /// <param name="password"></param>
-        public Admin(int idAdmin, string nome, string email, string password)
+        public Admin(int idAdmin, string nome, string email, string username, string password)
         {
             this.idAdmin = idAdmin;
             this.nome = nome;
             this.email = email;
+            this.username = username;
             this.password = password;
         }
 
@@ -89,6 +93,15 @@ namespace Objetos_de_Negocio
         {
             get { return email; }
             set { email = value; }
+        }
+
+        /// <summary>
+        /// Propriedade responsavel por definir o username do Admin
+        /// </summary>
+        public string Username
+        {
+            get { return username; }
+            set { username = value; }
         }
 
         /// <summary>
