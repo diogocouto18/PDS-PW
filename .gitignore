@@ -1,3 +1,32 @@
 gnode_modules
 # Keep environment variables out of version control
 .env
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Dependency directories
+node_modules/
+vendor/
+__pycache__/
+
+# Environment files
+.env
+
+# Build and temporary files
+dist/
+build/
+tmp/
+*.tmp
+
+# IDE or Editor folders
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
