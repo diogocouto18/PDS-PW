@@ -1,0 +1,242 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Administrador {
+  id              Int               @id @default(autoincrement())
+  username        String            @db.VarChar(100)
+  nome            String            @db.VarChar(100)
+  email           String            @unique(map: "email") @db.VarChar(150)
+  password_hash   String            @db.VarChar(255)
+  Anuncio         Anuncio[]
+  Evento          Evento[]
+  MensagemSuporte MensagemSuporte[]
+  Notificacao     Notificacao[]
+  Rifa            Rifa[]
+}
+
+model Anuncio {
+  id                      Int                       @id @default(autoincrement())
+  cargo                   String                    @db.VarChar(255)
+  descricao               String                    @db.Text
+  data_publicacao         DateTime?                 @default(now()) @db.Timestamp(0)
+  id_administrador        Int
+  id_evento               Int
+  Administrador           Administrador             @relation(fields: [id_administrador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "anuncio_ibfk_1")
+  Evento                  Evento                    @relation(fields: [id_evento], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "anuncio_ibfk_2")
+  CandidaturaVoluntariado CandidaturaVoluntariado[]
+
+  @@index([id_administrador], map: "id_administrador")
+  @@index([id_evento], map: "id_evento")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model AvaliacaoEvento {
+  id             Int        @id @default(autoincrement())
+  id_utilizador  Int
+  id_evento      Int
+  nota           Int?
+  data_avaliacao DateTime?  @default(now()) @db.Timestamp(0)
+  Utilizador     Utilizador @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "avaliacaoevento_ibfk_1")
+  Evento         Evento     @relation(fields: [id_evento], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "avaliacaoevento_ibfk_2")
+
+  @@index([id_evento], map: "id_evento")
+  @@index([id_utilizador], map: "id_utilizador")
+}
+
+model CandidaturaVoluntariado {
+  id            Int                             @id @default(autoincrement())
+  id_utilizador Int
+  id_anuncio    Int
+  estado        CandidaturaVoluntariado_estado? @default(Pendente)
+  Utilizador    Utilizador                      @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "candidaturavoluntariado_ibfk_1")
+  Anuncio       Anuncio                         @relation(fields: [id_anuncio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "candidaturavoluntariado_ibfk_2")
+
+  @@index([id_anuncio], map: "id_anuncio")
+  @@index([id_utilizador], map: "id_utilizador")
+}
+
+model CategoriaEvento {
+  id     Int      @id @default(autoincrement())
+  nome   String   @unique(map: "nome") @db.VarChar(100)
+  Evento Evento[]
+}
+
+model CompraRifa {
+  id            Int                @id @default(autoincrement())
+  id_utilizador Int
+  id_rifa       Int
+  quantidade    Int
+  data_compra   DateTime?          @default(now()) @db.Timestamp(0)
+  estado        CompraRifa_estado? @default(Pendente)
+  Utilizador    Utilizador         @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comprarifa_ibfk_1")
+  Rifa          Rifa               @relation(fields: [id_rifa], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comprarifa_ibfk_2")
+
+  @@index([id_rifa], map: "id_rifa")
+  @@index([id_utilizador], map: "id_utilizador")
+}
+
+model Doacao {
+  id               Int                     @id @default(autoincrement())
+  id_utilizador    Int
+  valor            Decimal                 @db.Decimal(10, 2)
+  data_doacao      DateTime?               @default(now()) @db.Timestamp(0)
+  metodo_pagamento Doacao_metodo_pagamento
+  Utilizador       Utilizador              @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "doacao_ibfk_1")
+
+  @@index([id_utilizador], map: "id_utilizador")
+}
+
+model Evento {
+  id               Int               @id @default(autoincrement())
+  titulo           String            @db.VarChar(100)
+  localizacao      String            @db.VarChar(255)
+  descricao        String?           @db.Text
+  data_evento      DateTime          @db.Date
+  fotografia       String            @db.VarChar(100)
+  estado           Evento_estado?    @default(Ativo)
+  id_administrador Int
+  id_categoria     Int
+  Anuncio          Anuncio[]
+  AvaliacaoEvento  AvaliacaoEvento[]
+  Administrador    Administrador     @relation(fields: [id_administrador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "evento_ibfk_1")
+  CategoriaEvento  CategoriaEvento   @relation(fields: [id_categoria], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "evento_ibfk_2")
+  Rifa             Rifa[]
+
+  @@index([id_administrador], map: "id_administrador")
+  @@index([id_categoria], map: "id_categoria")
+}
+
+model MensagemSuporte {
+  id                Int                     @id @default(autoincrement())
+  id_utilizador     Int
+  id_administrador  Int
+  mensagem          String                  @db.VarChar(700)
+  data_abertura     DateTime?               @default(now()) @db.Timestamp(0)
+  data_encerramento DateTime?               @default(now()) @db.Timestamp(0)
+  estado            MensagemSuporte_estado? @default(Aberto)
+  Utilizador        Utilizador              @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "mensagemsuporte_ibfk_1")
+  Administrador     Administrador           @relation(fields: [id_administrador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "mensagemsuporte_ibfk_2")
+
+  @@index([id_administrador], map: "id_administrador")
+  @@index([id_utilizador], map: "id_utilizador")
+}
+
+model Notificacao {
+  id               Int                 @id @default(autoincrement())
+  id_utilizador    Int
+  id_administrador Int
+  mensagem         String              @db.VarChar(700)
+  data_envio       DateTime?           @default(now()) @db.Timestamp(0)
+  estado           Notificacao_estado? @default(Por_abrir)
+  Utilizador       Utilizador          @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notificacao_ibfk_1")
+  Administrador    Administrador       @relation(fields: [id_administrador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notificacao_ibfk_2")
+
+  @@index([id_administrador], map: "id_administrador")
+  @@index([id_utilizador], map: "id_utilizador")
+}
+
+model Pagamento {
+  id               Int                        @id @default(autoincrement())
+  id_utilizador    Int
+  valor            Decimal                    @db.Decimal(10, 2)
+  metodo_pagamento Pagamento_metodo_pagamento
+  estado           Pagamento_estado?          @default(Pendente)
+  data_pagamento   DateTime?                  @default(now()) @db.Timestamp(0)
+  Utilizador       Utilizador                 @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "pagamento_ibfk_1")
+
+  @@index([id_utilizador], map: "id_utilizador")
+}
+
+model Rifa {
+  id               Int           @id @default(autoincrement())
+  nome             String        @db.VarChar(100)
+  preco            Decimal       @db.Decimal(10, 2)
+  quantidade       Int
+  descricao        String        @db.Text
+  premio           String        @db.Text
+  data_sorteio     DateTime      @db.Date
+  id_administrador Int
+  id_evento        Int
+  CompraRifa       CompraRifa[]
+  Administrador    Administrador @relation(fields: [id_administrador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rifa_ibfk_1")
+  Evento           Evento        @relation(fields: [id_evento], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rifa_ibfk_2")
+
+  @@index([id_administrador], map: "id_administrador")
+  @@index([id_evento], map: "id_evento")
+}
+
+model Suporte {
+  id        Int    @id @default(autoincrement())
+  artigo    String @db.VarChar(50)
+  descricao String @db.Text
+}
+
+model Utilizador {
+  id                      Int                       @id @default(autoincrement())
+  username                String                    @db.VarChar(100)
+  nome                    String                    @db.VarChar(100)
+  email                   String                    @unique(map: "email") @db.VarChar(150)
+  telefone                String                    @unique(map: "telefone") @db.VarChar(15)
+  password_hash           String                    @db.VarChar(255)
+  morada                  String?                   @db.VarChar(150)
+  AvaliacaoEvento         AvaliacaoEvento[]
+  CandidaturaVoluntariado CandidaturaVoluntariado[]
+  CompraRifa              CompraRifa[]
+  Doacao                  Doacao[]
+  MensagemSuporte         MensagemSuporte[]
+  Notificacao             Notificacao[]
+  Pagamento               Pagamento[]
+}
+
+enum Pagamento_metodo_pagamento {
+  MBWAY
+  Cart_o @map("Cartão")
+  Paypal
+}
+
+enum CandidaturaVoluntariado_estado {
+  Pendente
+  Aceite
+  Rejeitado
+}
+
+enum Pagamento_estado {
+  Pendente
+  Pago
+  Falhado
+}
+
+enum Doacao_metodo_pagamento {
+  MBWAY
+  Cart_o @map("Cartão")
+  Paypal
+}
+
+enum Notificacao_estado {
+  Por_abrir @map("Por abrir")
+  Aberto
+}
+
+enum CompraRifa_estado {
+  Vencedor
+  SegundoLugar
+  TerceiroLugar
+  Perdedor
+  Pendente
+}
+
+enum MensagemSuporte_estado {
+  Aberto
+  Fechado
+}
+
+enum Evento_estado {
+  Terminado
+  Ativo
+}
