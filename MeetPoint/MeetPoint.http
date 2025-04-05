@@ -1,6 +1,0 @@
-@MeetPoint_HostAddress = http://localhost:5081
-
-GET {{MeetPoint_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
