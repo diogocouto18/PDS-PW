@@ -12,6 +12,28 @@ app.use(express.json());
 const utilizadoresRoutes = require("./routes/utilizadores");
 const administradoresRoutes = require("./routes/administradores");
 
+// ... Outras importações e middlewares
+const suporteRoutes = require("./routes/suportes");
+app.use("/suportes", suporteRoutes);
+
+const comprasRifaRoutes = require("./routes/comprasRifa");
+app.use("/comprasRifa", comprasRifaRoutes);
+
+const candidaturasRoutes = require("./routes/candidaturasVoluntariado");
+app.use("/candidaturas", candidaturasRoutes);
+
+const rifasRoutes = require("./routes/rifas");
+app.use("/rifas", rifasRoutes);
+
+const eventosRoutes = require("./routes/eventos");
+app.use("/eventos", eventosRoutes);
+
+const anunciosRoutes = require("./routes/anuncios");
+app.use("/anuncios", anunciosRoutes);
+
+// Rotas de CategoriaEvento
+const categoriasEventoRoutes = require("./routes/categoriasEvento");
+app.use("/categoriasEvento", categoriasEventoRoutes);
 
 // Monta os endpoints
 app.use("/utilizadores", utilizadoresRoutes);

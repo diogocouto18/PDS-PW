@@ -27,3 +27,4 @@ exports.deletar = async (id) => {
         where: { id: parseInt(id) },
     });
 };
+
