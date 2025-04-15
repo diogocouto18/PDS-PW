@@ -36,19 +36,6 @@ exports.obterCandidatura = async (id) => {
 };
 
 exports.avaliarCandidatura = async (id, novoEstado) => {
-    // novoEstado deve ser "Aceite" ou "Rejeitado"
-    if (!["Aceite", "Rejeitado"].includes(novoEstado)) {
-        throw new Error("Estado inválido. Use 'Aceite' ou 'Rejeitado'.");
-    }
-    return await prisma.candidaturaVoluntariado.update({
-        where: { id: parseInt(id) },
-        data: {
-            estado: novoEstado,
-        },
-    });
-};
-
-exports.avaliarCandidatura = async (id, novoEstado) => {
     if (!["Aceite", "Rejeitado"].includes(novoEstado)) {
         throw new Error("Estado inválido. Use 'Aceite' ou 'Rejeitado'.");
     }
