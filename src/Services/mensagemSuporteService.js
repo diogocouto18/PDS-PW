@@ -7,7 +7,7 @@ const notificacaoService = require("../Services/notificacaoService");
 const criarMensagemInicial = async (data) => {
     const mensagem = await prisma.mensagemSuporte.create({
         data: {
-            ticket_id: data.ticket_id,
+            id_ticket: data.id_ticket,
             id_utilizador: data.id_utilizador,
             mensagem: data.mensagem,
             estado: "Aberto",
@@ -21,7 +21,7 @@ const criarMensagemInicial = async (data) => {
 
 const enviarResposta = async (data) => {
     const ticket = await prisma.mensagemSuporte.findFirst({
-      where: { ticket_id: parseInt(data.ticket_id) },
+      where: { id_ticket: parseInt(data.id_ticket) },
     });
   
     if (!ticket) {
@@ -34,7 +34,7 @@ const enviarResposta = async (data) => {
   
     const novaMensagem = await prisma.mensagemSuporte.create({
       data: {
-        ticket_id: parseInt(data.ticket_id),
+        id_ticket: parseInt(data.id_ticket),
         id_utilizador: data.id_utilizador || null,
         id_administrador: data.id_administrador || null,
         mensagem: data.mensagem,
@@ -56,9 +56,9 @@ const enviarResposta = async (data) => {
 };
 
 // 3. Fechar Ticket (admin encerra a conversa)
-const fecharTicket = async (ticket_id) => {
+const fecharTicket = async (id_ticket) => {
     const mensagens = await prisma.mensagemSuporte.findMany({
-      where: { ticket_id: parseInt(ticket_id), estado: "Aberto" },
+      where: { id_ticket: parseInt(id_ticket), estado: "Aberto" },
     });
   
     if (mensagens.length === 0) {
@@ -81,9 +81,9 @@ const fecharTicket = async (ticket_id) => {
 };
 
 // 4. Listar todas as mensagens de um ticket
-const listarMensagensDoTicket = async (ticket_id) => {
+const listarMensagensDoTicket = async (id_ticket) => {
     return await prisma.mensagemSuporte.findMany({
-      where: { ticket_id: parseInt(ticket_id) },
+      where: { id_ticket: parseInt(id_ticket) },
       orderBy: { data_abertura: "asc" },
     });
 };
