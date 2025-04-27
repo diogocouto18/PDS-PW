@@ -1,47 +1,49 @@
-const candidaturaService = require("../services/candidaturaVoluntariadoService");
+const candidaturaService = require("../Services/candidaturasVoluntariadoService");
 
-exports.criarCandidatura = async (req, res) => {
+async function criarCandidatura(req, res) {
     try {
-        // Ex. body = { id_utilizador, id_anuncio }
-        const candidatura = await candidaturaService.criarCandidatura(req.body);
+        const { id } = req.utilizador;
+        const candidaturaData = {
+            id_utilizador: id,
+            id_anuncio: req.body.id_anuncio
+        };
+
+        const candidatura = await candidaturaService.criarCandidatura(candidaturaData);
         res.status(201).json(candidatura);
-    } catch (error) {
-        console.error("Erro ao criar candidatura:", error);
-        res.status(500).json({ error: error.message || "Erro ao criar candidatura" });
+
+    }   catch (error) {
+        console.error("Erro ao criar candidatura:", error.message);
+        res.status(500).json({ error: error.message });
     }
 };
 
-exports.listarCandidaturas = async (req, res) => {
+async function avaliarCandidatura(req, res) {
     try {
-        const candidaturas = await candidaturaService.listarCandidaturas();
+        const { id } = req.params;
+        const { estado } = req.body;
+        const idAdministrador = req.utilizador.id;
+        const candidaturaAvaliada = await candidaturaService.avaliarCandidatura(id, estado, idAdministrador);
+        res.json(candidaturaAvaliada);
+    } catch (error) {
+        console.error("Erro ao avaliar candidatura:", error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+async function listarPorAnuncio(req, res) {
+    try {
+        const { id_anuncio } = req.params;
+        const candidaturas = await candidaturaService.listarPorAnuncio(id_anuncio);
         res.json(candidaturas);
     } catch (error) {
-        console.error("Erro ao listar candidaturas:", error);
+        console.error("Erro ao listar candidaturas:", error.message);
         res.status(500).json({ error: "Erro ao buscar candidaturas" });
     }
 };
 
-exports.obterCandidatura = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const candidatura = await candidaturaService.obterCandidatura(id);
-        if (!candidatura) return res.status(404).json({ error: "Candidatura não encontrada" });
-        res.json(candidatura);
-    } catch (error) {
-        console.error("Erro ao obter candidatura:", error);
-        res.status(500).json({ error: "Erro ao buscar candidatura" });
-    }
-};
 
-exports.avaliarCandidatura = async (req, res) => {
-    try {
-        const { id } = req.params;
-        // Ex.: body = { estado: "Aceite" ou "Rejeitado" }
-        const { estado } = req.body;
-        const candidaturaAvaliada = await candidaturaService.avaliarCandidatura(id, estado);
-        res.json(candidaturaAvaliada);
-    } catch (error) {
-        console.error("Erro ao avaliar candidatura:", error);
-        res.status(500).json({ error: error.message || "Erro ao avaliar candidatura" });
-    }
+module.exports = {
+    criarCandidatura,
+    avaliarCandidatura,
+    listarPorAnuncio,
 };

@@ -1,18 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const suporteController = require("../controllers/suporteController");
-const mensagemSuporteController = require("../controllers/mensagemSuporteController");
+const suporteController = require("../Controllers/suporteController");
+const { autenticacao, apenasAdministrador } = require("../Middlewares/authMiddlewares");
 
-// Endpoint para criar um novo ticket (Suporte)
-router.post("/", suporteController.criarTicket);
+// Criar novo artigo
+router.post("/artigos", autenticacao, apenasAdministrador, suporteController.criarArtigo);
 
-// Endpoint para obter um ticket com suas mensagens
-router.get("/:id", suporteController.obterTicketPorId);
+// Ver todos os artigos
+router.get("/artigos", autenticacao, suporteController.listarArtigos);
 
-// Endpoint para marcar o ticket como resolvido (se necessário)
-router.put("/:id/resolver", suporteController.resolverTicket);
+// Ver um artigo específico
+router.get("/artigos/:id", autenticacao, suporteController.obterArtigoPorId);
 
-// Endpoint para enviar mensagem para um ticket
-router.post("/:id/mensagens", mensagemSuporteController.enviarMensagem);
+// Atualizar artigo
+router.put("/artigos/:id", autenticacao, apenasAdministrador, suporteController.atualizarArtigo);
+
+// Eliminar artigo
+router.delete("/artigos/:id", autenticacao, apenasAdministrador, suporteController.eliminarArtigo);
 
 module.exports = router;

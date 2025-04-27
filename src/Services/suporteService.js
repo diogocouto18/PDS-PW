@@ -1,28 +1,45 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const criarTicket = async (data) => {
-    // data: { artigo, descricao, id_utilizador }
+const criarArtigo = async (data) => {
     return await prisma.suporte.create({
         data: {
             artigo: data.artigo,
-            descricao: data.descricao,
-            utilizador: data.utilizador,
-        },
+            descricao: data.descricao
+        }
     });
 };
 
-const obterTicketPorId = async (id) => {
+const listarArtigos = async () => {
+    return await prisma.suporte.findMany();
+};
+
+const obterArtigoPorId = async (id) => {
     return await prisma.suporte.findUnique({
         where: { id: parseInt(id) },
-        include: { mensagens: true }, // Inclui as mensagens associadas ao ticket
     });
 };
 
-const resolverTicket = async (id) => {
-    // Se desejar implementar um estado de resolução, seria necessário incluir campos "estado" e "dataEncerramento" no modelo Suporte.
-    // Como o modelo atual não os possui, aqui apenas retornamos uma mensagem.
-    return { message: "Ticket marcado como resolvido (implemente campos de estado se necessário)" };
+const atualizarArtigo = async (id, data) => {
+    return await prisma.suporte.update({
+        where: { id: parseInt(id) },
+        data: {
+            artigo: data.artigo,
+            descricao: data.descricao
+        }
+    });
 };
 
-module.exports = { criarTicket, obterTicketPorId, resolverTicket };
+const eliminarArtigo = async (id) => {
+    return await prisma.suporte.delete({
+        where: { id: parseInt(id) },
+    });
+};
+
+module.exports = {
+    criarArtigo, 
+    listarArtigos, 
+    obterArtigoPorId,
+    atualizarArtigo,
+    eliminarArtigo, 
+};

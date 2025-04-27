@@ -1,9 +1,11 @@
-const anuncioService = require("../services/anuncioService");
+const anuncioService = require("../Services/anuncioService");
 
-exports.criarAnuncio = async (req, res) => {
+async function criarAnuncio(req, res) {
     try {
-        // Ex.: body = { cargo, descricao, id_administrador, id_evento, ... }
-        const novoAnuncio = await anuncioService.criarAnuncio(req.body);
+        
+        const { id } = req.utilizador;
+        const anuncioData = { ...req.body, id_administrador: id };
+        const novoAnuncio = await anuncioService.criarAnuncio(anuncioData);
         res.status(201).json(novoAnuncio);
     } catch (error) {
         console.error("Erro ao criar anúncio:", error);
@@ -11,7 +13,7 @@ exports.criarAnuncio = async (req, res) => {
     }
 };
 
-exports.listarAnuncios = async (req, res) => {
+async function listarAnuncios(req, res)  {
     try {
         // Se quiser filtrar por evento, pode receber query param: ?id_evento=3
         const { id_evento } = req.query;
@@ -23,7 +25,7 @@ exports.listarAnuncios = async (req, res) => {
     }
 };
 
-exports.obterAnuncioPorId = async (req, res) => {
+async function obterAnuncioPorId(req, res) {
     try {
         const { id } = req.params;
         const anuncio = await anuncioService.obterAnuncioPorId(id);
@@ -34,3 +36,22 @@ exports.obterAnuncioPorId = async (req, res) => {
         res.status(500).json({ error: "Erro ao buscar anúncio" });
     }
 };
+
+/*async function encerrarAnuncio(req, res) {
+    try {
+      const { id } = req.params;
+      const anuncio = await anuncioService.encerrarAnuncio(id);
+      res.json(anuncio);
+    } catch (error) {
+      console.error("Erro ao encerrar anúncio:", error.message);
+      res.status(500).json({ error: "Erro ao encerrar anúncio" });
+    }
+  }*/
+
+
+module.exports= {
+    criarAnuncio,
+    listarAnuncios,
+    obterAnuncioPorId,
+    //encerrarAnuncio,
+}

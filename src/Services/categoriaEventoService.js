@@ -15,7 +15,7 @@ const criar = async (data) => {
     // data: { nome }
     return await prisma.categoriaEvento.create({
         data: {
-            nome: data.nome,
+            nome: data.nome
         },
     });
 };
@@ -23,20 +23,21 @@ const criar = async (data) => {
 const atualizar = async (id, data) => {
     return await prisma.categoriaEvento.update({
         where: { id: parseInt(id) },
-        data,
+        data: { nome: data.nome },
     });
 };
 
-const deletar = async (id) => {
+const eliminar = async (id) => {
     return await prisma.categoriaEvento.delete({
         where: { id: parseInt(id) },
     });
 };
+
 
 module.exports = {
     obterTodos,
     obterPorId,
     criar,
     atualizar,
-    deletar,
+    eliminar,
 };

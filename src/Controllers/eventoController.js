@@ -1,9 +1,11 @@
-const eventoService = require("../services/eventoService");
+const eventoService = require("../Services/eventoService");
 
-exports.criarEvento = async (req, res) => {
+async function criarEvento(req, res) {
     try {
         // Espera um body com dados do evento, ex.: { titulo, localizacao, data_evento, id_administrador, id_categoria, ... }
-        const novoEvento = await eventoService.criarEvento(req.body);
+        const { id } = req.utilizador;
+        const eventoData = { ...req.body, id_administrador: id };
+        const novoEvento = await eventoService.criarEvento(eventoData);
         res.status(201).json(novoEvento);
     } catch (error) {
         console.error("Erro ao criar evento:", error);
@@ -11,7 +13,7 @@ exports.criarEvento = async (req, res) => {
     }
 };
 
-exports.listarEventos = async (req, res) => {
+async function listarEventos(req, res) {
     try {
         const eventos = await eventoService.listarEventos();
         res.json(eventos);
@@ -21,7 +23,7 @@ exports.listarEventos = async (req, res) => {
     }
 };
 
-exports.obterEventoPorId = async (req, res) => {
+async function obterEventoPorId(req, res) {
     try {
         const { id } = req.params;
         const evento = await eventoService.obterEventoPorId(id);
@@ -31,4 +33,22 @@ exports.obterEventoPorId = async (req, res) => {
         console.error("Erro ao obter evento:", error);
         res.status(500).json({ error: "Erro ao buscar evento" });
     }
+};
+
+async function atualizarEvento(req, res) {
+    try {
+      const { id } = req.params;
+      const eventoAtualizado = await eventoService.atualizarEvento(id, req.body);
+      res.json(eventoAtualizado);
+    } catch (error) {
+      console.error("Erro ao atualizar evento:", error.message);
+      res.status(500).json({ error: "Erro ao atualizar evento" });
+    }
+  }
+
+module.exports = {
+    criarEvento,
+    listarEventos,
+    obterEventoPorId,
+    atualizarEvento,
 };

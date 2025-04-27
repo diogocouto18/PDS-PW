@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-exports.criarEvento = async (data) => {
+const criarEvento = async (data) => {
     // Ex.: data = { titulo, localizacao, descricao, data_evento, fotografia, id_administrador, id_categoria, ... }
     return await prisma.evento.create({
         data: {
@@ -17,12 +17,26 @@ exports.criarEvento = async (data) => {
     });
 };
 
-exports.listarEventos = async () => {
+const listarEventos = async () => {
     return await prisma.evento.findMany();
 };
 
-exports.obterEventoPorId = async (id) => {
+const obterEventoPorId = async (id) => {
     return await prisma.evento.findUnique({
         where: { id: parseInt(id) },
     });
+};
+
+const atualizarEvento = async (id, data) => {
+    return await prisma.evento.update({
+      where: { id: parseInt(id) },
+      data
+    });
+  }
+
+module.exports = { 
+    criarEvento,
+    listarEventos,
+    obterEventoPorId,
+    atualizarEvento,
 };

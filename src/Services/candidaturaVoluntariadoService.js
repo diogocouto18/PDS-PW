@@ -1,8 +1,10 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+const notificacaoService = require("../Services/notificacaoService"); 
+
 // Cria candidatura com estado Pendente
-exports.criarCandidatura = async (data) => {
+const criarCandidatura = async (data) => {
     // data: { id_utilizador, id_anuncio }
     // Verifica se já existe candidatura aberta para esse user/anuncio
     const candidaturaExistente = await prisma.candidaturaVoluntariado.findFirst({
@@ -24,18 +26,7 @@ exports.criarCandidatura = async (data) => {
     });
 };
 
-exports.listarCandidaturas = async () => {
-    // Pode filtrar por estado ou id_anuncio se quiser
-    return await prisma.candidaturaVoluntariado.findMany();
-};
-
-exports.obterCandidatura = async (id) => {
-    return await prisma.candidaturaVoluntariado.findUnique({
-        where: { id: parseInt(id) },
-    });
-};
-
-exports.avaliarCandidatura = async (id, novoEstado) => {
+const avaliarCandidatura = async (id, novoEstado, idAdministrador) => {
     if (!["Aceite", "Rejeitado"].includes(novoEstado)) {
         throw new Error("Estado inválido. Use 'Aceite' ou 'Rejeitado'.");
     }
@@ -44,17 +35,29 @@ exports.avaliarCandidatura = async (id, novoEstado) => {
         data: { estado: novoEstado },
     });
 
-    if (novoEstado === "Aceite") {
-        // Cria notificação
-        await prisma.notificacao.create({
+    await notificacaoService.criarNotificacao({
             data: {
                 id_utilizador: candidatura.id_utilizador,
-                id_administrador: 1, // ou o admin que avaliou
-                mensagem: "A sua candidatura foi aceite! Parabéns!",
+                id_administrador: idAdministrador,
+                mensagem: novoEstado === "Aceite"
+                    ?"A sua candidatura foi aceite! Parabéns!"
+                    :"A sua candidatura foi rejeitada. Agradecemos o seu interesse.",
                 estado: "Por_abrir"
             },
-        });
-    }
+    });
 
     return candidatura;
+};
+
+const listarPorAnuncio = async (id_anuncio) => {
+    return await prisma.candidaturaVoluntariado.findMany({
+        where: { id_anuncio: parseInt(id_anuncio) },
+        include: { Utilizador: true },
+    });
+};
+
+module.exports= {
+    criarCandidatura,
+    avaliarCandidatura,
+    listarPorAnuncio,
 };

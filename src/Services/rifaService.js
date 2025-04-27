@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-exports.criarRifa = async (data) => {
+const criarRifa = async (data) => {
     // data: { nome, preco, quantidade, descricao, premio, data_sorteio, id_evento, id_administrador }
     return await prisma.rifa.create({
         data: {
@@ -18,15 +18,54 @@ exports.criarRifa = async (data) => {
     });
 };
 
-exports.listarRifas = async (id_evento) => {
+const listarRifas = async (id_evento) => {
     const whereClause = id_evento ? { id_evento: parseInt(id_evento) } : {};
     return await prisma.rifa.findMany({
         where: whereClause,
     });
 };
 
-exports.obterRifa = async (id) => {
+const obterRifa = async (id) => {
     return await prisma.rifa.findUnique({
         where: { id: parseInt(id) },
     });
 };
+
+const atualizarRifa = async (id, data) => {
+return await prisma.rifa.update({
+    where: { id: parseInt(id) },
+    data: {
+      nome: data.nome,
+      preco: data.preco,
+      quantidade: data.quantidade,
+      descricao: data.descricao,
+      premio: data.premio,
+      data_sorteio: data.data_sorteio ? new Date(data.data_sorteio) : undefined,
+      estado: data.estado,
+    },
+  });
+}
+
+const eliminarRifa = async (id) => {
+    return await prisma.rifa.delete({
+        where: { id: parseInt(id) },
+    });
+}
+
+
+const sortearRifa = async (id) => {
+
+}
+    
+module.exports={
+    criarRifa,
+    listarRifas,
+    obterRifa,
+    atualizarRifa,
+    eliminarRifa,
+    
+}
+
+
+
+

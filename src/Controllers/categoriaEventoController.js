@@ -1,52 +1,52 @@
-const categoriaEventoService = require("../services/categoriaEventoService");
+const categoriaEventoService = require("../Services/categoriaEventoService");
 
-const listar = async (req, res) => {
+async function listar(req, res) {
     try {
         const categorias = await categoriaEventoService.obterTodos();
         res.json(categorias);
     } catch (error) {
-        console.error("Erro ao listar categorias:", error);
+        console.error("Erro ao listar categorias:", error.message);
         res.status(500).json({ error: "Erro ao buscar categorias" });
     }
 };
 
-const obterPorId = async (req, res) => {
+async function obterPorId(req, res) {
     try {
         const { id } = req.params;
         const categoria = await categoriaEventoService.obterPorId(id);
         if (!categoria) return res.status(404).json({ error: "Categoria não encontrada" });
         res.json(categoria);
     } catch (error) {
-        console.error("Erro ao obter categoria:", error);
-        res.status(500).json({ error: "Erro ao buscar categoria" });
+        console.error("Erro ao obter categoria:", error.message);
+        res.status(500).json({ error: "Erro ao encontrar categoria" });
     }
 };
 
-const criar = async (req, res) => {
+async function criar(req, res) {
     try {
         const novaCategoria = await categoriaEventoService.criar(req.body);
         res.status(201).json(novaCategoria);
     } catch (error) {
-        console.error("Erro ao criar categoria:", error);
-        res.status(500).json({ error: "Erro ao criar categoria" });
+        console.error("Erro ao criar categoria:", error.message);
+        res.status(500).json({ error: error.message });
     }
 };
 
-const atualizar = async (req, res) => {
+async function atualizar(req, res) {
     try {
         const { id } = req.params;
         const categoriaAtualizada = await categoriaEventoService.atualizar(id, req.body);
         res.json(categoriaAtualizada);
     } catch (error) {
-        console.error("Erro ao atualizar categoria:", error);
-        res.status(500).json({ error: "Erro ao atualizar categoria" });
+        console.error("Erro ao atualizar categoria:", error.message);
+        res.status(500).json({ error: error.message });
     }
 };
 
-const deletar = async (req, res) => {
+async function eliminar(req, res){
     try {
         const { id } = req.params;
-        await categoriaEventoService.deletar(id);
+        await categoriaEventoService.eliminar(id);
         res.json({ message: "Categoria apagada com sucesso" });
     } catch (error) {
         console.error("Erro ao apagar categoria:", error);
@@ -59,5 +59,5 @@ module.exports = {
     obterPorId,
     criar,
     atualizar,
-    deletar,
+    eliminar,
 };
