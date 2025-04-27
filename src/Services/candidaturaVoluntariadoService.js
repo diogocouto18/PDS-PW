@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const notificacaoService = require("../Services/notificacaoService"); 
+const notificacaoService = require("../Services/notificacaoService");
 
 // Cria candidatura com estado Pendente
 const criarCandidatura = async (data) => {
@@ -36,14 +36,14 @@ const avaliarCandidatura = async (id, novoEstado, idAdministrador) => {
     });
 
     await notificacaoService.criarNotificacao({
-            data: {
-                id_utilizador: candidatura.id_utilizador,
-                id_administrador: idAdministrador,
-                mensagem: novoEstado === "Aceite"
-                    ?"A sua candidatura foi aceite! Parabéns!"
-                    :"A sua candidatura foi rejeitada. Agradecemos o seu interesse.",
-                estado: "Por_abrir"
-            },
+        data: {
+            id_utilizador: candidatura.id_utilizador,
+            id_administrador: idAdministrador,
+            mensagem: novoEstado === "Aceite"
+                ?"A sua candidatura foi aceite! Parabéns!"
+                :"A sua candidatura foi rejeitada. Agradecemos o seu interesse.",
+            estado: "Por_abrir"
+        },
     });
 
     return candidatura;

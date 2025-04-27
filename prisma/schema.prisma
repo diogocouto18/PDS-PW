@@ -25,7 +25,7 @@ model Anuncio {
   cargo                   String                    @db.VarChar(255)
   descricao               String                    @db.Text
   data_publicacao         DateTime?                 @default(now()) @db.Timestamp(0)
-  estado                  Anuncio_estado            @default(Ativo) 
+  estado                  Anuncio_estado            @default(Ativo)
   id_administrador        Int
   id_evento               Int
   Administrador           Administrador             @relation(fields: [id_administrador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "anuncio_ibfk_1")
@@ -107,7 +107,7 @@ model MensagemSuporte {
   id_administrador  Int?
   mensagem          String                  @db.VarChar(700)
   data_abertura     DateTime?               @default(now()) @db.Timestamp(0)
-  data_encerramento DateTime?               
+  data_encerramento DateTime?
   estado            MensagemSuporte_estado  @default(Aberto)
   Utilizador        Utilizador              @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "mensagemsuporte_ibfk_1")
   Administrador     Administrador?          @relation(fields: [id_administrador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "mensagemsuporte_ibfk_2")
@@ -156,7 +156,7 @@ model SorteioRifas {
   descricao        String                @db.Text
   premio           String                @db.Text
   data_sorteio     DateTime              @db.Date
-  estado           SorteioRifas_estado   @default(Ativo) 
+  estado           SorteioRifas_estado   @default(Ativo)
   id_administrador Int
   id_evento        Int
   Administrador    Administrador         @relation(fields: [id_administrador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "sorteio_rifas_ibfk_1")

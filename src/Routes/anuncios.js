@@ -12,8 +12,8 @@ router.get("/", autenticacao, anuncioController.listarAnuncios);
 
 // Obter anúncio específico
 router.get("/:id", autenticacao, anuncioController.obterAnuncioPorId);
-/*
+
 // Encerrar anúncio (apenas Administrador)
 router.put("/:id/encerrar", autenticacao, apenasAdministrador, anuncioController.encerrarAnuncio);
-*/
+
 module.exports = router;

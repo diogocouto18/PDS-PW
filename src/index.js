@@ -1,54 +1,63 @@
+// src/index.js
+
 require("dotenv").config();
 const express = require("express");
-const app = express();
-const port = 3001;
 const cors = require("cors");
+const app = express();
+const port = process.env.PORT || 3000;
 
-
-app.use(cors());
+// Middleware para aceitar JSON e permitir CORS
 app.use(express.json());
+app.use(cors());
 
-// Importa as rotas de cada entidade
-const utilizadoresRoutes = require("./routes/utilizadores");
-const administradoresRoutes = require("./routes/administradores");
+// Importar todas as rotas
+const utilizadoresRoutes = require("./Routes/utilizadores");
+const administradoresRoutes = require("./Routes/administradores");
+const authRoutes = require("./Routes/auth");
+const eventosRoutes = require("./Routes/eventos");
+const anunciosRoutes = require("./Routes/anuncios");
+const candidaturasVoluntariadoRoutes = require("./Routes/candidaturasVoluntariado");
+const categoriasEventoRoutes = require("./Routes/categoriasEvento");
+const suportesRoutes = require("./Routes/suportes");
+const mensagensSuporteRoutes = require("./Routes/mensagensSuporte");
+const notificacoesRoutes = require("./Routes/notificacoes");
+const avaliacoesEventoRoutes = require("./Routes/avaliacoesEvento");
 
-// ... Outras importações e middlewares
-const suporteRoutes = require("./routes/suportes");
-app.use("/suportes", suporteRoutes);
+// Rotas de Rifas, ComprasRifa, Pagamentos ainda precisam ser feitas!
+// Quando criares esses routes podes adicionar:
+// const rifasRoutes = require("./Routes/rifas");
+// const comprasRifaRoutes = require("./Routes/comprasRifa");
+// const pagamentosRoutes = require("./Routes/pagamentos");
 
-const comprasRifaRoutes = require("./routes/comprasRifa");
-app.use("/comprasRifa", comprasRifaRoutes);
-
-const candidaturasRoutes = require("./routes/candidaturasVoluntariado");
-app.use("/candidaturas", candidaturasRoutes);
-
-const rifasRoutes = require("./routes/rifas");
-app.use("/rifas", rifasRoutes);
-
-const eventosRoutes = require("./routes/eventos");
-app.use("/eventos", eventosRoutes);
-
-const anunciosRoutes = require("./routes/anuncios");
-app.use("/anuncios", anunciosRoutes);
-
-// Rotas de CategoriaEvento
-const categoriasEventoRoutes = require("./routes/categoriasEvento");
-app.use("/categoriasEvento", categoriasEventoRoutes);
-
-// Monta os endpoints
+// Montar as rotas
 app.use("/utilizadores", utilizadoresRoutes);
 app.use("/administradores", administradoresRoutes);
-
-// Rotas de autenticação
-const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
+app.use("/eventos", eventosRoutes);
+app.use("/anuncios", anunciosRoutes);
+app.use("/candidaturas", candidaturasVoluntariadoRoutes);
+app.use("/categorias", categoriasEventoRoutes);
+app.use("/suportes", suportesRoutes);
+app.use("/mensagensSuporte", mensagensSuporteRoutes);
+app.use("/notificacoes", notificacoesRoutes);
+app.use("/avaliacoes", avaliacoesEventoRoutes);
 
+const comprasRifaRoutes = require("./Routes/comprasRifa");
+app.use("/comprasRifa", comprasRifaRoutes);
+const pagamentosRoutes = require("./Routes/pagamentos");
+app.use("/pagamentos", pagamentosRoutes);
+// Quando tiveres Rifas, ComprasRifa, Pagamentos:
+// app.use("/rifas", rifasRoutes);
+// app.use("/comprasRifa", comprasRifaRoutes);
+// app.use("/pagamentos", pagamentosRoutes);
 
+// Rota raiz (opcional)
+app.get("/", (req, res) => {
+    res.send("API PDS Final online! ✨");
+});
+
+// Ligar o servidor
 app.listen(port, () => {
     console.log(`Servidor a correr em http://localhost:${port}`);
 });
-
-
-
-
 

@@ -8,13 +8,14 @@ const criarMensagemInicial = async (data) => {
     const mensagem = await prisma.mensagemSuporte.create({
         data: {
             id_ticket: data.id_ticket,
-            id_utilizador: data.id_utilizador,
             mensagem: data.mensagem,
             estado: "Aberto",
-            data_abertura: new Date()
-        },
+            data_abertura: new Date(),
+            Utilizador: {
+                connect: { id: data.id_utilizador }
+            }
+        }
     });
-
     return mensagem;
 };
 

@@ -1,4 +1,4 @@
-const candidaturaService = require("../Services/candidaturasVoluntariadoService");
+const candidaturaService = require("../Services/candidaturaVoluntariadoService");
 
 async function criarCandidatura(req, res) {
     try {

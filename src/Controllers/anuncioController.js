@@ -37,7 +37,7 @@ async function obterAnuncioPorId(req, res) {
     }
 };
 
-/*async function encerrarAnuncio(req, res) {
+async function encerrarAnuncio(req, res) {
     try {
       const { id } = req.params;
       const anuncio = await anuncioService.encerrarAnuncio(id);
@@ -46,12 +46,12 @@ async function obterAnuncioPorId(req, res) {
       console.error("Erro ao encerrar anúncio:", error.message);
       res.status(500).json({ error: "Erro ao encerrar anúncio" });
     }
-  }*/
+}
 
 
 module.exports= {
     criarAnuncio,
     listarAnuncios,
     obterAnuncioPorId,
-    //encerrarAnuncio,
+    encerrarAnuncio,
 }

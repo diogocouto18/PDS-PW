@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const compraRifaController = require("../controllers/compraRifaController");
+const compraRifaController = require("../Controllers/compraRifaController");
+const { autenticacao } = require("../Middlewares/authMiddlewares");
 
-// Criar uma nova compra
-router.post("/", compraRifaController.criarCompra);
+// Apenas utilizadores autenticados podem comprar rifas
+router.post("/", autenticacao, compraRifaController.criarCompra);
 
-// (Opcional) Confirmar pagamento
-router.put("/:id/pagamento", compraRifaController.confirmarPagamento);
+// Só para ver todas as compras (opcional - pode ser protegido também)
+router.get("/", autenticacao, compraRifaController.listarCompras);
 
 module.exports = router;

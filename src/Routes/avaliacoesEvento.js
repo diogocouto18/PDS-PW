@@ -15,7 +15,7 @@ router.get("/evento/:id_evento", autenticacao, avaliacaoController.listarPorEven
 router.put("/:id", autenticacao, avaliacaoController.atualizarAvaliacao);
 
 // Apagar avaliação (apenas Administrador)
-router.delete("/:id", autenticacao, apenasAdministrador, avaliacaoController.deletarAvaliacao);
+router.delete("/:id", avaliacaoController.eliminarAvaliacao);
 
 // Média de avaliações de um evento
 router.get("/evento/:id_evento/media", autenticacao, avaliacaoController.mediaDoEvento);

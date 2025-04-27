@@ -1,8 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const criarRifa = async (data) => {
-    // data: { nome, preco, quantidade, descricao, premio, data_sorteio, id_evento, id_administrador }
+exports.criar = async (data) => {
     return await prisma.rifa.create({
         data: {
             nome: data.nome,
@@ -11,61 +10,78 @@ const criarRifa = async (data) => {
             descricao: data.descricao,
             premio: data.premio,
             data_sorteio: new Date(data.data_sorteio),
-            id_evento: parseInt(data.id_evento),
             id_administrador: parseInt(data.id_administrador),
-            estado: "Ativa",
+            id_evento: parseInt(data.id_evento),
         },
     });
 };
 
-const listarRifas = async (id_evento) => {
-    const whereClause = id_evento ? { id_evento: parseInt(id_evento) } : {};
-    return await prisma.rifa.findMany({
-        where: whereClause,
-    });
+exports.listar = async () => {
+    return await prisma.rifa.findMany();
 };
 
-const obterRifa = async (id) => {
+exports.obterPorId = async (id) => {
     return await prisma.rifa.findUnique({
         where: { id: parseInt(id) },
     });
 };
 
-const atualizarRifa = async (id, data) => {
-return await prisma.rifa.update({
-    where: { id: parseInt(id) },
-    data: {
-      nome: data.nome,
-      preco: data.preco,
-      quantidade: data.quantidade,
-      descricao: data.descricao,
-      premio: data.premio,
-      data_sorteio: data.data_sorteio ? new Date(data.data_sorteio) : undefined,
-      estado: data.estado,
-    },
-  });
-}
+exports.atualizar = async (id, data) => {
+    return await prisma.rifa.update({
+        where: { id: parseInt(id) },
+        data,
+    });
+};
 
-const eliminarRifa = async (id) => {
+exports.deletar = async (id) => {
     return await prisma.rifa.delete({
         where: { id: parseInt(id) },
     });
-}
+};
 
+exports.sortearRifa = async (idRifa, idAdministrador) => {
+    const { PrismaClient } = require("@prisma/client");
+    const prisma = new PrismaClient();
 
-const sortearRifa = async (id) => {
+    // Buscar todas as compras pagas para a rifa
+    const comprasPagas = await prisma.compraRifa.findMany({
+        where: {
+            id_rifa: parseInt(idRifa),
+            estado: "Pago",
+        },
+    });
 
-}
-    
-module.exports={
-    criarRifa,
-    listarRifas,
-    obterRifa,
-    atualizarRifa,
-    eliminarRifa,
-    
-}
+    if (comprasPagas.length === 0) {
+        throw new Error("Nenhuma compra paga encontrada para esta rifa.");
+    }
 
+    // Escolher um vencedor aleatório
+    const vencedor = comprasPagas[Math.floor(Math.random() * comprasPagas.length)];
 
+    // Atualizar o estado do vencedor
+    await prisma.compraRifa.update({
+        where: { id: vencedor.id },
+        data: { estado: "Vencedor" },
+    });
 
+    // Atualizar o estado dos restantes como Perdedor
+    const perdedores = comprasPagas.filter(c => c.id !== vencedor.id);
+    for (const perdedor of perdedores) {
+        await prisma.compraRifa.update({
+            where: { id: perdedor.id },
+            data: { estado: "Perdedor" },
+        });
+    }
 
+    // Criar uma notificação para o vencedor
+    await prisma.notificacao.create({
+        data: {
+            id_utilizador: vencedor.id_utilizador,
+            id_administrador: idAdministrador, // O admin que realizou o sorteio
+            mensagem: `Parabéns! Você venceu a rifa #${idRifa}! 🎉`,
+            estado: "Por abrir",
+        },
+    });
+
+    return { message: `Sorteio realizado com sucesso para a rifa ${idRifa}.` };
+};
