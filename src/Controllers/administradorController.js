@@ -1,25 +1,5 @@
 const administradorService = require("../Services/administradorService");
 
-const bcrypt = require("bcryptjs");
-
-criarAdministrador = async (req, res) => {
-    try {
-        const data = req.body;
-
-        // Encripta a senha antes de gravar
-        data.password_hash = await bcrypt.hash(data.password_hash, 10);
-
-        // Cria o administrador com a senha encriptada
-        const novoAdmin = await administradorService.criarAdministrador(data);
-
-        // Resposta de sucesso
-        res.status(201).json(novoAdmin);
-    } catch (error) {
-        console.error("Erro ao criar administrador:", error.message);
-        res.status(500).json({ error: "Erro ao criar administrador" });
-    }
-};
-
 const listarAdministradores = async (req, res) => {
     try {
         const registros = await administradorService.listarAdministradores();
@@ -61,7 +41,6 @@ const eliminarAdministradores = async (req, res) => {
 };
 
 module.exports = {
-    criarAdministrador,
     listarAdministradores,
     obterPorId,
     atualizarAdministradores,
