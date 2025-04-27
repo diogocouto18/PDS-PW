@@ -1,15 +1,24 @@
-const administradorService = require("../services/administradorService");
+const administradorService = require("../Services/administradorService");
 
-exports.listar = async (req, res) => {
+const criarAdministrador = async (req, res) => {
     try {
-        const registros = await administradorService.obterTodos();
+        const novoRegistro = await administradorService.criarAdministrador(req.body);
+        res.status(201).json(novoRegistro);
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao criar administrador" });
+    }
+};
+
+const listarAdministradores = async (req, res) => {
+    try {
+        const registros = await administradorService.listarAdministradores();
         res.json(registros);
     } catch (error) {
         res.status(500).json({ error: "Erro ao buscar administradores" });
     }
 };
 
-exports.obterPorId = async (req, res) => {
+const obterPorId = async (req, res) => {
     try {
         const { id } = req.params;
         const registro = await administradorService.obterPorId(id);
@@ -20,31 +29,30 @@ exports.obterPorId = async (req, res) => {
     }
 };
 
-exports.criar = async (req, res) => {
-    try {
-        const novoRegistro = await administradorService.criar(req.body);
-        res.status(201).json(novoRegistro);
-    } catch (error) {
-        res.status(500).json({ error: "Erro ao criar administrador" });
-    }
-};
-
-exports.atualizar = async (req, res) => {
+const atualizarAdministradores = async (req, res) => {
     try {
         const { id } = req.params;
-        const atualizado = await administradorService.atualizar(id, req.body);
+        const atualizado = await administradorService.atualizarAdministradores(id, req.body);
         res.json(atualizado);
     } catch (error) {
         res.status(500).json({ error: "Erro ao atualizar administrador" });
     }
 };
 
-exports.deletar = async (req, res) => {
+const eliminarAdministradores = async (req, res) => {
     try {
         const { id } = req.params;
-        await administradorService.deletar(id);
+        await administradorService.eliminarAdministradores(id);
         res.json({ message: "Administrador deletado com sucesso" });
     } catch (error) {
         res.status(500).json({ error: "Erro ao deletar administrador" });
     }
 };
+
+module.exports = {
+    criarAdministrador,
+    listarAdministradores,
+    obterPorId,
+    atualizarAdministradores,
+    eliminarAdministradores
+}
