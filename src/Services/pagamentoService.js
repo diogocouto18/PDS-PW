@@ -2,17 +2,17 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 // Comprar rifas e criar pagamento
-const comprarRifas = async (id_utilizador, id_sorteioRifas, quantidade, metodo_pagamento) => {
+const comprarRifas = async (id_utilizador, id_sorteioRifas, quantidadeCompra, metodo_pagamento) => {
     // Buscar rifas livres
     const rifasDisponiveis = await prisma.rifa.findMany({
       where: {
         id_sorteio: id_sorteioRifas,
         estado: "PorComprar",
       },
-      take: quantidade,
+      take: quantidadeCompra,
     });
   
-    if (rifasDisponiveis.length < quantidade) {
+    if (rifasDisponiveis.length < quantidadeCompra) {
       throw new Error("Não há rifas suficientes disponíveis.");
     }
   
@@ -21,14 +21,14 @@ const comprarRifas = async (id_utilizador, id_sorteioRifas, quantidade, metodo_p
       where: { id: id_sorteioRifas },
     });
   
-    const valorTotal = sorteio.preco * quantidade;
+    const valorTotal = sorteio.preco * quantidadeCompra;
   
     // Criar pagamento
     const pagamento = await prisma.pagamento.create({
       data: {
         id_utilizador,
         id_sorteioRifas,
-        quantidade,
+        quantidadeCompra,
         valorTotal,
         metodo_pagamento,
         estado: "Pago", // Para simplificação aqui
@@ -51,4 +51,6 @@ const comprarRifas = async (id_utilizador, id_sorteioRifas, quantidade, metodo_p
     return pagamento;
   };
   
-module.exports = { comprarRifas };
+module.exports = { 
+  comprarRifas 
+};

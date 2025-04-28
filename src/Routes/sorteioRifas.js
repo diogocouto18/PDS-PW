@@ -1,12 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const compraRifaController = require("../Controllers/compraRifaController");
-const { autenticacao } = require("../Middlewares/authMiddlewares");
+const sorteioRifas = require("../Controllers/sorteioRifasController");
 
-// Apenas utilizadores autenticados podem comprar rifas
-router.post("/", autenticacao, compraRifaController.criarCompra);
+const { autenticacao, apenasAdministrador } = require("../Middlewares/authMiddlewares");
 
-// Só para ver todas as compras (opcional - pode ser protegido também)
-router.get("/", autenticacao, compraRifaController.listarCompras);
+
+// POST   /sorteios        → criar um novo sorteio
+router.post("/", autenticacao, apenasAdministrador, sorteioRifas.criarSorteio);
+
+// GET    /sorteios        → listar todos
+router.get("/", autenticacao, sorteioRifas.listarSorteios);
+
+// PUT    /sorteios/:id    → atualizar
+router.put("/:id", autenticacao, apenasAdministrador, sorteioRifas.atualizarSorteio);
+
+// DELETE /sorteios/:id    → remover
+router.delete("/:id", autenticacao, apenasAdministrador, sorteioRifas.eliminarSorteio);
 
 module.exports = router;

@@ -1,18 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const rifaController = require("../Controllers/rifaController");
-const { autenticacao } = require("../Middlewares/authMiddlewares");
-const { apenasAdministrador } = require("../Middlewares/authMiddlewares");
+const rifa = require("../Controllers/rifaController");
 
-// Apenas Admins podem criar, atualizar, deletar rifas
-router.post("/", autenticacao, apenasAdministrador, rifaController.criar);
-router.put("/:id", autenticacao, apenasAdministrador, rifaController.atualizar);
-router.delete("/:id", autenticacao, apenasAdministrador, rifaController.deletar);
+const { autenticacao, apenasAdministrador } = require("../Middlewares/authMiddlewares");
 
-// Utilizadores e Admins podem ver rifas
-router.get("/", autenticacao, rifaController.listar);
-router.get("/:id", autenticacao, rifaController.obterPorId);
 
-router.post("/:id/sortear", autenticacao, apenasAdministrador, rifaController.sortear);
+// GET    /rifas/sorteio/:id_sorteio    → lista todas as rifas daquele sorteio
+router.get("/sorteio/:id_sorteio", autenticacao, rifa.listarRifasPorSorteio);
+
+// GET    /rifas/:id                    → detalhes de uma rifa
+router.get("/:id", autenticacao, rifa.obterRifaPorId);
+
+// PUT    /rifas/:id/estado             → atualiza estado via body { estado }
+router.put("/:id/estado", autenticacao, apenasAdministrador, rifa.atualizarEstadoRifa);
 
 module.exports = router;
