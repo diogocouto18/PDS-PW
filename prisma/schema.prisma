@@ -186,7 +186,7 @@ model Utilizador {
   morada                  String?                   @db.VarChar(150)
   AvaliacaoEvento         AvaliacaoEvento[]
   CandidaturaVoluntariado CandidaturaVoluntariado[]
-  RifaComprada            RifaComprada[]
+  Rifa                    Rifa[]
   MensagemSuporte         MensagemSuporte[]
   Notificacao             Notificacao[]
   Pagamento               Pagamento[]
