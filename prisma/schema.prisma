@@ -69,18 +69,6 @@ model CategoriaEvento {
   Evento Evento[]
 }
 
-model RifaComprada {
-  id            Int                @id @default(autoincrement())
-  id_utilizador Int
-  id_pagamento  Int
-  estado        RifaComprada_estado  @default(Pendente)
-  Utilizador    Utilizador         @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rifacomprada_ibfk_1")
-  Pagamento     Pagamento          @relation(fields: [id_pagamento], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rifacomprada_ibfk_2")
-
-  @@index([id_utilizador], map: "id_utilizador")
-  @@index([id_pagamento], map: "id_pagamento")
-}
-
 model Evento {
   id               Int               @id @default(autoincrement())
   titulo           String            @db.VarChar(100)
@@ -131,29 +119,11 @@ model Notificacao {
   @@index([id_utilizador], map: "id_utilizador")
 }
 
-model Pagamento {
-  id               Int                        @id @default(autoincrement())
-  id_utilizador    Int
-  id_sorteioRifas  Int
-  quantidade       Int
-  valor            Decimal                    @db.Decimal(10, 2)
-  metodo_pagamento Pagamento_metodo_pagamento
-  estado           Pagamento_estado           @default(Pendente)
-  data_pagamento   DateTime?                  @default(now()) @db.Timestamp(0)
-  Utilizador       Utilizador                 @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "pagamento_ibfk_1")
-  SorteioRifas     SorteioRifas               @relation(fields: [id_sorteioRifas], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "pagamento_ibfk_2")
-
-  RifaComprada     RifaComprada[]
-
-  @@index([id_utilizador], map: "id_utilizador")
-  @@index([id_sorteioRifas], map: "id_sorteioRifas")
-}
-
 model SorteioRifas {
   id               Int                   @id @default(autoincrement())
   nome             String                @db.VarChar(100)
   preco            Decimal               @db.Decimal(10, 2)
-  quantidade       Int
+  quantidadeTotal  Int
   descricao        String                @db.Text
   premio           String                @db.Text
   data_sorteio     DateTime              @db.Date
@@ -164,9 +134,40 @@ model SorteioRifas {
   Evento           Evento                @relation(fields: [id_evento], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "sorteio_rifas_ibfk_2")
 
   Pagamento        Pagamento[]
+  Rifa             Rifa[]
 
   @@index([id_administrador], map: "id_administrador")
   @@index([id_evento], map: "id_evento")
+}
+
+model Rifa {
+  id            Int                @id @default(autoincrement())
+  id_sorteio    Int
+  id_utilizador Int?
+  estado        Rifa_estado        @default(PorComprar)
+
+  SorteioRifas  SorteioRifas       @relation(fields: [id_sorteio], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "rifa_ibfk_2")
+  Utilizador    Utilizador?        @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rifa_ibfk_1")
+  
+  @@index([id_utilizador], map: "id_utilizador")
+  @@index([id_sorteio], map: "id_sorteio")
+}
+
+model Pagamento {
+  id               Int                        @id @default(autoincrement())
+  id_utilizador    Int
+  id_sorteioRifas  Int
+  quantidadeCompra Int
+  valor_total      Decimal                    @db.Decimal(10, 2)
+  metodo_pagamento Pagamento_metodo_pagamento
+  estado           Pagamento_estado           @default(Pendente)
+  data_pagamento   DateTime?                  @default(now()) @db.Timestamp(0)
+  
+  Utilizador       Utilizador                 @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "pagamento_ibfk_1")
+  SorteioRifas     SorteioRifas               @relation(fields: [id_sorteioRifas], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "pagamento_ibfk_2")
+
+  @@index([id_utilizador], map: "id_utilizador")
+  @@index([id_sorteioRifas], map: "id_sorteioRifas")
 }
 
 model Suporte {
@@ -213,12 +214,13 @@ enum Notificacao_estado {
   Aberto
 }
 
-enum RifaComprada_estado {
+enum Rifa_estado {
   Vencedor
   SegundoLugar
   TerceiroLugar
   Perdedor
-  Pendente
+  PorComprar
+  Comprada
 }
 
 enum MensagemSuporte_estado {
