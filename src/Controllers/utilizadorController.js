@@ -1,79 +1,84 @@
 const utilizadorService = require("../Services/utilizadorService.js");
 
-// Criar Utilizador
+/*
 const criarUtilizador = async (req, res) => {
     try {
-        console.log("Criando utilizador com os dados:", req.body);  // Log dos dados recebidos
+        console.log("Criando utilizador com os dados:", req.body);  
         const novoUtilizador = await utilizadorService.criarUtilizador(req.body);
-        console.log("Novo utilizador criado:", novoUtilizador);  // Log do utilizador criado
+        console.log("Novo utilizador criado:", novoUtilizador);  
         res.status(201).json(novoUtilizador);
-    } catch (error) {
-        console.error("Erro ao criar utilizador:", error);  // Log do erro
+    } 
+        catch (error) {
+        console.error("Erro ao criar utilizador:", error);  
         res.status(500).json({ error: "Erro ao criar utilizador" });
     }
-};
+};*/
 
-// Listar Utilizadores
-const listarUtilizadores = async (req, res) => {
+// Get - Lista todos os utilizadores
+async function listarUtilizadores(req, res) {
     try {
-        console.log("Listando utilizadores...");  // Log para saber quando está a listar
+        console.log("Listando utilizadores...");  
         const registros = await utilizadorService.listarUtilizadores();
-        console.log("Utilizadores encontrados:", registros);  // Log dos utilizadores encontrados
+        console.log("Utilizadores encontrados:", registros);  
         res.json(registros);
-    } catch (error) {
-        console.error("Erro ao buscar utilizadores:", error);  // Log do erro
+    } 
+        catch (error) {
+        console.error("Erro ao buscar utilizadores:", error);  
         res.status(500).json({ error: "Erro ao buscar utilizadores" });
     }
 };
 
-// Obter Utilizador por ID
-const obterPorId = async (req, res) => {
+// Get - Obtem um Utilizador pelo ID
+async function obterPorId(req, res) {
     try {
         const { id } = req.params;
-        console.log(`Buscando utilizador com ID: ${id}`);  // Log do ID procurado
+        console.log(`Buscando utilizador com ID: ${id}`);  
         const registro = await utilizadorService.obterPorId(id);
         if (!registro) {
-            console.error("Utilizador não encontrado");  // Log de erro caso não encontre
+            console.error("Utilizador não encontrado");  
             return res.status(404).json({ error: "Utilizador não encontrado" });
         }
-        console.log("Utilizador encontrado:", registro);  // Log do utilizador encontrado
+        console.log("Utilizador encontrado:", registro);  
         res.json(registro);
-    } catch (error) {
-        console.error("Erro ao buscar utilizador:", error);  // Log do erro
+    } 
+        catch (error) {
+        console.error("Erro ao buscar utilizador:", error);  
         res.status(500).json({ error: "Erro ao buscar utilizador" });
     }
 };
 
-// Atualizar Utilizador
-const atualizarUtilizadores = async (req, res) => {
+// Put - Atualiza os dados de um utilizador
+async function atualizarUtilizadores(req, res) {
     try {
         const { id } = req.params;
-        console.log(`Atualizando utilizador com ID: ${id}`, req.body);  // Log dos dados a serem atualizados
+        console.log(`Atualizando utilizador com ID: ${id}`, req.body);  
         const atualizado = await utilizadorService.atualizarUtilizadores(id, req.body);
-        console.log("Utilizador atualizado:", atualizado);  // Log do utilizador atualizado
+        console.log("Utilizador atualizado:", atualizado);  
         res.json(atualizado);
-    } catch (error) {
-        console.error("Erro ao atualizar utilizador:", error);  // Log do erro
+    } 
+        catch (error) {
+        console.error("Erro ao atualizar utilizador:", error);  
         res.status(500).json({ error: "Erro ao atualizar utilizador" });
     }
 };
 
-// Eliminar Utilizador
-const eliminarUtilizadores = async (req, res) => {
+// Delete - Remove um utilizador 
+async function eliminarUtilizadores(req, res) {
     try {
         const { id } = req.params;
-        console.log(`Deletando utilizador com ID: ${id}`);  // Log do ID a ser deletado
+        console.log(`Deletando utilizador com ID: ${id}`);  
         await utilizadorService.eliminarUtilizadores(id);
-        console.log("Utilizador deletado com sucesso.");  // Log de sucesso
+        console.log("Utilizador deletado com sucesso.");  
         res.json({ message: "Utilizador deletado com sucesso" });
-    } catch (error) {
-        console.error("Erro ao deletar utilizador:", error);  // Log do erro
+    } 
+        catch (error) {
+        console.error("Erro ao deletar utilizador:", error);  
         res.status(500).json({ error: "Erro ao deletar utilizador" });
     }
 };
 
 module.exports = {
-    criarUtilizador,
+    //criarUtilizador,
     listarUtilizadores,
     obterPorId,
     atualizarUtilizadores,

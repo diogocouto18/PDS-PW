@@ -5,16 +5,16 @@ const avaliacaoController = require("../Controllers/avaliacaoEventoController");
 
 const { autenticacao, apenasAdministrador } = require("../Middlewares/authMiddlewares");
 
-// Submissão de avaliação (Utilizador)
+// Submissão de avaliação (qualquer utilizador)
 router.post("/", autenticacao, avaliacaoController.criarAvaliacao);
 
-// Listar avaliações de um evento
+// Listar avaliações de um evento (qualquer utilizador)
 router.get("/evento/:id_evento", autenticacao, avaliacaoController.listarPorEvento);
 
-// Atualizar avaliação (só o autor da avaliação pode)
+// Atualizar avaliação de um evento (autor)
 router.put("/:id", autenticacao, avaliacaoController.atualizarAvaliacao);
 
-// Apagar avaliação (apenas Administrador)
+// Remover uma avaliação (apenas Administrador)
 router.delete("/:id", autenticacao, apenasAdministrador, avaliacaoController.eliminarAvaliacao);
 
 // Média de avaliações de um evento

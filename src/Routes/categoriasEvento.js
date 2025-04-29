@@ -4,11 +4,19 @@ const categoriaEventoController = require("../Controllers/categoriaEventoControl
 
 const {autenticacao, apenasAdministrador} = require("../Middlewares/authMiddlewares");
 
+// Criar uma categoria (apenas administrador)
+router.post("/", autenticacao, apenasAdministrador, categoriaEventoController.criar);
+
+// Lista todas as categorias existentes (qualquer utilizador)
 router.get("/", autenticacao, categoriaEventoController.listar);
+
+// Obtem uma categoria existente por id (qualquer utilizador)
 router.get("/:id", autenticacao, categoriaEventoController.obterPorId);
 
-router.post("/", autenticacao, apenasAdministrador, categoriaEventoController.criar);
+// Atualiza uma categoria existente (apenas administrador)
 router.put("/:id", autenticacao, apenasAdministrador, categoriaEventoController.atualizar);
+
+// Remove uma categoria existente (apenas administrador)
 router.delete("/:id", autenticacao, apenasAdministrador, categoriaEventoController.eliminar);
 
 module.exports = router;

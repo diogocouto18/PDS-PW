@@ -4,16 +4,16 @@ const eventoController = require("../Controllers/eventoController");
 
 const {autenticacao, apenasAdministrador} = require("../Middlewares/authMiddlewares");
 
-// Criar um novo evento
+// Criar um novo evento (apenas administrador)
 router.post("/", autenticacao, apenasAdministrador, eventoController.criarEvento);
 
-// (Opcional) Listar todos os eventos
+// Lista todos os eventos existentes (qualquer utilizador)
 router.get("/", autenticacao, eventoController.listarEventos);
 
-// (Opcional) Obter detalhes de um evento
+// Obtem detalhes de um evento (qualquer utilizador)
 router.get("/:id", autenticacao, eventoController.obterEventoPorId);
 
-// (Opcional) Atualizar/terminar um evento
+// Atualiza um evento (apenas administrador)
 router.put("/:id", autenticacao, apenasAdministrador, eventoController.atualizarEvento);
 
 

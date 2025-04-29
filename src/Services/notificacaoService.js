@@ -13,7 +13,7 @@ const criarNotificacao = async (data) => {
   });
 };
 
-// Listar notificações de um utilizador
+// Listar todas as notificações de um utilizador
 const listarNotificacoesPorUtilizador = async (id_utilizador) => {
   return await prisma.notificacao.findMany({
     where: { id_utilizador: parseInt(id_utilizador) },
@@ -29,7 +29,7 @@ const listarNotificacoesPorAdministrador = async (id_administrador) => {
   });
 };
 
-// Marcar notificação como aberta
+// Atualiza o estado de uma notificação para "Aberto"
 const abrirNotificacao = async (id) => {
   return await prisma.notificacao.update({
     where: { id: parseInt(id) },
@@ -37,7 +37,7 @@ const abrirNotificacao = async (id) => {
   });
 };
 
-// Apagar uma notificação (opcional)
+// Remove uma notificação
 const apagarNotificacao = async (id) => {
   return await prisma.notificacao.delete({
     where: { id: parseInt(id) },

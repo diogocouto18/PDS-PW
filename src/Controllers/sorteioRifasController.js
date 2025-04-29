@@ -1,50 +1,57 @@
 const sorteioService = require("../Services/sorteioRifasService");
 
+// POST - Cria um novo sorteio de rifas
 async function criarSorteio(req, res) {
   try {
-    // espera body: { nome, preco, quantidadeTotal, descricao, premio, data_sorteio, id_administrador, id_evento }
     const data = {
       ...req.body,
-      // se quiseres extrair admin/evento do token, podes substituir estes:
-      id_administrador: parseInt(req.body.id_administrador, 10),
-      id_evento: parseInt(req.body.id_evento, 10),
+      
+      id_administrador: parseInt(req.body.id_administrador),
+      id_evento: parseInt(req.body.id_evento),
     };
     const sorteio = await sorteioService.criarSorteio(data);
     res.status(201).json(sorteio);
-  } catch (err) {
-    console.error("criarSorteio:", err);
+  } 
+    catch (error) {
+    console.error("criarSorteio:", error);
     res.status(400).json({ error: err.message });
   }
 }
 
+// Get - Lista todos os sorteios com as rifas associadas
 async function listarSorteios(req, res) {
   try {
     const lista = await sorteioService.listarSorteios();
     res.json(lista);
-  } catch (err) {
-    console.error("listarSorteios:", err);
+  } 
+    catch (error) {
+    console.error("listarSorteios:", error);
     res.status(500).json({ error: err.message });
   }
 }
 
+// Put - Atualiza campos de um sorteio existente
 async function atualizarSorteio(req, res) {
   try {
     const { id } = req.params;
     const updated = await sorteioService.atualizarSorteio(id, req.body);
     res.json(updated);
-  } catch (err) {
-    console.error("atualizarSorteio:", err);
+  } 
+    catch (error) {
+    console.error("atualizarSorteio:", error);
     res.status(400).json({ error: err.message });
   }
 }
 
+// Delete - Remove um sorteio e todas as rifas relacionadas com este sorteio
 async function eliminarSorteio(req, res) {
   try {
     const { id } = req.params;
     await sorteioService.eliminarSorteio(id);
     res.json({ message: "Sorteio removido com sucesso" });
-  } catch (err) {
-    console.error("eliminarSorteio:", err);
+  } 
+    catch (error) {
+    console.error("eliminarSorteio:", error);
     res.status(400).json({ error: err.message });
   }
 }

@@ -4,19 +4,19 @@ const notificacaoController = require("../Controllers/notificacaoController");
 
 const { autenticacao, apenasAdministrador } = require("../Middlewares/authMiddlewares");
 
-// Criar notificação (provavelmente apenas Admins vão usar)
+// Criar notificação (apenas administrador)
 router.post("/", autenticacao, apenasAdministrador, notificacaoController.criarNotificacao);
 
-// Listar notificações para utilizador
+// Listar notificações para um utilizador (qualquer utilizador)
 router.get("/utilizador/:id_utilizador", autenticacao, notificacaoController.listarNotificacoesPorUtilizador);
 
-// Listar notificações para administrador
+// Listar notificações para um administrador (apenas administrador)
 router.get("/administrador/:id_administrador", autenticacao, apenasAdministrador, notificacaoController.listarNotificacoesPorAdministrador);
 
-// Marcar uma notificação como aberta
+// Atualizar o estado de uma notificação (qualquer utilizador)
 router.put("/:id/abrir", autenticacao, notificacaoController.abrirNotificacao);
 
-// Apagar uma notificação
+// Remover uma notificação (apenas administrador)
 router.delete("/:id", autenticacao, apenasAdministrador, notificacaoController.apagarNotificacao);
 
 module.exports = router;

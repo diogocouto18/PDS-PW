@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const pagamento = require("../Controllers/pagamentoController");
+const pagamentoController = require("../Controllers/pagamentoController");
 
 const { autenticacao } = require("../Middlewares/authMiddlewares");
 
-// POST /pagamentos  → realiza compra de N rifas
-router.post("/", autenticacao, pagamento.comprarRifas);
+// Executa compra de um nº de rifas (qualquer utilizador)
+router.post("/", autenticacao, pagamentoController.comprarRifas);
 
 module.exports = router;

@@ -140,7 +140,7 @@ CREATE TABLE `Rifa` (
 CREATE TABLE `Pagamento` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `id_utilizador` INTEGER NOT NULL,
-    `id_sorteioRifas` INTEGER NOT NULL,
+    `id_sorteio` INTEGER NOT NULL,
     `quantidadeCompra` INTEGER NOT NULL,
     `valor_total` DECIMAL(10, 2) NOT NULL,
     `metodo_pagamento` ENUM('MBWAY', 'Entidade_Referencia') NOT NULL,
@@ -148,7 +148,7 @@ CREATE TABLE `Pagamento` (
     `data_pagamento` TIMESTAMP(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
 
     INDEX `id_utilizador`(`id_utilizador`),
-    INDEX `id_sorteioRifas`(`id_sorteioRifas`),
+    INDEX `id_sorteio`(`id_sorteio`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -228,4 +228,4 @@ ALTER TABLE `Rifa` ADD CONSTRAINT `rifa_ibfk_1` FOREIGN KEY (`id_utilizador`) RE
 ALTER TABLE `Pagamento` ADD CONSTRAINT `pagamento_ibfk_1` FOREIGN KEY (`id_utilizador`) REFERENCES `Utilizador`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE `Pagamento` ADD CONSTRAINT `pagamento_ibfk_2` FOREIGN KEY (`id_sorteioRifas`) REFERENCES `SorteioRifas`(`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE `Pagamento` ADD CONSTRAINT `pagamento_ibfk_2` FOREIGN KEY (`id_sorteio`) REFERENCES `SorteioRifas`(`id`) ON DELETE CASCADE ON UPDATE NO ACTION;

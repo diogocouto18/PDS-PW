@@ -1,40 +1,48 @@
 const authService = require("../Services/authService");
 
+// Post - Cria conta de um Utilizador
 async function registerUtilizador(req, res) {
   try {
     const novo = await authService.registerUtilizador(req.body);
     res.status(201).json(novo);
-  } catch (error) {
+  } 
+    catch (error) {
     console.error("Erro no registro:", error.message);
     res.status(500).json({ error: error.message });
   }
 }
 
+// Post - Cria conta de um Administrador
 async function registerAdministrador(req, res) {
   try {
     const novo = await authService.registerAdministrador(req.body);
     res.status(201).json(novo);
-  } catch (error) {
+  } 
+    catch (error) {
     console.error("Erro no registro:", error.message);
     res.status(500).json({ error: error.message });
   }
 }
 
+// Post - Login de um Utilizador
 async function loginUtilizador(req, res) {
   try {
     const token = await authService.loginUtilizador(req.body);
     res.json({ token });
-  } catch (error) {
+  } 
+    catch (error) {
     console.error("Erro no login:", error.message);
     res.status(401).json({ error: error.message });
   }
 }
 
+// Post - Login de um Administrador
 async function loginAdministrador(req, res) {
   try {
     const token = await authService.loginAdministrador(req.body);
     res.json({ token });
-  } catch (error) {
+  } 
+    catch (error) {
     console.error("Erro no login:", error.message);
     res.status(401).json({ error: error.message });
   }

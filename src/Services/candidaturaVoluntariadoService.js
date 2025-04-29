@@ -3,10 +3,8 @@ const prisma = new PrismaClient();
 
 const notificacaoService = require("../Services/notificacaoService");
 
-// Cria candidatura com estado Pendente
+// Cria uma nova candidatura com estado "Pendente"
 const criarCandidatura = async (data) => {
-    // data: { id_utilizador, id_anuncio }
-    // Verifica se já existe candidatura aberta para esse user/anuncio
     const candidaturaExistente = await prisma.candidaturaVoluntariado.findFirst({
         where: {
             id_utilizador: parseInt(data.id_utilizador),
@@ -26,6 +24,7 @@ const criarCandidatura = async (data) => {
     });
 };
 
+// Avalia uma candidatura existente para um anuncio, alterando o seu estado
 const avaliarCandidatura = async (id, novoEstado, idAdministrador) => {
     if (!["Aceite", "Rejeitado"].includes(novoEstado)) {
         throw new Error("Estado inválido. Use 'Aceite' ou 'Rejeitado'.");
@@ -49,6 +48,7 @@ const avaliarCandidatura = async (id, novoEstado, idAdministrador) => {
     return candidatura;
 };
 
+// Lista todas as candidaturas existentes por um anuncio
 const listarPorAnuncio = async (id_anuncio) => {
     return await prisma.candidaturaVoluntariado.findMany({
         where: { id_anuncio: parseInt(id_anuncio) },

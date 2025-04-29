@@ -5,9 +5,9 @@ const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = process.env.JWT_SECRET || "segredo_super_secreto";
 
+// Regista um utilizador
 const registerUtilizador= async (data) => {
-    // data: { username, nome, email, telefone, password, morada }
-    // Verifica se o email já existe (opcional)
+    // 1. Verifica email duplicado
     const existente = await prisma.utilizador.findUnique({
         where: { email: data.email },
     });
@@ -15,10 +15,10 @@ const registerUtilizador= async (data) => {
         throw new Error("Email já registrado");
     }
 
-    // Hashear a password
+    // 2. Hash da password
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
-    // Cria o utilizador no banco de dados (observe que o campo na BD pode ser "password_hash")
+    // 3. Regista o utilizador
     const novoUtilizador = await prisma.utilizador.create({
         data: {
             username: data.username,
@@ -32,9 +32,9 @@ const registerUtilizador= async (data) => {
     return novoUtilizador;
 };
 
+// Regista um Administrador
 const registerAdministrador= async (data) => {
-    // data: { username, nome, email, telefone, password, morada }
-    // Verifica se o email já existe (opcional)
+    // 1. Verifica email duplicado
     const existente = await prisma.administrador.findUnique({
         where: { email: data.email },
     });
@@ -42,10 +42,10 @@ const registerAdministrador= async (data) => {
         throw new Error("Email já registrado");
     }
 
-    // Hashear a password
+    // 2. Hash da password
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
-    // Cria o administrador no banco de dados (observe que o campo na BD pode ser "password_hash")
+    // 3. Regista o administrador
     const novoAdministrador = await prisma.administrador.create({
         data: {
             username: data.username,
@@ -57,8 +57,9 @@ const registerAdministrador= async (data) => {
     return novoAdministrador;
 };
 
+// Login do Utilizador
 const loginUtilizador = async (data) => {
-    // data: { email, password }
+    
     const utilizador = await prisma.utilizador.findUnique({
         where: { email: data.email },
     });
@@ -69,7 +70,7 @@ const loginUtilizador = async (data) => {
     if (!passwordValida) {
         throw new Error("Password inválida");
     }
-    // Gera o token com informações mínimas (ex: id e email)
+    
     const token = jwt.sign(
         { id: utilizador.id, email: utilizador.email, role: "Utilizador"},
         JWT_SECRET,
@@ -78,8 +79,9 @@ const loginUtilizador = async (data) => {
     return token;
 };
 
+// Login do administrador
 const loginAdministrador = async (data) => {
-    // data: { email, password }
+    
     const administrador = await prisma.administrador.findUnique({
         where: { email: data.email },
     });
@@ -90,7 +92,7 @@ const loginAdministrador = async (data) => {
     if (!passwordValida) {
         throw new Error("Password inválida");
     }
-    // Gera o token com informações mínimas (ex: id e email)
+    
     const token = jwt.sign(
         { id: administrador.id, email: administrador.email, role: "Administrador" },
         JWT_SECRET,

@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const sorteioRifas = require("../Controllers/sorteioRifasController");
+const sorteioRifasController = require("../Controllers/sorteioRifasController");
 
 const { autenticacao, apenasAdministrador } = require("../Middlewares/authMiddlewares");
 
 
-// POST   /sorteios        → criar um novo sorteio
-router.post("/", autenticacao, apenasAdministrador, sorteioRifas.criarSorteio);
+// Criar um novo sorteio (apenas administrador)
+router.post("/", autenticacao, apenasAdministrador, sorteioRifasController.criarSorteio);
 
-// GET    /sorteios        → listar todos
-router.get("/", autenticacao, sorteioRifas.listarSorteios);
+// Lista todos os sorteios (qualquer utilizador)
+router.get("/", autenticacao, sorteioRifasController.listarSorteios);
 
-// PUT    /sorteios/:id    → atualizar
-router.put("/:id", autenticacao, apenasAdministrador, sorteioRifas.atualizarSorteio);
+// Atualiza um sorteio existente (apenas administrador)
+router.put("/:id", autenticacao, apenasAdministrador, sorteioRifasController.atualizarSorteio);
 
-// DELETE /sorteios/:id    → remover
-router.delete("/:id", autenticacao, apenasAdministrador, sorteioRifas.eliminarSorteio);
+// Remove um sorteio (apenas administrador)
+router.delete("/:id", autenticacao, apenasAdministrador, sorteioRifasController.eliminarSorteio);
 
 module.exports = router;
