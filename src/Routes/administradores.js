@@ -4,7 +4,6 @@ const administradorController = require("../Controllers/administradorController"
 
 const {autenticacao, apenasAdministrador} = require("../Middlewares/authMiddlewares");
 
-//router.post("/", administradorController.criarAdministrador);
 
 // Lista todos os administradores existentes (apenas administrador)
 router.get("/", autenticacao, apenasAdministrador, administradorController.listarAdministradores);

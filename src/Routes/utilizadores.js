@@ -4,8 +4,6 @@ const utilizadorController = require("../Controllers/utilizadorController.js");
 
 const {autenticacao, apenasAdministrador} = require("../Middlewares/authMiddlewares");
 
-//router.post("/", utilizadorController.criarUtilizador);
-
 // Lista todos os utilizadores (apenas administrador)
 router.get("/", autenticacao, apenasAdministrador, utilizadorController.listarUtilizadores);
 
