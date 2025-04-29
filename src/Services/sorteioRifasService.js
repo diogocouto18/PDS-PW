@@ -9,7 +9,7 @@ const criarSorteio = async (data) => {
       nome: data.nome,
       preco: parseFloat(data.preco),
       quantidadeTotal: parseInt(data.quantidadeTotal),
-      descricao: data.descricao,
+      descricao: data.descricao,                                                  // Notificação que foi criado um sorteio de rifas
       premio: data.premio,
       data_sorteio: new Date(data.data_sorteio),
       id_administrador: parseInt(data.id_administrador),
@@ -52,8 +52,8 @@ const eliminarSorteio = async (id) => {
   return await prisma.sorteioRifas.delete({
     where: { id: parseInt(id) },
   });
-};
-  
+};      
+                                                      // Função de sortear uma rifa para o sorteio com o estado "Comprada"
 module.exports = { 
     criarSorteio, 
     listarSorteios,

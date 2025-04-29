@@ -31,7 +31,7 @@ const listarNotificacoesPorAdministrador = async (id_administrador) => {
 
 // Atualiza o estado de uma notificação para "Aberto"
 const abrirNotificacao = async (id) => {
-  return await prisma.notificacao.update({
+  return await prisma.notificacao.update({          //ver como funciona isto
     where: { id: parseInt(id) },
     data: { estado: "Aberto" },
   });

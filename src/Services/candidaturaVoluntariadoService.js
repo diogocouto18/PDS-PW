@@ -21,7 +21,7 @@ const criarCandidatura = async (data) => {
             id_anuncio: parseInt(data.id_anuncio),
             estado: "Pendente",
         },
-    });
+    });                                 // Notificação para o administrador(recebeu uma candidatura para avaliar)
 };
 
 // Avalia uma candidatura existente para um anuncio, alterando o seu estado
@@ -55,6 +55,9 @@ const listarPorAnuncio = async (id_anuncio) => {
         include: { Utilizador: true },
     });
 };
+
+
+// Remover Candidatura(Crud)
 
 module.exports= {
     criarCandidatura,

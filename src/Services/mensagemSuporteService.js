@@ -10,7 +10,7 @@ const criarMensagemInicial = async (data) => {
       id_ticket: data.id_ticket,
       mensagem: data.mensagem,
       estado: "Aberto",
-      data_abertura: new Date(),
+      data_abertura: new Date(),                          // Notificação que foi criado um ticket
       Utilizador: {
         connect: { id: data.id_utilizador }
       }
@@ -87,6 +87,8 @@ const listarMensagensDoTicket = async (id_ticket) => {
     orderBy: { data_abertura: "asc" },
   });
 };
+
+// Remover Ticket(Crud)
 
 module.exports = { 
     criarMensagemInicial, 

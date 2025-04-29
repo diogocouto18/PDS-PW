@@ -24,6 +24,8 @@ function apenasAdministrador(req, res, next) {
   next();
 }
 
+// Função que valide apenas coisas relacionadas com o utilizador
+
 module.exports = { 
   autenticacao, 
   apenasAdministrador 
