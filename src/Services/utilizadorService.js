@@ -1,10 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-/*const criarUtilizador = async (data) => {
-    return await prisma.utilizador.create({ data });
-};*/
-
 // Retorna todos os utilizadores
 const listarUtilizadores = async () => {
     return await prisma.utilizador.findMany();
@@ -33,7 +29,6 @@ const eliminarUtilizadores = async (id) => {
 };
 
 module.exports = {
-    //criarUtilizador,
     listarUtilizadores,
     obterPorId,
     atualizarUtilizadores,

@@ -7,7 +7,7 @@ const criarAnuncio = async (data) => {
         data: {
             cargo: data.cargo,
             descricao: data.descricao,
-            id_administrador: data.id_administrador,
+            id_administrador: data.id_administrador,        // Notificação que foi criado um anuncio para um evento
             id_evento: data.id_evento,
             estado: data.estado || "Ativo", 
         },

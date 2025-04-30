@@ -27,7 +27,7 @@ const comprarRifas = async (id_utilizador, id_sorteio, quantidadeCompra, metodo_
     data: {
       id_utilizador,
       id_sorteio,
-      quantidadeCompra,
+      quantidadeCompra,                   // Como funciona a mudança de estado
       valor_Total,
       metodo_pagamento,
       estado: "Pago", 
@@ -46,9 +46,9 @@ const comprarRifas = async (id_utilizador, id_sorteio, quantidadeCompra, metodo_
       })
     )
   );
-  return pagamento;
+  return pagamento;                   // Notificação a confirmar o pagamento concluido
 };
-  
+
 module.exports = { 
   comprarRifas 
 };

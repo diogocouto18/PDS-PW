@@ -8,7 +8,7 @@ const criarEvento = async (data) => {
             titulo: data.titulo,
             localizacao: data.localizacao,
             descricao: data.descricao,
-            data_evento: new Date(data.data_evento),
+            data_evento: new Date(data.data_evento),            // Notificação que foi criado um evento
             fotografia: data.fotografia,
             estado: "Ativo",
             id_administrador: data.id_administrador,
@@ -36,6 +36,8 @@ const atualizarEvento = async (id, data) => {
         data
     });
 }
+
+// Remover Evento(Crud)
 
 module.exports = { 
     criarEvento,

@@ -1,18 +1,5 @@
 const utilizadorService = require("../Services/utilizadorService.js");
 
-/*
-const criarUtilizador = async (req, res) => {
-    try {
-        console.log("Criando utilizador com os dados:", req.body);  
-        const novoUtilizador = await utilizadorService.criarUtilizador(req.body);
-        console.log("Novo utilizador criado:", novoUtilizador);  
-        res.status(201).json(novoUtilizador);
-    } 
-        catch (error) {
-        console.error("Erro ao criar utilizador:", error);  
-        res.status(500).json({ error: "Erro ao criar utilizador" });
-    }
-};*/
 
 // Get - Lista todos os utilizadores
 async function listarUtilizadores(req, res) {
@@ -78,7 +65,6 @@ async function eliminarUtilizadores(req, res) {
 };
 
 module.exports = {
-    //criarUtilizador,
     listarUtilizadores,
     obterPorId,
     atualizarUtilizadores,

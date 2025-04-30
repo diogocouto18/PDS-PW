@@ -101,6 +101,7 @@ const loginAdministrador = async (data) => {
     return token;
 };
 
+// Token
 
 module.exports = { 
     registerUtilizador, 

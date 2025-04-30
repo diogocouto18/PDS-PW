@@ -1,11 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-/*
-const criarAdministrador = async (data) => {
-    return await prisma.administrador.create({ data });
-};*/
-
 // Lista todos os administradores existentes
 const listarAdministradores = async () => {
     return await prisma.administrador.findMany();
@@ -34,7 +29,6 @@ const eliminarAdministradores = async (id) => {
 };
 
 module.exports = {
-    //criarAdministrador,
     listarAdministradores,
     obterPorId,
     atualizarAdministradores,
