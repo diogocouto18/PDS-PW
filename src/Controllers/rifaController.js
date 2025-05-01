@@ -14,6 +14,19 @@ async function listarRifasPorSorteio(req, res) {
   }
 }
 
+// Get - Lista todos as rifas de um dado utilizador
+async function listarRifasUtilizador(req, res) {
+  try {
+    const id_utilizador = req.utilizador.id;
+    const rifas = await rifaService.listarRifasUtilizador(id_utilizador);
+    res.json(rifas);
+  } 
+    catch (error) {
+    console.error("listarMinhasRifas:", error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
 // Get - Obtem detalhes de uma rifa
 async function obterRifaPorId(req, res) {
   try {
@@ -44,6 +57,7 @@ async function atualizarEstadoRifa(req, res) {
 
 module.exports = {
   listarRifasPorSorteio,
+  listarRifasUtilizador,
   obterRifaPorId,
   atualizarEstadoRifa,
 };

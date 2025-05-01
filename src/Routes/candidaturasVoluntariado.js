@@ -2,15 +2,15 @@ const express = require("express");
 const router = express.Router();
 const candidaturaController = require("../Controllers/candidaturaVoluntariadoController");
 
-const {autenticacao, apenasAdministrador} = require("../Middlewares/authMiddlewares");
+const {autenticacao, apenasUtilizadores, apenasAdministrador, proprioUtilizadorOuAdministrador} = require("../Middlewares/authMiddlewares");
 
-// Criar candidatura (qualquer utilizador)
-router.post("/",autenticacao, candidaturaController.criarCandidatura);
+// Criar candidatura (apenas utilizadores)
+router.post("/",autenticacao, apenasUtilizadores, candidaturaController.criarCandidatura);
 
 // Avaliar candidatura (apenas administrador)
 router.put("/:id/avaliar", autenticacao, apenasAdministrador, candidaturaController.avaliarCandidatura);
 
-// Listar candidaturas de um anuncio (qualquer utilizador)
-router.get("/anuncio/:id_anuncio", autenticacao, candidaturaController.listarPorAnuncio);
+// Listar candidaturas de um anuncio (próprio utilizador ou administradores)
+router.get("/anuncio/:id_anuncio", autenticacao, proprioUtilizadorOuAdministrador, candidaturaController.listarPorAnuncio);
 
 module.exports = router;

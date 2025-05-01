@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const pagamentoController = require("../Controllers/pagamentoController");
 
-const { autenticacao } = require("../Middlewares/authMiddlewares");
+const { autenticacao, apenasUtilizadores } = require("../Middlewares/authMiddlewares");
 
-// Executa compra de um nº de rifas (qualquer utilizador)
-router.post("/", autenticacao, pagamentoController.comprarRifas);
+// Executa compra de um nº de rifas (apenas utilizadores)
+router.post("/", autenticacao, apenasUtilizadores, pagamentoController.comprarRifas);
 
 module.exports = router;

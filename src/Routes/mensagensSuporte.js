@@ -2,19 +2,19 @@ const express = require("express");
 const router = express.Router();
 const mensagemSuporteController = require("../Controllers/mensagemSuporteController");
 
-const { autenticacao, apenasAdministrador } = require("../Middlewares/authMiddlewares");
+const { autenticacao, proprioUtilizadorOuAdministrador, apenasUtilizadores } = require("../Middlewares/authMiddlewares");
 
-// Abre o ticket/cria a primeira mensagem (qualquer utilizador)
-router.post("/", autenticacao, mensagemSuporteController.criarMensagemInicial);
+// Abre o ticket/cria a primeira mensagem (apenas utilizadores)
+router.post("/", autenticacao, apenasUtilizadores, mensagemSuporteController.criarMensagemInicial);
 
-// Responder a um ticket (qualquer utilizador)
-router.post("/:id_ticket/responder", autenticacao, mensagemSuporteController.enviarResposta);
+// Responder a um ticket (próprio utilizador ou administrador)
+router.post("/:id_ticket/responder", autenticacao, proprioUtilizadorOuAdministrador, mensagemSuporteController.enviarResposta);
 
-// Fechar ticket (apenas administrador)
-router.put("/:id_ticket/fechar", autenticacao, apenasAdministrador, mensagemSuporteController.fecharTicket);
+// Fechar ticket (próprio utilizador)
+router.put("/:id_ticket/fechar", autenticacao, proprioUtilizadorOuAdministrador, mensagemSuporteController.fecharTicket);
 
-// Listar mensagens de um ticket (qualquer utilizador)
-router.get("/:id_ticket", autenticacao, mensagemSuporteController.listarMensagensDoTicket);
+// Listar mensagens de um ticket (próprio utilizador ou administrador)
+router.get("/:id_ticket", autenticacao, proprioUtilizadorOuAdministrador, mensagemSuporteController.listarMensagensDoTicket);
 
 
 

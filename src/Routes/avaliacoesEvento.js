@@ -3,19 +3,19 @@ const router = express.Router();
 const avaliacaoController = require("../Controllers/avaliacaoEventoController");
 
 
-const { autenticacao, apenasAdministrador } = require("../Middlewares/authMiddlewares");
+const { autenticacao, apenasAdministrador, apenasUtilizadores, apenasProprioUtilizador} = require("../Middlewares/authMiddlewares");
 
-// Submissão de avaliação (qualquer utilizador)
-router.post("/", autenticacao, avaliacaoController.criarAvaliacao);
+// Submissão de avaliação (apenas utilizadores)
+router.post("/", autenticacao, apenasUtilizadores, avaliacaoController.criarAvaliacao);
 
-// Listar avaliações de um evento (qualquer utilizador)
-router.get("/evento/:id_evento", autenticacao, avaliacaoController.listarPorEvento);
+// Listar avaliações de um evento (apenas administradores)
+router.get("/evento/:id_evento", autenticacao, apenasAdministrador, avaliacaoController.listarPorEvento);
 
-// Atualizar avaliação de um evento (autor)
-router.put("/:id", autenticacao, avaliacaoController.atualizarAvaliacao);
+// Atualizar avaliação de um evento (próprio utilizador)
+router.put("/:id", autenticacao, apenasProprioUtilizador, avaliacaoController.atualizarAvaliacao);
 
-// Remover uma avaliação (apenas Administrador)
-router.delete("/:id", autenticacao, apenasAdministrador, avaliacaoController.eliminarAvaliacao);
+// Remover uma avaliação (próprio utilizador)
+router.delete("/:id", autenticacao, apenasProprioUtilizador, avaliacaoController.eliminarAvaliacao);
 
 // Média de avaliações de um evento
 router.get("/evento/:id_evento/media", autenticacao, avaliacaoController.mediaDoEvento);
