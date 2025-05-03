@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../styles/menu.css';
 import Sidebarfixed from "../componentes/Sidebar-fixed";
 
+
 const images = [
     '/imagens/imagem carrosel 1.jpg',
     '/imagens/imagem carrosel 2.jpg',
@@ -31,7 +32,6 @@ const images = [
     return (
     <div className="MenuPage">
     <Sidebarfixed />
-      <Filter/>
     <div className="imagemTitle">
         <img src="/imagens/Logo.png" alt="MeetPoint Logo" className="logo_menu" />
     </div>
