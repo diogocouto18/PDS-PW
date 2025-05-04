@@ -67,9 +67,21 @@ async function listarMensagensDoTicket(req, res) {
   }
 };
 
+// Delete - Remover um ticket existente
+async function eliminarTicket(req, res) {
+  try {
+    const { id_ticket } = req.params;
+    await mensagemSuporteService.removerTicket(id_ticket);
+    res.json({ message: "Ticket removido com sucesso" });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao remover ticket" });
+  }
+};
+
 module.exports = {
     criarMensagemInicial,
     enviarResposta,
     fecharTicket,
-    listarMensagensDoTicket
+    listarMensagensDoTicket,
+    eliminarTicket
 };

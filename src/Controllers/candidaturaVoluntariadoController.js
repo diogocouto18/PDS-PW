@@ -47,9 +47,20 @@ async function listarPorAnuncio(req, res) {
     }
 };
 
+// Delete - Remove uma candidatura existente
+async function eliminarCandidatura(req, res) {
+    try {
+      const { id } = req.params;
+      await candidaturaService.removerCandidatura(id);
+      res.json({ message: "Candidatura removida com sucesso" });
+    } catch (error) {
+      res.status(500).json({ error: "Erro ao remover candidatura" });
+    }
+};
 
 module.exports = {
     criarCandidatura,
     avaliarCandidatura,
     listarPorAnuncio,
+    eliminarCandidatura
 };

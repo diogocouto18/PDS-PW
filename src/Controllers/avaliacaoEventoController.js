@@ -16,7 +16,7 @@ async function criarAvaliacao(req, res) {
     console.error("Erro ao criar avaliação:", error.message);
     res.status(400).json({ error: error.message });
   }
-}
+};
 
 // Get - Lista avaliações de um evento
 async function listarPorEvento(req, res) {
@@ -28,7 +28,7 @@ async function listarPorEvento(req, res) {
     console.error("Erro ao listar avaliações:", error.message);
     res.status(500).json({ error: "Erro ao listar avaliações" });
   }
-}
+};
 
 // Put - Atualiza a avaliação de um evento
 async function atualizarAvaliacao(req, res) {
@@ -48,7 +48,7 @@ async function atualizarAvaliacao(req, res) {
     console.error("Erro ao atualizar avaliação:", error.message);
     res.status(400).json({ error: error.message });
   }
-}
+};
 
 // Delete - Remove uma avaliação de um evento
 async function eliminarAvaliacao(req, res) {
@@ -60,7 +60,7 @@ async function eliminarAvaliacao(req, res) {
     console.error("Erro ao apagar avaliação:", error.message);
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Get - Calcula a média de avaliações de um evento
 async function mediaDoEvento(req, res) {
@@ -72,7 +72,7 @@ async function mediaDoEvento(req, res) {
     console.error("Erro ao calcular média:", error.message);
     res.status(500).json({ error: "Erro ao calcular média" });
   }
-}
+};
 
 module.exports = {
   criarAvaliacao,

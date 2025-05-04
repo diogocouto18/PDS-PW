@@ -10,7 +10,7 @@ const criarAvaliacao= async (data) => {
       nota: data.nota,
     },
   });
-}
+};
 
 // Lista todas as avaliações por evento
 const listarPorEvento= async (id_evento) => {
@@ -18,7 +18,7 @@ const listarPorEvento= async (id_evento) => {
     where: { id_evento: parseInt(id_evento) },
     include: { Utilizador: true },
   });
-}
+};
 
 // Atualiza a nota de avaliação de um evento
 const atualizarAvaliacao= async (id_avaliacao, data) => {
@@ -26,14 +26,14 @@ const atualizarAvaliacao= async (id_avaliacao, data) => {
     where: { id: parseInt(id_avaliacao) },
     data: { nota: data.nota },
   });
-}
+};
 
 // Remove uma avaliação
 const eliminarAvaliacao= async (id_avaliacao) => {
   return await prisma.avaliacaoEvento.delete({
     where: { id: parseInt(id_avaliacao) },
   });
-}
+};
 
 // Calcula a média de avaliações de um evento
 const mediaDoEvento= async (id_evento) => {
@@ -42,7 +42,7 @@ const mediaDoEvento= async (id_evento) => {
     where: { id_evento: parseInt(id_evento) },
   });
   return result._avg.nota;
-}
+};
 
 module.exports = {
   criarAvaliacao,

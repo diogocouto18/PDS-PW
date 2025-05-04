@@ -10,7 +10,7 @@ async function registerUtilizador(req, res) {
     console.error("Erro no registro:", error.message);
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Post - Cria conta de um Administrador
 async function registerAdministrador(req, res) {
@@ -22,7 +22,7 @@ async function registerAdministrador(req, res) {
     console.error("Erro no registro:", error.message);
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Post - Login de um Utilizador
 async function loginUtilizador(req, res) {
@@ -34,7 +34,7 @@ async function loginUtilizador(req, res) {
     console.error("Erro no login:", error.message);
     res.status(401).json({ error: error.message });
   }
-}
+};
 
 // Post - Login de um Administrador
 async function loginAdministrador(req, res) {
@@ -46,7 +46,7 @@ async function loginAdministrador(req, res) {
     console.error("Erro no login:", error.message);
     res.status(401).json({ error: error.message });
   }
-}
+};
 
 module.exports = { 
   registerUtilizador, 

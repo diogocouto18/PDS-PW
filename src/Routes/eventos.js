@@ -16,5 +16,7 @@ router.get("/:id", autenticacao, eventoController.obterEventoPorId);
 // Atualiza um evento (apenas administrador)
 router.put("/:id", autenticacao, apenasAdministrador, eventoController.atualizarEvento);
 
+// Eliminar evento (só administradores)
+router.delete("/eventos/:id", autenticacao, apenasAdministrador, eventoController.eliminarEvento);
 
 module.exports = router;

@@ -12,7 +12,7 @@ router.get("/", autenticacao, apenasAdministrador, administradorController.lista
 router.get("/:id", autenticacao, apenasAdministrador, administradorController.obterPorId);
 
 // Atualiza um administrador existente (apenas administrador)
-router.put("/:id", autenticacao, apenasAdministrador, administradorController.atualizarAdministradores);
+router.put("/:id/estado", autenticacao, apenasAdministrador, administradorController.atualizarAdministradores);
 
 // Remove um administrador existente (apenas administrador)
 router.delete("/:id", autenticacao, apenasAdministrador, administradorController.eliminarAdministradores);

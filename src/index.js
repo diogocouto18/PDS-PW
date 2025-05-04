@@ -42,10 +42,7 @@ app.use("/mensagensSuporte", mensagensSuporteRoutes);
 app.use("/notificacoes", notificacoesRoutes);
 app.use("/avaliacoes", avaliacoesEventoRoutes);
 
-const comprasRifaRoutes = require("./Routes/comprasRifa");
-app.use("/comprasRifa", comprasRifaRoutes);
-const pagamentosRoutes = require("./Routes/pagamentos");
-app.use("/pagamentos", pagamentosRoutes);
+
 // Quando tiveres Rifas, ComprasRifa, Pagamentos:
 // app.use("/rifas", rifasRoutes);
 // app.use("/comprasRifa", comprasRifaRoutes);

@@ -88,6 +88,11 @@ const loginAdministrador = async (data) => {
     if (!administrador) {
         throw new Error("Administrador não encontrado");
     }
+
+    if (!administrador.ativo) {
+        throw new Error("Conta de administrador desativada");
+    }
+
     const passwordValida = await bcrypt.compare(data.password, administrador.password_hash);
     if (!passwordValida) {
         throw new Error("Password inválida");
@@ -96,12 +101,10 @@ const loginAdministrador = async (data) => {
     const token = jwt.sign(
         { id: administrador.id, email: administrador.email, role: "Administrador" },
         JWT_SECRET,
-        { expiresIn: "2h" }
+        { expiresIn: "1h" }
     );
     return token;
 };
-
-// Token
 
 module.exports = { 
     registerUtilizador, 

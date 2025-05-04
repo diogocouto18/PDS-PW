@@ -14,10 +14,10 @@ const obterPorId = async (id) => {
 };
 
 // Atualiza um administrador existente
-const atualizarAdministradores = async (id, data) => {
+const atualizarAdministradores = async (id, ativo) => {
     return await prisma.administrador.update({
         where: { id: parseInt(id) },
-        data,
+        data: { ativo },
     });
 };
 
@@ -33,4 +33,4 @@ module.exports = {
     obterPorId,
     atualizarAdministradores,
     eliminarAdministradores
-}
+};

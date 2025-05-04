@@ -16,7 +16,7 @@ async function comprarRifas(req, res) {
     console.error("comprarRifas:", error);
     res.status(400).json({ error: error.message });
   }
-}
+};
 
 module.exports = { 
     comprarRifas 

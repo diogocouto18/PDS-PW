@@ -16,7 +16,7 @@ async function criarSorteio(req, res) {
     console.error("criarSorteio:", error);
     res.status(400).json({ error: err.message });
   }
-}
+};
 
 // Get - Lista todos os sorteios com as rifas associadas
 async function listarSorteios(req, res) {
@@ -28,7 +28,7 @@ async function listarSorteios(req, res) {
     console.error("listarSorteios:", error);
     res.status(500).json({ error: err.message });
   }
-}
+};
 
 // Put - Atualiza campos de um sorteio existente
 async function atualizarSorteio(req, res) {
@@ -41,7 +41,7 @@ async function atualizarSorteio(req, res) {
     console.error("atualizarSorteio:", error);
     res.status(400).json({ error: err.message });
   }
-}
+};
 
 // Delete - Remove um sorteio e todas as rifas relacionadas com este sorteio
 async function eliminarSorteio(req, res) {
@@ -54,11 +54,47 @@ async function eliminarSorteio(req, res) {
     console.error("eliminarSorteio:", error);
     res.status(400).json({ error: err.message });
   }
-}
+};
+
+// Post - Sortear primeiro lugar
+async function sortearVencedor(req, res) {
+  try {
+    const { id_sorteio } = req.params;
+    const vencedor = await sorteioService.sortearVencedor(id_sorteio);
+    res.json(vencedor);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Post - Sortear segundo lugar
+async function sortearSegundoLugar(req, res) {
+  try {
+    const { id_sorteio } = req.params;
+    const segundo = await sorteioService.sortearSegundoLugar(id_sorteio);
+    res.json(segundo);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Post - Sortear terceiro lugar
+async function sortearTerceiroLugar(req, res) {
+  try {
+    const { id_sorteio } = req.params;
+    const terceiro = await sorteioService.sortearTerceiroLugar(id_sorteio);
+    res.json(terceiro);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 module.exports = {
   criarSorteio,
   listarSorteios,
   atualizarSorteio,
   eliminarSorteio,
+  sortearVencedor,
+  sortearSegundoLugar,
+  sortearTerceiroLugar
 };

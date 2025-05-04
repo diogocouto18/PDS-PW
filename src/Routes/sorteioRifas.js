@@ -17,4 +17,13 @@ router.put("/:id", autenticacao, apenasAdministrador, sorteioRifasController.atu
 // Remove um sorteio (apenas administrador)
 router.delete("/:id", autenticacao, apenasAdministrador, sorteioRifasController.eliminarSorteio);
 
+// Sortear Vencedor (apenas administrador)
+router.post("/:id_sorteio/sortear/vencedor", autenticacao, apenasAdministrador, sorteioRifasController.sortearVencedor);
+
+// Sortear Segundo Lugar (apenas administrador)
+router.post("/:id_sorteio/sortear/segundo", autenticacao, apenasAdministrador, sorteioRifasController.sortearSegundoLugar);
+
+// Sortear Terceiro Lugar (apenas administrador)
+router.post("/:id_sorteio/sortear/terceiro", autenticacao, apenasAdministrador, sorteioRifasController.sortearTerceiroLugar);
+
 module.exports = router;

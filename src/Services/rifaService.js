@@ -20,7 +20,7 @@ const listarRifasUtilizador = async (id_utilizador) => {
         include: { SorteioRifas: true },
         orderBy: { id: 'asc' },
     });
-}
+};
 
 
 // Obter detalhes de uma rifa

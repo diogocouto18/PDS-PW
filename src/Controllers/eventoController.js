@@ -51,11 +51,23 @@ async function atualizarEvento(req, res) {
         console.error("Erro ao atualizar evento:", error.message);
         res.status(500).json({ error: "Erro ao atualizar evento" });
     }
-}
+};
+
+// Delete - Remove um evento existente
+async function eliminarEvento(req, res) {
+    try {
+        const { id } = req.params;
+        await eventoService.eliminarEvento(id);
+        res.json({ message: "Evento eliminado com sucesso" });
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao eliminar evento" });
+    }
+};
 
 module.exports = {
     criarEvento,
     listarEventos,
     obterEventoPorId,
     atualizarEvento,
+    eliminarEvento
 };

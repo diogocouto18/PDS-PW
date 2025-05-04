@@ -10,13 +10,29 @@ const criarMensagemInicial = async (data) => {
       id_ticket: data.id_ticket,
       mensagem: data.mensagem,
       estado: "Aberto",
-      data_abertura: new Date(),                          // Notificação que foi criado um ticket
+      data_abertura: new Date(),                          
       Utilizador: {
         connect: { id: data.id_utilizador }
       }
     }
   });
+
+  const administradores = await prisma.administrador.findMany({
+    where: { ativo: true },
+    select: { id: true }
+  });
+
+  await Promise.all(administradores.map(({ id }) =>
+    notificacaoService.criarNotificacao({
+      id_utilizador: data.id_utilizador,
+      id_administrador: id,
+      mensagem: "Novo ticket de suporte recebido.",
+      estado: "Por_abrir"
+    })
+  ));
+
   return mensagem;
+  
 };
 
 // Envia um resposta, mantendo o ticket aberto
@@ -88,11 +104,17 @@ const listarMensagensDoTicket = async (id_ticket) => {
   });
 };
 
-// Remover Ticket(Crud)
+// Remover Ticket existente
+const eliminarTicket = async (id_ticket) => {
+  await prisma.mensagemSuporte.deleteMany({
+    where: { id_ticket: parseInt(id_ticket) },
+  });
+};
 
 module.exports = { 
     criarMensagemInicial, 
     enviarResposta, 
     fecharTicket,
     listarMensagensDoTicket,
+    eliminarTicket
 };

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mensagemSuporteController = require("../Controllers/mensagemSuporteController");
 
-const { autenticacao, proprioUtilizadorOuAdministrador, apenasUtilizadores } = require("../Middlewares/authMiddlewares");
+const { autenticacao, proprioUtilizadorOuAdministrador, apenasUtilizadores, apenasAdministrador } = require("../Middlewares/authMiddlewares");
 
 // Abre o ticket/cria a primeira mensagem (apenas utilizadores)
 router.post("/", autenticacao, apenasUtilizadores, mensagemSuporteController.criarMensagemInicial);
@@ -16,6 +16,7 @@ router.put("/:id_ticket/fechar", autenticacao, proprioUtilizadorOuAdministrador,
 // Listar mensagens de um ticket (próprio utilizador ou administrador)
 router.get("/:id_ticket", autenticacao, proprioUtilizadorOuAdministrador, mensagemSuporteController.listarMensagensDoTicket);
 
-
+// Remover ticket existente (apenas administradores)
+router.delete("/suporte/:id_ticket", autenticacao, apenasAdministrador, mensagemSuporteController.eliminarTicket);
 
 module.exports = router;

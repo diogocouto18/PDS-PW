@@ -28,8 +28,9 @@ async function obterPorId(req, res) {
 async function atualizarAdministradores(req, res) {
     try {
         const { id } = req.params;
-        const atualizado = await administradorService.atualizarAdministradores(id, req.body);
-        res.json(atualizado);
+        const { ativo } = req.body;
+        const resultado = await administradorService.atualizarAdministradores(id, ativo);
+        res.json(resultado);
     } 
         catch (error) {
         res.status(500).json({ error: "Erro ao atualizar administrador" });
@@ -53,4 +54,4 @@ module.exports = {
     obterPorId,
     atualizarAdministradores,
     eliminarAdministradores
-}
+};

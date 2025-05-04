@@ -1,20 +1,31 @@
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET || "segredo_super_secreto";
 
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
+
 //Permite apenas utilizadores autenticados
-function autenticacao(req, res, next) {
+async function autenticacao(req, res, next) {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) return res.status(401).json({ error: "Token não fornecido" });
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
+    if (decoded.role === "Administrador") {
+      const administrador = await prisma.administrador.findUnique({
+        where: { id: decoded.id },
+      });
+      if (!administrador || !administrador.ativo) {
+        return res.status(403).json({ error: "Administrador desativado" });
+      }
+    }
     req.utilizador = decoded;
     next();
   } 
-    catch (err) {
+    catch (error) {
     res.status(401).json({ error: "Token inválido" });
   }
-}
+};
 
 // Permite apenas utilizadores com role === 'Utilizador'.
 function apenasUtilizadores(req, res, next) {
@@ -22,7 +33,7 @@ function apenasUtilizadores(req, res, next) {
     return res.status(403).json({ error: "Acesso apenas permitido a utilizadores." });
   }
   next();
-}
+};
 
 // Permite apenas utilizadores com role === 'Administrador'.
 function apenasAdministrador(req, res, next) {
@@ -30,7 +41,7 @@ function apenasAdministrador(req, res, next) {
     return res.status(403).json({ error: "Acesso apenas para administradores" });
   }
   next();
-}
+};
 
 // Função que valide apenas coisas relacionadas com o própio utilizador
 function apenasProprioUtilizador(req, res, next) {
@@ -42,7 +53,7 @@ function apenasProprioUtilizador(req, res, next) {
   }
 
   return res.status(403).json({ error: "Apenas o próprio utilizador pode executar esta ação." });
-}
+};
 
 
 // Função que valide apenas objetos relacionadas com o própio utilizador ou o administrador
@@ -56,7 +67,7 @@ function proprioUtilizadorOuAdministrador(req, res, next) {
   }
 
   return res.status(403).json({ error: "Acesso negado: apenas o próprio utilizador ou um administrador pode executar esta ação" });
-}
+};
 
 
 module.exports = { 

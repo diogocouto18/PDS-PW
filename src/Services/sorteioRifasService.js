@@ -28,6 +28,17 @@ const criarSorteio = async (data) => {
     data: rifas,
   });
   
+  // 4. Notificação de novo sorteio para todos os utilizadores
+  const utilizadores = await prisma.utilizador.findMany({ select: { id: true } });
+  await Promise.all(utilizadores.map(({ id }) =>
+    notificacaoService.criarNotificacao({
+      id_utilizador: id,
+      id_administrador: sorteio.id_administrador,
+      mensagem: `Novo sorteio de rifas "${sorteio.nome}" agendado para ${sorteio.data_sorteio.toLocaleString()}.`,
+      estado: "Por_abrir",
+    })
+  ));
+
   return sorteio;
 };
   
@@ -53,10 +64,102 @@ const eliminarSorteio = async (id) => {
     where: { id: parseInt(id) },
   });
 };      
-                                                      // Função de sortear uma rifa para o sorteio com o estado "Comprada"
+                     
+
+// Sorteio do Vencedor
+const sortearVencedor = async (id_sorteio) => {
+  const rifasCompradas = await prisma.rifa.findMany({
+    where: {
+      id_sorteio: parseInt(id_sorteio),
+      estado: "Comprada",
+    },
+  });
+  if (!rifasCompradas.length) {
+    throw new Error("Não existem rifas compradas para este sorteio.");
+  }
+
+  const sortearIndex = Math.floor(Math.random() * rifasCompradas.length);
+  const RifaSorteada = rifasCompradas[sortearIndex];
+
+  const atualizarVencedor = await prisma.rifa.update({
+    where: { id: RifaSorteada.id },
+    data: { estado: "Vencedor" },
+  });
+
+  await notificacaoService.criarNotificacao({
+    id_utilizador: atualizarVencedor.id_utilizador,
+    id_administrador: atualizarVencedor.id_sorteio,
+    mensagem: `Parabéns! A rifa ${atualizarVencedor.id} foi sorteada como vencedora no sorteio ${id_sorteio}. O código para levantar o seu prémio é 2543`,
+    estado: "Por_abrir",
+  });
+    
+  return atualizarVencedor;
+};
+
+// Sorteio do segundo lugar
+const sortearSegundoLugar = async (id_sorteio) => {
+  const rifasCompradas = await prisma.rifa.findMany({
+    where: {
+      id_sorteio: parseInt(id_sorteio),
+      estado: "Comprada",
+    },
+  });
+  if (!rifasCompradas.length) {
+    throw new Error("Não existem rifas compradas para este sorteio.");
+  }
+
+  const sortearIndex = Math.floor(Math.random() * rifasCompradas.length);
+  const RifaSorteada = rifasCompradas[sortearIndex];
+
+  const atualizarVencedor = await prisma.rifa.update({
+    where: { id: RifaSorteada.id },
+    data: { estado: "SegundoLugar" },
+  });
+
+  await notificacaoService.criarNotificacao({
+    id_utilizador: atualizarVencedor.id_utilizador,
+    id_administrador: atualizarVencedor.id_sorteio,
+    mensagem: `Parabéns! A rifa ${atualizarVencedor.id} foi sorteada como segundo lugar no sorteio ${id_sorteio}. O código para levantar o seu prémio é 5467`,
+    estado: "Por_abrir",
+  });
+  return atualizarVencedor;
+};
+
+// Sorteio do terceiro lugar
+const sortearTerceiroLugar = async (id_sorteio) => {
+  const rifasCompradas = await prisma.rifa.findMany({
+    where: {
+      id_sorteio: parseInt(id_sorteio),
+      estado: "Comprada",
+    },
+  });
+  if (!rifasCompradas.length) {
+    throw new Error("Não existem rifas compradas para este sorteio.");
+  }
+
+  const sortearIndex = Math.floor(Math.random() * rifasCompradas.length);
+  const RifaSorteada = rifasCompradas[sortearIndex];
+
+  const atualizarVencedor = await prisma.rifa.update({
+    where: { id: RifaSorteada.id },
+    data: { estado: "TerceiroLugar" },
+  });
+
+  await notificacaoService.criarNotificacao({
+    id_utilizador: atualizarVencedor.id_utilizador,
+    id_administrador: atualizarVencedor.id_sorteio,
+    mensagem: `Parabéns! A rifa ${atualizarVencedor.id} foi sorteada como terceiro lugar no sorteio ${id_sorteio}. O código para levantar o seu prémio é 8659`,
+    estado: "Por_abrir",
+  });
+  return atualizarVencedor;
+};
+
 module.exports = { 
-    criarSorteio, 
-    listarSorteios,
-    atualizarSorteio,
-    eliminarSorteio 
+  criarSorteio, 
+  listarSorteios,
+  atualizarSorteio,
+  eliminarSorteio,
+  sortearVencedor,
+  sortearSegundoLugar,
+  sortearTerceiroLugar
 };

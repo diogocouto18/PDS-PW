@@ -5,6 +5,7 @@ CREATE TABLE `Administrador` (
     `nome` VARCHAR(100) NOT NULL,
     `email` VARCHAR(150) NOT NULL,
     `password_hash` VARCHAR(255) NOT NULL,
+    `ativo` BOOLEAN NOT NULL DEFAULT true,
 
     UNIQUE INDEX `email`(`email`),
     PRIMARY KEY (`id`)

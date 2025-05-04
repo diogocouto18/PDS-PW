@@ -10,7 +10,7 @@ async function criarNotificacao(req, res) {
     console.error("Erro ao criar notificação:", error.message);
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Get - Lista notificações de um utilizador
 async function listarNotificacoesPorUtilizador(req, res) {
@@ -22,7 +22,7 @@ async function listarNotificacoesPorUtilizador(req, res) {
     console.error("Erro ao listar notificações:", error.message);
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Get - Lista notificações de um administrador
 async function listarNotificacoesPorAdministrador(req, res) {
@@ -34,7 +34,7 @@ async function listarNotificacoesPorAdministrador(req, res) {
     console.error("Erro ao listar notificações:", error.message);
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Put - Atualiza o estado de uma notificação para "Aberto"
 async function abrirNotificacao(req, res) {
@@ -46,7 +46,7 @@ async function abrirNotificacao(req, res) {
     console.error("Erro ao abrir notificação:", error.message);
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Delete - Remove uma notificação 
 async function apagarNotificacao(req, res) {
@@ -58,7 +58,7 @@ async function apagarNotificacao(req, res) {
     console.error("Erro ao apagar notificação:", error.message);
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 module.exports = {
   criarNotificacao,

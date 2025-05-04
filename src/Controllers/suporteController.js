@@ -10,7 +10,7 @@ async function criarArtigo(req, res) {
         console.error("Erro ao criar artigo de suporte:", error.message);
         res.status(500).json({ error: "Erro ao criar artigo" });
     }
-}
+};
 
 // Get - Lista todos os artigos de suporte 
 async function listarArtigos(req, res) {
@@ -22,7 +22,7 @@ async function listarArtigos(req, res) {
         console.error("Erro ao listar artigos de suporte:", error.message);
         res.status(500).json({ error: "Erro ao listar artigos de suporte" });
     }
-}
+};
 
 // Get - Obtem um artigo de suporte existente pelo seu ID
 async function obterArtigoPorId(req, res) {
@@ -36,7 +36,7 @@ async function obterArtigoPorId(req, res) {
         console.error("Erro ao obter artigo:", error.message);
         res.status(500).json({ error: "Erro ao obter artigo" });
     }
-}
+};
 
 // Put - Atualiza um artigo de suporte existente
 async function atualizarArtigo(req, res) {
@@ -49,7 +49,7 @@ async function atualizarArtigo(req, res) {
         console.error("Erro ao atualizar artigo de suporte:", error.message);
         res.status(500).json({ error: "Erro ao atualizar artigo" });
     }
-}
+};
 
 // Delete - Remove um artiogo de suporte existente
 async function eliminarArtigo(req, res) {
@@ -62,7 +62,7 @@ async function eliminarArtigo(req, res) {
         console.error("Erro ao eliminar artigo de suporte:", error.message);
         res.status(500).json({ error: "Erro ao eliminar artigo" });
     }
-}
+};
 
 module.exports = {
     criarArtigo,

@@ -12,7 +12,7 @@ async function listarRifasPorSorteio(req, res) {
     console.error("listarRifasPorSorteio:", error);
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Get - Lista todos as rifas de um dado utilizador
 async function listarRifasUtilizador(req, res) {
@@ -25,7 +25,7 @@ async function listarRifasUtilizador(req, res) {
     console.error("listarMinhasRifas:", error);
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Get - Obtem detalhes de uma rifa
 async function obterRifaPorId(req, res) {
@@ -39,7 +39,7 @@ async function obterRifaPorId(req, res) {
     console.error("obterRifaPorId:", error);
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Put - Atualiza o estado de uma rifa
 async function atualizarEstadoRifa(req, res) {
@@ -53,7 +53,7 @@ async function atualizarEstadoRifa(req, res) {
     console.error("atualizarEstadoRifa:", error);
     res.status(400).json({ error: error.message });
   }
-}
+};
 
 module.exports = {
   listarRifasPorSorteio,

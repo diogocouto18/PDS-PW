@@ -27,7 +27,7 @@ const comprarRifas = async (id_utilizador, id_sorteio, quantidadeCompra, metodo_
     data: {
       id_utilizador,
       id_sorteio,
-      quantidadeCompra,                   // Como funciona a mudança de estado
+      quantidadeCompra,                   
       valor_Total,
       metodo_pagamento,
       estado: "Pago", 
@@ -46,7 +46,15 @@ const comprarRifas = async (id_utilizador, id_sorteio, quantidadeCompra, metodo_
       })
     )
   );
-  return pagamento;                   // Notificação a confirmar o pagamento concluido
+
+  // 5. Notificação para o utilizador confirmando pagamento
+  await notificacaoService.criarNotificacao({
+    id_utilizador,
+    id_administrador: sorteio.id_administrador,
+    mensagem: `Pagamento de ${quantidadeCompra} rifas no sorteio \"${sorteio.nome}\" concluído com sucesso.`,
+    estado: "Por_abrir",
+  });
+  return pagamento;                   
 };
 
 module.exports = { 
