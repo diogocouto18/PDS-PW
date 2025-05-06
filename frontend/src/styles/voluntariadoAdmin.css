@@ -1,0 +1,39 @@
+.voluntariado-page {
+    padding: 2rem;
+    background-color: #ffffff;
+    min-height: 100vh;
+  }
+  
+  h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #0d415a;
+  }
+  
+  .candidaturas-grid,
+  .anuncios-grid {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  
+  .anuncio-plus {
+    width: 100px;
+    height: 100px;
+    background-color: #e9e9e9;
+    border-radius: 10px;
+    font-size: 50px;
+    color: #0d415a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px dashed #bbb;
+    transition: background-color 0.3s;
+  }
+  
+  .anuncio-plus:hover {
+    background-color: #dcdcdc;
+  }
+  
