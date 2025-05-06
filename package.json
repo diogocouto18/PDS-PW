@@ -16,6 +16,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "jest-mock": "^29.7.0",
     "jsonwebtoken": "^9.0.2",
     "react-router": "^7.5.3",
     "react-router-dom": "^7.5.3"

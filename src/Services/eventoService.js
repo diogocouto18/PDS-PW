@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const notificacaoService = require("../Services/notificacaoService");
 
 // Cria um novo evento
 const criarEvento = async (data) => {

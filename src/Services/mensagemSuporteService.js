@@ -77,38 +77,42 @@ const fecharTicket = async (id_ticket) => {
   const mensagens = await prisma.mensagemSuporte.findMany({
     where: { id_ticket: parseInt(id_ticket), estado: "Aberto" },
   });
-  
-  if (mensagens.length === 0) {
-    throw new Error("Nenhuma mensagem aberta encontrada para este ticket.");
+
+  if (!mensagens || mensagens.length === 0) {
+    return { message: "Nenhuma mensagem aberta encontrada para este ticket." }; // Retorna uma mensagem amigável
   }
-  
+
   const updates = await Promise.all(
-    mensagens.map((mensagem) =>
-      prisma.mensagemSuporte.update({
-        where: { id: mensagem.id },
-        data: {
-          estado: "Fechado",
-          data_encerramento: new Date(),
-        },
-      })
-    )
+      mensagens.map((mensagem) =>
+          prisma.mensagemSuporte.update({
+            where: { id: mensagem.id },
+            data: {
+              estado: "Fechado",
+              data_encerramento: new Date(),
+            },
+          })
+      )
   );
   return updates;
 };
 
 // Listar todas as mensagens de um ticket, em ordem crescente
 const listarMensagensDoTicket = async (id_ticket) => {
-  return await prisma.mensagemSuporte.findMany({
+  const mensagens = await prisma.mensagemSuporte.findMany({
     where: { id_ticket: parseInt(id_ticket) },
     orderBy: { data_abertura: "asc" },
   });
+
+  return mensagens || []; // Garantir que sempre retorna um array, mesmo que vazio
 };
 
 // Remover Ticket existente
 const eliminarTicket = async (id_ticket) => {
-  await prisma.mensagemSuporte.deleteMany({
+  const result = await prisma.mensagemSuporte.deleteMany({
     where: { id_ticket: parseInt(id_ticket) },
   });
+
+  return result; // Deve retornar o objeto resultante do deleteMany
 };
 
 module.exports = { 
