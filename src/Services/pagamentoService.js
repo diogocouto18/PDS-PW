@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const notificacaoService = require("./notificacaoService");
 
 // Processa a compra do nº de rifas: gera pagamento e marca rifas como compradas.
 const comprarRifas = async (id_utilizador, id_sorteio, quantidadeCompra, metodo_pagamento) => {
@@ -11,29 +12,29 @@ const comprarRifas = async (id_utilizador, id_sorteio, quantidadeCompra, metodo_
     },
     take: quantidadeCompra,
   });
-  
+
   if (rifasDisponiveis.length < quantidadeCompra) {
     throw new Error("Não há rifas suficientes disponíveis.");
   }
-  
+
   // 2. Calcula o valor total
   const sorteio = await prisma.sorteioRifas.findUnique({
     where: { id: id_sorteio },
   });
   const valor_Total = sorteio.preco * quantidadeCompra;
-  
+
   // 3. Cria pagamento
   const pagamento = await prisma.pagamento.create({
     data: {
       id_utilizador,
       id_sorteio,
-      quantidadeCompra,                   
+      quantidadeCompra,
       valor_Total,
       metodo_pagamento,
-      estado: "Pago", 
+      estado: "Pago",
     },
   });
-  
+
   // 4. Atualizar o estado das rifas compradas
   await Promise.all(
     rifasDisponiveis.map((rifa) =>
@@ -54,9 +55,9 @@ const comprarRifas = async (id_utilizador, id_sorteio, quantidadeCompra, metodo_
     mensagem: `Pagamento de ${quantidadeCompra} rifas no sorteio \"${sorteio.nome}\" concluído com sucesso.`,
     estado: "Por_abrir",
   });
-  return pagamento;                   
+  return pagamento;
 };
 
-module.exports = { 
-  comprarRifas 
+module.exports = {
+  comprarRifas
 };

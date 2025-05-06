@@ -1,47 +1,49 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const notificacaoService = require("./notificacaoService");
 
 // Cria um sorteio e gera automaticamente as rifas em estado "PorComprar"
 const criarSorteio = async (data) => {
-  //1. Cria o registro do sorteio
+  // 1. Cria o registro do sorteio
   const sorteio = await prisma.sorteioRifas.create({
     data: {
       nome: data.nome,
       preco: parseFloat(data.preco),
       quantidadeTotal: parseInt(data.quantidadeTotal),
-      descricao: data.descricao,                                                  // Notificação que foi criado um sorteio de rifas
+      descricao: data.descricao,
       premio: data.premio,
       data_sorteio: new Date(data.data_sorteio),
       id_administrador: parseInt(data.id_administrador),
       id_evento: parseInt(data.id_evento),
     },
   });
-  
+
   // 2. Prepara array de rifas “PorComprar” com base na quantidadeTotal
   const rifas = Array.from({ length: data.quantidadeTotal }).map(() => ({
     id_sorteio: sorteio.id,
     estado: "PorComprar",
   }));
-  
+
   // 3. Cria todas as rifas
   await prisma.rifa.createMany({
     data: rifas,
   });
-  
+
   // 4. Notificação de novo sorteio para todos os utilizadores
   const utilizadores = await prisma.utilizador.findMany({ select: { id: true } });
-  await Promise.all(utilizadores.map(({ id }) =>
-    notificacaoService.criarNotificacao({
-      id_utilizador: id,
-      id_administrador: sorteio.id_administrador,
-      mensagem: `Novo sorteio de rifas "${sorteio.nome}" agendado para ${sorteio.data_sorteio.toLocaleString()}.`,
-      estado: "Por_abrir",
-    })
-  ));
+  if (Array.isArray(utilizadores)) {
+    await Promise.all(utilizadores.map(({ id }) =>
+        notificacaoService.criarNotificacao({
+          id_utilizador: id,
+          id_administrador: sorteio.id_administrador,
+          mensagem: `Novo sorteio de rifas "${sorteio.nome}" agendado para ${sorteio.data_sorteio.toLocaleString()}.`,
+          estado: "Por_abrir",
+        })
+    ));
+  }
 
   return sorteio;
 };
-  
 // Listar todos os sorteios, incluindo as rifas geradas
 const listarSorteios = async () => {
   return await prisma.sorteioRifas.findMany({
@@ -63,8 +65,8 @@ const eliminarSorteio = async (id) => {
   return await prisma.sorteioRifas.delete({
     where: { id: parseInt(id) },
   });
-};      
-                     
+};
+
 
 // Sorteio do Vencedor
 const sortearVencedor = async (id_sorteio) => {
@@ -92,7 +94,7 @@ const sortearVencedor = async (id_sorteio) => {
     mensagem: `Parabéns! A rifa ${atualizarVencedor.id} foi sorteada como vencedora no sorteio ${id_sorteio}. O código para levantar o seu prémio é 2543`,
     estado: "Por_abrir",
   });
-    
+
   return atualizarVencedor;
 };
 
@@ -154,8 +156,8 @@ const sortearTerceiroLugar = async (id_sorteio) => {
   return atualizarVencedor;
 };
 
-module.exports = { 
-  criarSorteio, 
+module.exports = {
+  criarSorteio,
   listarSorteios,
   atualizarSorteio,
   eliminarSorteio,

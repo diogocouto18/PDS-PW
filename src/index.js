@@ -1,60 +1,57 @@
-// src/index.js
+// Importa as dependências
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
+// Inicializa o dotenv para usar variáveis de ambiente
+dotenv.config();
+
+// Cria a aplicação Express
 const app = express();
-const port = process.env.PORT || 3000;
 
-// Middleware para aceitar JSON e permitir CORS
-app.use(express.json());
-app.use(cors());
+// Configurações básicas do servidor
+app.use(express.json()); // Para o parsing de JSON
+app.use(express.urlencoded({ extended: true })); // Para o parsing de dados do formulário
+app.use(cors()); // Permitir comunicação com o frontend
 
-// Importar todas as rotas
-const utilizadoresRoutes = require("./Routes/utilizadores");
-const administradoresRoutes = require("./Routes/administradores");
-const authRoutes = require("./Routes/auth");
-const eventosRoutes = require("./Routes/eventos");
-const anunciosRoutes = require("./Routes/anuncios");
-const candidaturasVoluntariadoRoutes = require("./Routes/candidaturasVoluntariado");
-const categoriasEventoRoutes = require("./Routes/categoriasEvento");
-const suportesRoutes = require("./Routes/suportes");
-const mensagensSuporteRoutes = require("./Routes/mensagensSuporte");
-const notificacoesRoutes = require("./Routes/notificacoes");
-const avaliacoesEventoRoutes = require("./Routes/avaliacoesEvento");
+// Importa as rotas
+const administradorRoutes = require('./Routes/administradores');
+const anuncioRoutes = require('./Routes/anuncios');
+const authRoutes = require('./Routes/auth');
+const avaliacaoEventoRoutes = require('./Routes/avaliacoesEvento');
+const candidaturaVoluntariadoRoutes = require('./Routes/candidaturasVoluntariado');
+const categoriaEventoRoutes = require('./Routes/categoriasEvento');
+const eventoRoutes = require('./Routes/eventos');
+const mensagemSuporteRoutes = require('./Routes/mensagensSuporte');
+const notificacaoRoutes = require('./Routes/notificacoes');
+const pagamentoRoutes = require('./Routes/pagamentos');
+const rifaRoutes = require('./Routes/rifas');
+const sorteioRifasRoutes = require('./Routes/sorteioRifas');
+const suporteRoutes = require('./Routes/suportes');
+const utilizadorRoutes = require('./Routes/utilizadores');
 
-// Rotas de Rifas, ComprasRifa, Pagamentos ainda precisam ser feitas!
-// Quando criares esses routes podes adicionar:
-// const rifasRoutes = require("./Routes/rifas");
-// const comprasRifaRoutes = require("./Routes/comprasRifa");
-// const pagamentosRoutes = require("./Routes/pagamentos");
+// Usa as rotas
+app.use('/administradores', administradorRoutes);
+app.use('/anuncios', anuncioRoutes);
+app.use('/auth', authRoutes);
+app.use('/avaliacao-evento', avaliacaoEventoRoutes);
+app.use('/candidaturas-voluntariado', candidaturaVoluntariadoRoutes);
+app.use('/categoria-evento', categoriaEventoRoutes);
+app.use('/eventos', eventoRoutes);
+app.use('/mensagens-suporte', mensagemSuporteRoutes);
+app.use('/notificacoes', notificacaoRoutes);
+app.use('/pagamentos', pagamentoRoutes);
+app.use('/rifas', rifaRoutes);
+app.use('/sorteio-rifas', sorteioRifasRoutes);
+app.use('/suportes', suporteRoutes);
+app.use('/utilizadores', utilizadorRoutes);
 
-// Montar as rotas
-app.use("/utilizadores", utilizadoresRoutes);
-app.use("/administradores", administradoresRoutes);
-app.use("/auth", authRoutes);
-app.use("/eventos", eventosRoutes);
-app.use("/anuncios", anunciosRoutes);
-app.use("/candidaturas", candidaturasVoluntariadoRoutes);
-app.use("/categorias", categoriasEventoRoutes);
-app.use("/suportes", suportesRoutes);
-app.use("/mensagensSuporte", mensagensSuporteRoutes);
-app.use("/notificacoes", notificacoesRoutes);
-app.use("/avaliacoes", avaliacoesEventoRoutes);
+// Definir a porta do servidor
+const PORT = process.env.PORT || 3000;
 
-
-// Quando tiveres Rifas, ComprasRifa, Pagamentos:
-// app.use("/rifas", rifasRoutes);
-// app.use("/comprasRifa", comprasRifaRoutes);
-// app.use("/pagamentos", pagamentosRoutes);
-
-// Rota raiz (opcional)
-app.get("/", (req, res) => {
-    res.send("API PDS Final online! ✨");
+// Iniciar o servidor
+app.listen(PORT, () => {
+    console.log(`Servidor está a correr na porta ${PORT}`);
 });
 
-// Ligar o servidor
-app.listen(port, () => {
-    console.log(`Servidor a correr em http://localhost:${port}`);
-});
-
+module.exports = app;

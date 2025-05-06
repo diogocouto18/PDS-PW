@@ -42,8 +42,8 @@ describe('Rifa Service', () => {
         // Resetar os mocks antes de cada teste
         jest.clearAllMocks();
 
-        // Garantir que o mock do findUnique retorne o mock correto
-        prisma.rifa.findUnique.mockResolvedValue(mockRifa); // Para o ID existente
+        // Garantir que o mock do findUnique retorne o mock correto para o ID existente
+        prisma.rifa.findUnique.mockResolvedValueOnce(mockRifa); // Para o ID existente
         prisma.rifa.findUnique.mockResolvedValueOnce(null); // Para o ID inexistente
     });
 
@@ -68,9 +68,12 @@ describe('Rifa Service', () => {
     });
 
     test('obterRifaPorId deve retornar uma rifa ou null', async () => {
-        const rifaExistente = await obterRifaPorId(mockRifa.id); // ID existente
-        const rifaInexistente = await obterRifaPorId(99999); // ID inexistente
+        // Testa o ID existente
+        const rifaExistente = await obterRifaPorId(mockRifa.id);
+        // Testa o ID inexistente
+        const rifaInexistente = await obterRifaPorId(99999);
 
+        // Verifica se o resultado é o esperado
         expect(rifaExistente).toEqual(mockRifa);
         expect(rifaInexistente).toBeNull();
     });
