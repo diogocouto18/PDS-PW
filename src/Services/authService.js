@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = process.env.JWT_SECRET || "segredo_super_secreto";
+const ADMINISTRADOR_PASSPHRASE = process.env.ADMIN_PASSPHRASE;
 
 // Regista um utilizador
 const registerUtilizador= async (data) => {
@@ -34,7 +35,13 @@ const registerUtilizador= async (data) => {
 
 // Regista um Administrador
 const registerAdministrador= async (data) => {
-    // 1. Verifica email duplicado
+    
+    // 1. Verifica se a passphrase de admin existe
+    if (!data.passphrase || data.passphrase !== ADMINISTRADOR_PASSPHRASE) {
+        throw new Error("Frase-passe incorreta");
+    }
+
+    // 2. Verifica email duplicado
     const existente = await prisma.administrador.findUnique({
         where: { email: data.email },
     });
@@ -42,10 +49,10 @@ const registerAdministrador= async (data) => {
         throw new Error("Email já registrado");
     }
 
-    // 2. Hash da password
+    // 3. Hash da password
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
-    // 3. Regista o administrador
+    // 4. Regista o administrador
     const novoAdministrador = await prisma.administrador.create({
         data: {
             username: data.username,

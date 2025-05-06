@@ -15,6 +15,9 @@ async function registerUtilizador(req, res) {
 // Post - Cria conta de um Administrador
 async function registerAdministrador(req, res) {
   try {
+    if (!req.body.passphrase) {
+      return res.status(400).json({ error: "Passphrase é obrigatória" });
+    }
     const novo = await authService.registerAdministrador(req.body);
     res.status(201).json(novo);
   } 
