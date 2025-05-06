@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/menu.css';
-import Sidebarfixed from "../componentes/Sidebar-fixed";
+import Sidebarfixed from "../componentes/sidebarFixed";
 
 
 const images = [

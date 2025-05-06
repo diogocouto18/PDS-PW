@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import '../styles/eventos.css';
-import Sidebar from "../componentes/Sidebar";
+import Sidebar from "../componentes/sidebar";
 import SearchBar from "../componentes/searchbar"
 import Filter from "../componentes/filters";
 
