@@ -17,10 +17,7 @@ const SuporteAdmin1 = () => {
                         <span className='right'>Data de envio</span>
                     </button>
                 </form>
-                
-                
             </div>
-
         </div>
     )
 }

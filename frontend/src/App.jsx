@@ -7,9 +7,9 @@ import Registo from "./pages/registo";
 import Suporte3 from "./pages/suporte3";
 import AnunciosAdmin from "./pages/voluntariadoAdmin";
 import SuporteAdmin1 from "./pages/suporte-admin";
-import "./styles/App.css"
+import Suporte from "./pages/suporte";
 import MenuAdministrador from "./pages/menuAdministradores";
-
+import "./styles/App.css"
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
           <Route path="/voluntariado" element={<AnunciosAdmin />} />
           <Route path="/SuporteAdmin" element={<SuporteAdmin1 />} />
           <Route path="/suporte3" element={<Suporte3 />} />
-          <Route path="/perfil" element={<PerfilUtilizador />} />
+          <Route path="/suporte" element={<Suporte />} />
         </Routes>
       </div>
     </Router>
