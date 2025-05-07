@@ -25,7 +25,7 @@ const SidebarFixed = () => {
             <Link to='/suporte' className='link_menu'> <span className="icon"><FaHeadphones /></span>Suporte</Link>
           </div>
           <div className="menu-item">
-            <Link to='/perfil' className='link_menu'> <span className="icon"><FaUser /></span>Admin</Link>
+            <Link to='/perfil' className='link_menu'> <span className="icon"></span>Admin</Link>
           </div>
         </div>
       </nav>
