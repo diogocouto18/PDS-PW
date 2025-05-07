@@ -10,7 +10,7 @@ datasource db {
 
 model Administrador {
   id              Int               @id @default(autoincrement())
-  username        String            @db.VarChar(100)
+  username        String            @unique @db.VarChar(100)
   nome            String            @db.VarChar(100)
   email           String            @unique(map: "email") @db.VarChar(150)
   password_hash   String            @db.VarChar(255)
@@ -179,7 +179,7 @@ model Suporte {
 
 model Utilizador {
   id                      Int                       @id @default(autoincrement())
-  username                String                    @db.VarChar(100)
+  username                String                    @unique @db.VarChar(100)
   nome                    String                    @db.VarChar(100)
   email                   String                    @unique(map: "email") @db.VarChar(150)
   telefone                String                    @unique(map: "telefone") @db.VarChar(15)
