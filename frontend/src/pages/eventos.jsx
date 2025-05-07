@@ -1,14 +1,16 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import '../styles/eventos.css';
-import Sidebar from "../componentes/sidebar";
-import SearchBar from "../componentes/searchbar"
+import Sidebar from "../componentes/Sidebar";
+import SearchBar from "../componentes/searchbar";
 import Filter from "../componentes/filters";
+import CriarEvento from '../componentes/criar_evento';
 
-const Eventos =() => {
+const Eventos = () => {
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <div>
-            <Sidebar/>
+            <Sidebar />
             <div className="search-container">
                 <SearchBar />
             </div>
@@ -17,8 +19,13 @@ const Eventos =() => {
                 <div>
                     <Filter />
                 </div>
+                <button className="criar-evento-btn" onClick={() => setShowModal(true)}>
+                    +
+                </button>
+
+                {/* Passando o setShowModal como uma prop para o CriarEvento */}
+                {showModal && (<CriarEvento setShowModal={setShowModal} />)}
             </div>
-            
         </div>
     );
 };
