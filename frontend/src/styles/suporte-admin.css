@@ -1,0 +1,53 @@
+.admin-suporte-page{
+    position: relative;
+    height: 100%;
+}
+    
+.admin-suporte-page .Topbar{
+    background-color: #E3C6B5;
+    width: 100%;
+    height: 45px;
+}
+
+.admin-suporte-page .Topbar-tittle{
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    vertical-align: top;
+}
+
+.admin-suporte-page .container-msg{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 60px;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: none;
+}
+.admin-suporte-page .support-msg-btn{
+    width: 1000px;
+    display: flex;
+    font-weight: bold;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #D9D9D9;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+}
+.support-msg-btn:hover{
+    background-color: #AAA;
+}
+.support-msg-btn .left{
+    text-align: left;
+}
+
+.support-msg-btn .right{
+    text-align: right;
+}

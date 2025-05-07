@@ -5,6 +5,7 @@ import Login from "./pages/login"
 import Registo from "./pages/registo"
 import Eventos from "./pages/eventos";
 import AnunciosAdmin from "./pages/voluntariadoAdmin";
+import SuporteAdmin1 from "./pages/suporte-admin";
 import "./styles/App.css"
 
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/registo" element={<Registo />} />
           <Route path="/eventos" element={<Eventos />} />
           <Route path="/voluntariado" element={<AnunciosAdmin />} />
+          <Route path="/SuporteAdmin" element={<SuporteAdmin1 />} />
         </Routes>
       </div>
     </Router>
