@@ -43,6 +43,7 @@ function Login() {
         localStorage.setItem('role', data.role);
 
         setTimeout(() => {
+          console.log("Role após login:", data.role);
           window.location.href =
             data.role === 'Administrador' ? '/menuAdministrador' : '/menu';
         }, 1500);
@@ -79,7 +80,7 @@ function Login() {
               <p className={`mensagem ${mensagemTipo === 'erro' ? 'erro' : 'sucesso'}`}>
                 {mensagem}
               </p>
-            )}
+          )}
             <button type="submit">Entrar</button>
           </form>
 

@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../componentes/sidebar";
+import Sidebar from "../componentes/Sidebar";
 import "../styles/suporte3.css";
 function Suporte3() {
     return ( 

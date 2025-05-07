@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/menu.css';
-
+import SidebarFixed from "../componentes/sidebarFixed";
 
 const images = [
     '/imagens/imagem carrosel 1.jpg',
@@ -28,29 +28,28 @@ const images = [
       return () => clearInterval(interval); // limpa o intervalo ao desmontar
     }, []);
 
+    const role = localStorage.getItem('role');
+
     return (
     <div className="MenuPage">
-    <div className="imagemTitle">
+      <SidebarFixed role={role} />
+      <div className="imagemTitle">
         <img src="/imagens/Logo.png" alt="MeetPoint Logo" className="logo_menu" />
+      </div>
+      <div className="carousel-container">
+        <div className="carousel-slider" style={{ transform: `translateX(-${current * 100}%)` }}>
+        {images.map((img, index) => (
+          <img
+            key={index}
+            src={img}
+            alt={`Slide ${index}`}
+            className="carousel-image"
+          />
+        ))}
+        </div>
+      </div>
     </div>
-    <div className="carousel-container">
-    <div
-    className="carousel-slider"
-    style={{ transform: `translateX(-${current * 100}%)` }}
-  >
-    {images.map((img, index) => (
-      <img
-        key={index}
-        src={img}
-        alt={`Slide ${index}`}
-        className="carousel-image"
-      />
-    ))}
-  </div>
-    </div>
-    
-    
-</div>
     );
-};
+  };
+  
 export default MenuAdministrador;
