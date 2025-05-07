@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../componentes/sidebar';
+import Sidebar from '../componentes/Sidebar';
 import '../styles/perfilUtilizador.css';
 import { FaUser } from 'react-icons/fa';
 

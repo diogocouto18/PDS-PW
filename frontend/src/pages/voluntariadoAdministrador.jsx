@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import NovoAnuncio from '../componentes/novoAnuncio';
-import Sidebar from "../componentes/sidebar";
-import '../styles/voluntariadoAdmin.css';
+import Sidebar from '../componentes/Sidebar';
+import '../styles/voluntariadoAdministrador.css';
 
-const AnunciosAdmin = () => {
+const AnunciosAdministrador = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="voluntariado-page">
-        <Sidebar/>
+        <Sidebar />
         <h2>Candidaturas Recebidas</h2>
         <div className="candidaturas-grid">
             {/* Aqui colocas os cards das candidaturas */}
@@ -26,4 +26,4 @@ const AnunciosAdmin = () => {
   );
 };
 
-export default AnunciosAdmin;
+export default AnunciosAdministrador;

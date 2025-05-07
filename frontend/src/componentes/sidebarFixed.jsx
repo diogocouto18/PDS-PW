@@ -15,19 +15,31 @@ const SidebarFixed = () => {
       <nav className="sidebar-menu">
         <div className="menu-section">
           <div className="menu-item">
-            <Link to='/menu' className='link_menu'> <span className="icon"><FaBars /></span>Menu</Link>
+            <Link to={role === "Administrador" ? '/menuAdministrador' : '/menu'} className='link_menu'>
+              <span className="icon"><FaBars /></span>
+              Menu
+            </Link>
           </div>
           <div className="menu-item">
-            <Link to='/eventos' className='link_menu'> <span className="icon"><FaCalendarAlt /></span>Eventos</Link>
+            <Link to={role === "Administrador" ? '/eventosAdministrador' : '/eventos'} className='link_menu'>
+              <span className="icon"><FaCalendarAlt /></span>
+              Eventos
+            </Link>
           </div>
           <div className="menu-item">
-            <Link to='/voluntariado' className='link_menu'> <span className="icon"><FaClipboardList /></span>Voluntariado</Link>
+            <Link to={role === "Administrador" ? '/voluntariadoAdministrador' : '/voluntariado'} className='link_menu'>
+              <span className="icon"><FaClipboardList /></span>
+              Voluntariado
+            </Link>
           </div>
           <div className="menu-item">
-            <Link to='/suporte' className='link_menu'> <span className="icon"><FaHeadphones /></span>Suporte</Link>
+            <Link to={role === "Administrador" ? '/suporteAdministrador' : '/suporte'} className='link_menu'>
+              <span className="icon"><FaHeadphones /></span>
+              Suporte
+            </Link>
           </div>
           <div className="menu-item">
-            <Link to={role === "Administrador" ? '/admin' : '/perfil'} className='link_menu'>
+            <Link to={role === "Administrador" ? '/perfilAdministrador' : '/perfil'} className='link_menu'>
               <span className="icon">{role === "Administrador" ? <FaUserShield /> : <FaUser />}</span>
               {role === "Administrador" ? 'Admin' : 'Perfil'}</Link>
           </div>
