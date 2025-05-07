@@ -1,5 +1,5 @@
 .filter-container {
-    background-color: #d3d3d3;
+    background-color: #dedede;
     padding: 16px;
     border-radius: 12px;
     width: 220px;
@@ -55,7 +55,9 @@
     cursor: pointer;
     padding: 0;
   }
-  
+  .star-button:hover{
+    background-color: #dedede;
+  }
   .star-icon {
     color: #fff;
     font-size: 20px;
@@ -67,7 +69,7 @@
   }
   
   .filter-button {
-    background-color: #e5bca7;
+    background-color: #cacaca;
     color: #0d415a;
     font-weight: bold;
     padding: 8px;
@@ -77,6 +79,9 @@
     cursor: pointer;
     margin-top: 12px;
     font-size: 18px;
+  }
+  .filter-button:hover{
+    background-color: #AAA;
   }
   
   .section-header svg {
