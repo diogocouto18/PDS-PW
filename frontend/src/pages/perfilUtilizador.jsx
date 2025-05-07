@@ -1,25 +1,40 @@
-import React from 'react';
-import Sidebar from '../componentes/Sidebar';
+import React, { useEffect, useState } from 'react';
+import Sidebar from '../componentes/sidebar';
 import '../styles/perfilUtilizador.css';
 import { FaUser } from 'react-icons/fa';
+import axios from 'axios';
 
 function PerfilUtilizador() {
+  const [utilizador, setUtilizador] = useState(null);
+
+  useEffect(() => {
+    axios.get('/api/utilizador/perfil', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(res => setUtilizador(res.data))
+    .catch(err => console.error('Erro ao buscar perfil:', err));
+  }, []);
+
+  if (!utilizador) return <p>Carregando perfil...</p>;
+
   return (
     <div className="perfil-page">
       <Sidebar />
       <div className="perfil-container">
         <div className="perfil-foto-info">
           <div className="foto-box">
-            <div className="foto-placeholder"><span classeName="icon"><FaUser /></span></div>
+            <div className="foto-placeholder"><span className="icon"><FaUser /></span></div>
           </div>
           <div className="info-box">
-            <h1>Nome utilizador</h1>
-            <strong>Nome Apelido</strong>
-            <p>email@email.com</p>
-            <p>+351931491491</p>
-            <p>Rua dos Unidos 123</p>
-            <p>Barcelos 4750-726</p>
-            <p className="doados">Total Doado: <strong>1560€</strong></p>
+            <h1>{utilizador.username}</h1>
+            <strong>{utilizador.nome}</strong>
+            <p>{utilizador.email}</p>
+            <p>{utilizador.telefone}</p>
+            <p>{utilizador.morada}</p>
+            <p>{utilizador.codigo_postal} {utilizador.localidade}</p>
+            <p className="doados">Total Doado: <strong>{utilizador.total_doado || 0}€</strong></p>
           </div>
         </div>
 
@@ -31,25 +46,38 @@ function PerfilUtilizador() {
         <div className="detalhes">
           <div className="secao">
             <h3>Candidaturas Voluntariado</h3>
-            <p>Colheita de uvas</p>
-            <p><strong>Estado</strong>: Aceite</p>
+            {utilizador.voluntariado?.map((item, i) => (
+              <div key={i}>
+                <p>{item.nome}</p>
+                <p><strong>Estado</strong>: {item.estado}</p>
+              </div>
+            )) || <p>Sem candidaturas</p>}
           </div>
 
           <div className="secao">
             <h3>Estado rifas</h3>
-            <p>Rifa do evento</p>
-            <p><strong>Vencedor</strong></p>
+            {utilizador.rifas?.map((rifa, i) => (
+              <div key={i}>
+                <p>{rifa.nome}</p>
+                <p><strong>{rifa.foiVencedor ? 'Vencedor' : 'Não Vencedor'}</strong></p>
+              </div>
+            )) || <p>Sem rifas</p>}
           </div>
 
           <div className="secao">
             <h3>Histórico Doações</h3>
-            <p>20/01 - Doação Evento Caminhada <span className="valor">15€</span></p>
-            <p>22/02 - Doação Evento Desportivo da Sueca <span className="valor">70€</span></p>
+            {utilizador.doacoes?.length > 0 ? (
+              utilizador.doacoes.map((d, i) => (
+                <p key={i}>{d.data} - {d.descricao} <span className="valor">{d.valor}€</span></p>
+              ))
+            ) : (
+              <p>Sem doações registadas</p>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default PerfilUtilizador;
