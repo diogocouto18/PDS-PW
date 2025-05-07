@@ -1,9 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Menu from "./pages/menu"
-import Login from "./pages/login"
-import Registo from "./pages/registo"
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Eventos from "./pages/eventos";
+import Login from "./pages/login";
+import Menu from "./pages/menu";
+import Registo from "./pages/registo";
+import Suporte3 from "./pages/suporte3";
 import AnunciosAdmin from "./pages/voluntariadoAdmin";
 import "./styles/App.css"
 import MenuAdministrador from "./pages/menuAdministradores";
@@ -20,6 +21,8 @@ function App() {
           <Route path="/registo" element={<Registo />} />
           <Route path="/eventos" element={<Eventos />} />
           <Route path="/voluntariado" element={<AnunciosAdmin />} />
+          <Route path="/suporte3" element={<Suporte3 />} />
+          <Route path="/perfil" element={<PerfilUtilizador />} />
         </Routes>
       </div>
     </Router>

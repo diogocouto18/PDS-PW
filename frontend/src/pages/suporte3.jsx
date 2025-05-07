@@ -1,7 +1,7 @@
 import React from "react";
-import Sidebar from "../componentes/sidebar"
-import "../styles/suporte3.css"
-const suporte3= () => {
+import Sidebar from "../componentes/sidebar";
+import "../styles/suporte3.css";
+function Suporte3() {
     return ( 
         <div className="Suporte3-page">
             <Sidebar/>
@@ -19,3 +19,5 @@ const suporte3= () => {
         </div>
 
    </div> ) }
+
+   export default Suporte3;
