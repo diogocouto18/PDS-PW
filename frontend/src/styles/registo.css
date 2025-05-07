@@ -27,13 +27,13 @@
   background-color: #fff;
   padding: 30px 40px;
   text-align: center;
-  height: 400px;
+  height: 450px;
   width:800px;
 }
 
 .title-register{
   position: absolute;
-  top:350px;
+  top: 260px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #e4c5b8;
@@ -106,4 +106,9 @@ input[type='email']{
 
 input[type='checkbox']:checked {
   accent-color: #e4c5b8;
+}
+
+.campo-desativado {
+  background-color: #333 !important;
+  cursor: not-allowed;
 }
