@@ -1,0 +1,79 @@
+.perfil-page {
+        padding: 2rem;
+        background-color: #fff;
+        min-height: 100vh;
+      }
+      
+      .perfil-container {
+        display: flex;
+        flex-direction: column;
+        margin-left: 200px; /* espaço para sidebar */
+        padding: 2rem;
+        background-color: #fff;
+        border-radius: 10px;
+      }
+      
+      .perfil-foto-info {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+      
+      .foto-box {
+        background-color: #f0c9b6;
+        width: 150px;
+        height: 150px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .foto-placeholder {
+        font-weight: bold;
+        color: white;
+        font-size: 86px;
+      }
+      
+      .info-box {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+      
+      .doados {
+        margin-top: 1rem;
+      }
+      
+      .botoes-box {
+        margin-top: 1rem;
+        display: flex;
+        gap: 1rem;
+      }
+      
+      .btn-editar,
+      .btn-terminar {
+        padding: 0.5rem 1.5rem;
+        background-color: #f0c9b6;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      
+      .detalhes {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      
+      .secao h3 {
+        margin-bottom: 0.5rem;
+        color: #000;
+      }
+      
+      .valor {
+        float: right;
+      }
+      

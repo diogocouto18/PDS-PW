@@ -1,73 +1,100 @@
 // LoginPage.jsx
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; 
 import '../styles/login.css';
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
-  
-  const handleLogin = async (e) => {
+function Login() {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const [isAdministrador, setIsAdmin] = useState(false);
+  const [mensagem, setMensagem] = useState('');
+  const [mensagemTipo, setMensagemTipo] = useState('');
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleRoleChange = (e) => {
+    setIsAdmin(e.target.checked);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-  
+
+    const endpoint = isAdministrador
+      ? 'http://localhost:3000/auth/login-administrador'
+      : 'http://localhost:3000/auth/login-utilizador';
+
     try {
-      const response = await fetch('http://localhost:3000/auth/login', {
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(formData),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
+        setMensagem('Login efetuado com sucesso!');
+        setMensagemTipo('sucesso');
         localStorage.setItem('token', data.token);
-        // Redirecionar para dashboard ou página principal
-        window.location.href = '/menu';
+        localStorage.setItem('role', data.role);
+
+        setTimeout(() => {
+          window.location.href =
+            data.role === 'Administrador' ? '/menuAdministrador' : '/menu';
+        }, 1500);
       } else {
-        setError(data.error || 'Falha no login');
+        setMensagem(data.error || 'Falha no login.');
+        setMensagemTipo('erro');
       }
     } catch (err) {
-      setError('Erro ao conectar ao servidor.');
+      setMensagem('Erro ao conectar ao servidor.');
+      setMensagemTipo('erro');
     }
   };
-  
+
   return (
-    <div className='fundo'>
-    <div className="login-page">
-      <img src="/imagens/Logo.png" alt="MeetPoint Logo" className="logo" />
+    <div className="fundo">
+      <div className="login-page">
+        <img src="/imagens/Logo.png" alt="MeetPoint Logo" className="logo" />
 
-      <div className="form-wrapper-login">
-        <h2 className="title">Iniciar sessão</h2>
-        <form onSubmit={handleLogin}>
-        <input
-                type="email"
-                placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            />
+        <div className="form-wrapper-login">
+          <h2>Login</h2>
 
-          <div className="password-wrapper">
-            <input type={showPassword ? 'text' : 'password'} placeholder="Palavra Passe" value={password} onChange={(e) => setPassword(e.target.value)} required/>
-            <span className="toggle-password" onClick={() => setShowPassword((prev) => !prev)}>
-              <img className='eyeIco'src='./imagens/eyeIco.png'></img>
-            </span>
-          </div>
+          <form onSubmit={handleSubmit}>
+            <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+            <input type="password" name="password" placeholder="Palavra-passe" value={formData.password} onChange={handleChange} required />
 
-          {error && <p className="error">{error}</p>}
+            <div className="options">
+              <label>
+                <input type="checkbox" checked={isAdministrador} onChange={handleRoleChange} />
+                Login como Administrador
+              </label>
+            </div>
+            
+            {mensagem && (
+              <p className={`mensagem ${mensagemTipo === 'erro' ? 'erro' : 'sucesso'}`}>
+                {mensagem}
+              </p>
+            )}
+            <button type="submit">Entrar</button>
+          </form>
 
-          <button type="submit">Login</button>
+
+
           <p className="register">
-            É a primeira vez que usa a MeetPoint?{' '}
-            <Link to="/registo">Registar</Link>            
+            Ainda não tem conta? <a href="/registo">Registe-se aqui</a>
           </p>
-        </form>
+
+          
+
+        </div>
       </div>
     </div>
-    </div>
   );
-};
+}
 
 export default Login;
