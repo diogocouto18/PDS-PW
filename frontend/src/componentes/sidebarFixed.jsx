@@ -42,7 +42,6 @@ const SidebarFixed = () => {
             <Link to={role === "Administrador" ? '/perfilAdministrador' : '/perfil'} className='link_menu'>
               <span className="icon">{role === "Administrador" ? <FaUserShield /> : <FaUser />}</span>
               {role === "Administrador" ? 'Admin' : 'Perfil'}</Link>
-            <Link to='/perfil' className='link_menu'> <span className="icon"></span>Admin</Link>
           </div>
         </div>
       </nav>

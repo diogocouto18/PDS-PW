@@ -12,18 +12,14 @@ const Sidebar = () => {
   return (
     <>
       <div className={`sidebar-wrapper ${isOpen ? 'open' : 'collapsed'}`}>
-        {/* Botão para fechar a sidebar */}
         {isOpen && (
           <div className="sidebar-toggle-left" onClick={toggleSidebar}>
             ←
           </div>
         )}
-
-        {/* Conteúdo da sidebar (visível só quando aberta) */}
         {isOpen && <SidebarFixed />}
       </div>
 
-      {/* Botão quando a sidebar está fechada */}
       {!isOpen && (
         <div className="sidebar-marker" onClick={toggleSidebar}>
           →
