@@ -1,15 +1,16 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import EventosAdministrador from "./pages/eventosAdministrador";
-import Login from "./pages/login";
-import Menu from "./pages/menu";
-import Registo from "./pages/registo";
-import Suporte3 from "./pages/suporte3";
-import AnunciosAdministrador from "./pages/voluntariadoAdministrador";
 import "./styles/App.css"
+import Login from "./pages/login";
+import Registo from "./pages/registo";
+import Menu from "./pages/menu";
 import MenuAdministrador from "./pages/menuAdministradores";
-import PerfilAdministrador from "./pages/perfilAdministrador";
+import EventosAdministrador from "./pages/eventosAdministrador";
+import AnunciosAdministrador from "./pages/voluntariadoAdministrador";
 import SuporteAdministrador from "./pages/suporteAdministrador";
+import PerfilAdministrador from "./pages/perfilAdministrador";
+import Suporte from "./pages/suporte";
+import PerfilUtilizador from "./pages/perfilUtilizador";
 
 function App() {
   return (
@@ -18,14 +19,17 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/registo" element={<Registo />} />
-          <Route path="/menu" element={<Menu />} />
           <Route path="/menuAdministrador" element={<MenuAdministrador />} />
-          <Route path="/registo" element={<Registo />} />
-          <Route path="/eventos" element={<Eventos />} />
-          <Route path="/voluntariado" element={<AnunciosAdmin />} />
-          <Route path="/SuporteAdmin" element={<SuporteAdmin1 />} />
-          <Route path="/suporte3" element={<Suporte3 />} />
+          <Route path="/eventosAdministrador" element={<EventosAdministrador />} />
+          <Route path="/voluntariadoAdministrador" element={<AnunciosAdministrador />} />
+          <Route path="/suporteAdministrador" element={<SuporteAdministrador />} />
+          <Route path="/perfilAdministrador" element={<PerfilAdministrador />} />
+          <Route path="/menu" element={<Menu />} />
+
           <Route path="/suporte" element={<Suporte />} />
+          
+          <Route path="/perfil" element={<PerfilUtilizador />} />
+          
         </Routes>
       </div>
     </Router>
@@ -33,3 +37,10 @@ function App() {
 }
 
 export default App;
+//<Route path="/suporte3" element={<Suporte3 />} />
+       
+
+// <Route path="/eventos" element={<Eventos />} />
+// <Route path="/voluntariado" element={<Voluntariado />} />
+
+          

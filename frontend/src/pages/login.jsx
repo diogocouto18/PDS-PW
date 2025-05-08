@@ -41,6 +41,7 @@ function Login() {
         setMensagemTipo('sucesso');
         localStorage.setItem('token', data.token);
         localStorage.setItem('role', data.role);
+        localStorage.setItem('id', data.id);
 
         setTimeout(() => {
           console.log("Role após login:", data.role);
@@ -96,6 +97,6 @@ function Login() {
       </div>
     </div>
   );
-}
+};
 
 export default Login;

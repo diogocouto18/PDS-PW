@@ -7,8 +7,8 @@ const {autenticacao, proprioUtilizadorOuAdministrador, apenasAdministrador} = re
 // Lista todos os utilizadores (apenas administrador)
 router.get("/", autenticacao, apenasAdministrador, utilizadorController.listarUtilizadores);
 
-// Obtem um utilizador pelo o ID (apenas administrador)
-router.get("/:id", autenticacao, apenasAdministrador, utilizadorController.obterPorId);
+// Obtem um utilizador pelo o ID (próprio utilizador ou administrador)
+router.get("/:id", autenticacao, proprioUtilizadorOuAdministrador, utilizadorController.obterPorId);
 
 // Atualiza um utilizador (próprio utilizador ou administrador)
 router.put("/:id", autenticacao, proprioUtilizadorOuAdministrador, utilizadorController.atualizarUtilizadores);

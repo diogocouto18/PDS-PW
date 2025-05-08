@@ -132,6 +132,6 @@ function Registo() {
       </div>
     </div>
   );
-}
+};
 
 export default Registo;

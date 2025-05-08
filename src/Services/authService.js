@@ -128,7 +128,7 @@ const loginUtilizador = async (data) => {
         JWT_SECRET,
         { expiresIn: "2h" }
     );
-    return {token, role: "Utilizador" };
+    return {token, role: "Utilizador", id: utilizador.id};
 };
 
 // Login do administrador
@@ -154,7 +154,7 @@ const loginAdministrador = async (data) => {
         JWT_SECRET,
         { expiresIn: "1h" }
     );
-    return {token, role: "Administrador" };
+    return {token, role: "Administrador", id: administrador.id };
 };
 
 module.exports = { 
