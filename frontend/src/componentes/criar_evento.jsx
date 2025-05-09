@@ -7,6 +7,7 @@ const CriarEvento = ({ setShowModal }) => {
     localizacao: '',
     data_evento: '',
     descricao: '',
+    id_categoria: 1, // Considera que há uma categoria predefinida ou outra lógica para seleção de categoria
   });
 
   const [imagem, setImagem] = useState(null);
@@ -30,8 +31,8 @@ const CriarEvento = ({ setShowModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { titulo, localizacao, data_evento, descricao } = formData;
-    if (!titulo || !localizacao || !data_evento || !descricao) {
+    const { titulo, localizacao, data_evento, descricao, id_categoria } = formData;
+    if (!titulo || !localizacao || !data_evento || !descricao || !imagem) {
       alert("Preencha todos os campos obrigatórios.");
       return;
     }
@@ -45,9 +46,8 @@ const CriarEvento = ({ setShowModal }) => {
     payload.append("localizacao", localizacao);
     payload.append("data_evento", dataISO);
     payload.append("descricao", descricao);
-    payload.append("id_administrador", localStorage.getItem("id_administrador")); // exemplo
-    payload.append("id_categoria", 1); // categoria padrão; idealmente você seleciona no form
-    if (imagem) payload.append("fotografia", imagem);
+    payload.append("id_categoria", id_categoria); // Inclui a categoria
+    if (imagem) payload.append("fotografia", imagem); // Anexar imagem
 
     try {
       const token = localStorage.getItem("token");
@@ -64,7 +64,8 @@ const CriarEvento = ({ setShowModal }) => {
       if (!res.ok) throw new Error(data.error || "Erro ao criar evento.");
 
       alert("Evento criado com sucesso!");
-      setShowModal(false);
+      setShowModal(false);  // Fechar o modal após o envio
+
     } catch (err) {
       console.error(err);
       alert(err.message || "Erro ao enviar evento.");
