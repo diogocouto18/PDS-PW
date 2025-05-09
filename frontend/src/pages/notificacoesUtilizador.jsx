@@ -1,50 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import '../styles/notificacoesUtilizador.css';
+import React, { useEffect, useState } from "react";
+import styles from "../styles/NotificacoesUtilizador.module.css";
 
 function NotificacoesUtilizador() {
   const [notificacoes, setNotificacoes] = useState([]);
+  const [erro, setErro] = useState(null);
+
+  // Substitui por ID real do utilizador autenticado
+  const id_utilizador = localStorage.getItem("id_utilizador");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const fetchNotificacoes = async () => {
-      try {
-        const response = await fetch('/api/utilizador/notificacoes', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'application/json',
-          },
-        });
+    if (!id_utilizador || !token) {
+      setErro("Utilizador não autenticado.");
+      return;
+    }
 
-        if (!response.ok) throw new Error('Erro ao encontrar notificações.');
-
-        const data = await response.json();
-        setNotificacoes(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchNotificacoes();
+    fetch(`http://localhost:3000/notificacoes/utilizador/${id_utilizador}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Erro ao buscar notificações");
+        return res.json();
+      })
+      .then((data) => setNotificacoes(data))
+      .catch((err) => setErro(err.message));
   }, []);
 
-  const getCorIcone = (tipo) => {
-    return tipo === 'positivo' ? 'verde' : 'vermelho';
-  };
-
   return (
-    <div className="notificacoes-container">
-      <div className="notificacoes-titulo">
-        <span role="img" aria-label="envelope">📩</span> Notificações
-      </div>
-      <div className="notificacoes-lista">
-        {notificacoes.map((notif, i) => (
-          <div key={i} className="notificacao-item">
-            <span className={`icone ${getCorIcone(notif.tipo)}`}></span>
-            <span
-              dangerouslySetInnerHTML={{ __html: notif.mensagem }}
-            ></span>
-          </div>
-        ))}
-      </div>
+    <div className={styles.container}>
+      <h2>📧 Notificações</h2>
+      {erro && <p className={styles.erro}>{erro}</p>}
+      {notificacoes.length === 0 && !erro ? (
+        <p>Não tens notificações.</p>
+      ) : (
+        <ul className={styles.lista}>
+          {notificacoes.map((notificacao) => (
+            <li key={notificacao.id} className={styles.notificacao}>
+              <h4>{notificacao.titulo}</h4>
+              <p>{notificacao.mensagem}</p>
+              <span className={notificacao.estado === "aberta" ? styles.aberta : styles.fechada}>
+                {notificacao.estado}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
