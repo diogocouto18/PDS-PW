@@ -10,6 +10,7 @@ import AnunciosAdministrador from "./pages/voluntariadoAdministrador";
 import SuporteAdministrador from "./pages/suporteAdministrador";
 import PerfilAdministrador from "./pages/perfilAdministrador";
 import Suporte from "./pages/suporte";
+import Suporte3 from "./pages/suporte3";
 import PerfilUtilizador from "./pages/perfilUtilizador";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/menu" element={<Menu />} />
 
           <Route path="/suporte" element={<Suporte />} />
+          <Route path="/suporte3" element={<Suporte3 />} />
           
           <Route path="/perfil" element={<PerfilUtilizador />} />
           

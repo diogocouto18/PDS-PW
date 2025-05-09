@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Sidebar from '../componentes/sidebar';
+import Sidebar from '../componentes/Sidebar';
 import '../styles/perfilUtilizador.css';
 import { FaUser } from 'react-icons/fa';
-import axios from 'axios';
 
 function PerfilUtilizador() {
   const [utilizador, setUtilizador] = useState(null);
