@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import Sidebar from "../componentes/Sidebar";
+import { Link } from 'react-router-dom';
+import SidebarLayout from "../componentes/sidebarLayout";
 import Artigo1 from "../componentes/artigo1";
 import Artigo2 from "../componentes/artigo2";
 import Artigo3 from "../componentes/artigo3";
 import "../styles/suporte.css"
+import { FaMessage } from "react-icons/fa6";
 
 const Suporte = () => {
     const [showArtigo1, setShowArtigo1] = useState(false);
     const [showArtigo2, setShowArtigo2] = useState(false);
     const [showArtigo3, setShowArtigo3] = useState(false);
     return(
+        <SidebarLayout>
         <div>
             <div className="Topbar">
-                <Sidebar />
                 <img src="/public/imagens/Logo_Branco.png"/>
                 <label className="Topbar-tittle">Centro de Apoio</label>
             </div>
@@ -26,9 +28,15 @@ const Suporte = () => {
                     {showArtigo1 && (<Artigo1 setShowArtigo1={setShowArtigo1} />)}
                     {showArtigo2 && (<Artigo2 setShowArtigo2={setShowArtigo2} />)}
                     {showArtigo3 && (<Artigo3 setShowArtigo3={setShowArtigo3} />)}
+                    <Link to="/suporte3"> 
+                        <button className="criar-ticket" >
+                            <FaMessage/>
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
+    </SidebarLayout>
     )
 }
 export default Suporte;

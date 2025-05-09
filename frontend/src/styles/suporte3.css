@@ -23,9 +23,9 @@
 }
 
 .suporte-message{
-
+padding: 8px;
 resize: none;
-
+font-size: 16px;
 height: 500px;
 width: 1150px;
 background-color: #AAA;
