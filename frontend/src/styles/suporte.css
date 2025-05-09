@@ -47,3 +47,18 @@
     cursor: pointer;
     background-color: #e5e5e5;
   }
+
+.criar-ticket{
+  position: fixed;
+  bottom: 40px;
+  right:  40px;
+  padding: 20px 25px;
+  background-color: #114B6E;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 30px;
+  font-weight: 400;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

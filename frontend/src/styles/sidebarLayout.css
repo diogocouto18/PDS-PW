@@ -6,7 +6,6 @@
 
 .main-content {
   margin-left: 300px; /* largura da sidebar */
-  padding: 2rem;
   flex-grow: 1;
   transition: margin-left 0.3s ease;
 }
