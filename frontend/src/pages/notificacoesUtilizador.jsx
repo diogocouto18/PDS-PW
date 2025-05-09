@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "../styles/NotificacoesUtilizador.module.css";
+import styles from "../styles/notificacoesUtilizador.css";
 
 function NotificacoesUtilizador() {
   const [notificacoes, setNotificacoes] = useState([]);
@@ -21,7 +21,7 @@ function NotificacoesUtilizador() {
       },
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Erro ao buscar notificações");
+        if (!res.ok) throw new Error("Erro ao procurar notificações");
         return res.json();
       })
       .then((data) => setNotificacoes(data))
