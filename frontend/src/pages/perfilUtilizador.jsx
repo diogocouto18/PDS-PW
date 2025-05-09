@@ -2,20 +2,34 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../componentes/sidebar';
 import '../styles/perfilUtilizador.css';
 import { FaUser } from 'react-icons/fa';
-import axios from 'axios';
 
 function PerfilUtilizador() {
   const [utilizador, setUtilizador] = useState(null);
 
+  const utilizadorId = localStorage.getItem('id');
+
   useEffect(() => {
-    axios.get('/api/utilizador/perfil', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    .then(res => setUtilizador(res.data))
-    .catch(err => console.error('Erro ao buscar perfil:', err));
-  }, []);
+    if (utilizadorId) {
+      fetch(`http://localhost:3000/utilizadores/${utilizadorId}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`, // Envia o token de autorização
+        },
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Erro ao buscar perfil');
+          }
+          return res.json(); // Retorna a resposta como JSON
+        })
+        .then((data) => {
+          setUtilizador(data); // Armazena os dados recebidos no estado
+        })
+        .catch((err) => {
+          console.error('Erro ao buscar perfil:', err); // Lida com qualquer erro
+        });
+    }
+  }, [utilizadorId]); 
 
   if (!utilizador) return <p>Carregando perfil...</p>;
 

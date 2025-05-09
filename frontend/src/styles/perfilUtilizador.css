@@ -1,79 +1,115 @@
 .perfil-page {
-        padding: 2rem;
-        background-color: #fff;
-        min-height: 100vh;
-      }
-      
-      .perfil-container {
-        display: flex;
-        flex-direction: column;
-        margin-left: 200px; /* espaço para sidebar */
-        padding: 2rem;
-        background-color: #fff;
-        border-radius: 10px;
-      }
-      
-      .perfil-foto-info {
-        display: flex;
-        gap: 2rem;
-        align-items: center;
-      }
-      
-      .foto-box {
-        background-color: #f0c9b6;
-        width: 150px;
-        height: 150px;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      
-      .foto-placeholder {
-        font-weight: bold;
-        color: white;
-        font-size: 86px;
-      }
-      
-      .info-box {
-        display: flex;
-        flex-direction: column;
-        gap: 0.3rem;
-      }
-      
-      .doados {
-        margin-top: 1rem;
-      }
-      
-      .botoes-box {
-        margin-top: 1rem;
-        display: flex;
-        gap: 1rem;
-      }
-      
-      .btn-editar,
-      .btn-terminar {
-        padding: 0.5rem 1.5rem;
-        background-color: #f0c9b6;
-        border: none;
-        border-radius: 10px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-      
-      .detalhes {
-        margin-top: 2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-      
-      .secao h3 {
-        margin-bottom: 0.5rem;
-        color: #000;
-      }
-      
-      .valor {
-        float: right;
-      }
-      
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f6f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.perfil-container {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.perfil-foto-info {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.foto-box {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.foto-placeholder .icon {
+  font-size: 3rem;
+  color: #888;
+}
+
+.info-box h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.info-box p, .info-box strong {
+  margin: 0.25rem 0;
+  color: #555;
+}
+
+.doados strong {
+  color: #006400;
+}
+
+.botoes-box {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.botoes-box button {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-editar {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-editar:hover {
+  background-color: #0056b3;
+}
+
+.btn-terminar {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-terminar:hover {
+  background-color: #a71d2a;
+}
+
+.detalhes {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.secao {
+  margin-bottom: 2rem;
+}
+
+.secao h3 {
+  color: #333;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.secao p {
+  margin: 0.3rem 0;
+  color: #444;
+}
+
+.valor {
+  font-weight: bold;
+  color: #2e8b57;
+}

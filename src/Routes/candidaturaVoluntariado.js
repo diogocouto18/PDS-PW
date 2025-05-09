@@ -10,10 +10,13 @@ router.post("/",autenticacao, apenasUtilizadores, candidaturaController.criarCan
 // Avaliar candidatura (apenas administrador)
 router.put("/:id/avaliar", autenticacao, apenasAdministrador, candidaturaController.avaliarCandidatura);
 
-// Listar candidaturas de um anuncio (próprio utilizador ou administradores)
-router.get("/anuncio/:id_anuncio", autenticacao, proprioUtilizadorOuAdministrador, candidaturaController.listarPorAnuncio);
+// Listar candidaturas de um anuncio (apenas administradores)
+router.get("/anuncio/:id_anuncio", autenticacao, apenasAdministrador, candidaturaController.listarPorAnuncio);
+
+// Listar as candidaturas do próprio utilizador
+router.get('/minhas', autenticacao, candidaturaController.listarMinhas);
 
 // Remover uma candidatura existente (próprio utilizador)
-router.delete("/candidaturas/:id", autenticacao, apenasProprioUtilizador, candidaturaController.eliminarCandidatura);
+router.delete("/candidaturas/:id", autenticacao, candidaturaController.eliminarCandidatura);
 
 module.exports = router;

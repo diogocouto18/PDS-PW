@@ -1,0 +1,41 @@
+.candidatura-card-utilizador {
+  position: relative;
+  width: 160px;
+  padding: 1rem;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #c0392b;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dados-candidatura {
+  margin-top: 1.5rem;
+}
+
+.cargo {
+  font-size: 0.95rem;
+  color: #0d415a;
+  margin: 0 0 0.5rem;
+}
+
+.evento {
+  font-size: 0.85rem;
+  color: #0d415a;
+  margin: 0;
+}

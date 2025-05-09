@@ -1,0 +1,90 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #0d415a;
+  margin-bottom: 1.5rem;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  color: #0d415a;
+  font-weight: 600;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.modal-buttons button {
+  flex: 1;
+  height: 60px;
+  font-size: 1rem;
+  font-family: inherit;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+/* Botão CRIAR */
+.modal-buttons button[type="submit"] {
+  background-color: #0d415a;
+  color: white;
+}
+
+.modal-buttons button[type="submit"]:hover {
+  background-color: #093249;
+}
+
+/* Botão CANCELAR */
+.modal-buttons button[type="button"] {
+  background-color: #ccc;
+  color: #000;
+}
+
+.modal-buttons button[type="button"]:hover {
+  background-color: #aaa;
+}

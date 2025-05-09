@@ -18,7 +18,7 @@ const criarCandidatura = async (data) => {
         where: {
             id_utilizador: parseInt(data.id_utilizador),
             id_anuncio: parseInt(data.id_anuncio),
-            estado: "Pendente"
+            estado: "Pendente"    
         }
     });
     if (candidaturaExistente) {
@@ -30,6 +30,7 @@ const criarCandidatura = async (data) => {
             id_utilizador: parseInt(data.id_utilizador),
             id_anuncio: parseInt(data.id_anuncio),
             estado: "Pendente",
+            mensagem: data.mensagem || null,
         },
     }); 
     
@@ -79,6 +80,21 @@ const listarPorAnuncio = async (id_anuncio) => {
     });
 };
 
+// Listar candidaturas feitas pelo utilizador autenticado
+const listarMinhasCandidaturas = async (id_utilizador) => {
+    return await prisma.candidaturaVoluntariado.findMany({
+      where: { id_utilizador },
+        include: { 
+            Anuncio: {
+                include: {
+                Evento: true
+                },
+            }       
+        }
+    });
+}
+
+
 // Remove uma candidatura existente 
 const removerCandidatura = async (id) => {
     return await prisma.candidaturaVoluntariado.delete({ 
@@ -91,5 +107,6 @@ module.exports= {
     criarCandidatura,
     avaliarCandidatura,
     listarPorAnuncio,
+    listarMinhasCandidaturas,
     removerCandidatura,
 };

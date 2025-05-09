@@ -11,6 +11,7 @@ import SuporteAdministrador from "./pages/suporteAdministrador";
 import PerfilAdministrador from "./pages/perfilAdministrador";
 import Suporte from "./pages/suporte";
 import PerfilUtilizador from "./pages/perfilUtilizador";
+import Voluntariado from "./pages/voluntariadoUtilizador";
 
 function App() {
   return (
@@ -26,8 +27,8 @@ function App() {
           <Route path="/perfilAdministrador" element={<PerfilAdministrador />} />
           <Route path="/menu" element={<Menu />} />
 
+          <Route path="/voluntariado" element={<Voluntariado />} />
           <Route path="/suporte" element={<Suporte />} />
-          
           <Route path="/perfil" element={<PerfilUtilizador />} />
           
         </Routes>

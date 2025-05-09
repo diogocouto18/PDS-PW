@@ -1,0 +1,53 @@
+.anuncio-card {
+  display: flex;
+  flex-direction: column;      /* empilha elementos verticalmente */
+  justify-content: space-between; /* botão no fundo */
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  width: 280px;               /* mantém largura fixa */
+  max-width: 100%;            /* responsivo em telas pequenas */
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+/* título */
+.anuncio-card h3 {
+  margin: 0 0 0.5rem;
+  color: #0d415a;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+/* parágrafos */
+.anuncio-card p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  word-break: break-word;       /* força quebra de palavra se necessário */
+}
+
+/* destaca o label forte */
+.anuncio-card p strong {
+  color: #0d415a;
+}
+
+/* botão encerrar: fica sempre abaixo, graças ao flexbox */
+.encerrar-btn {
+  align-self: stretch;         /* faz o botão ocupar 100% da largura do cartão */
+  margin-top: 1rem;
+  padding: 0.6rem;
+  background-color: #c0392b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.encerrar-btn:hover {
+  background-color: #a93226;
+}

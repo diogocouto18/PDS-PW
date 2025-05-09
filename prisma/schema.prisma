@@ -57,6 +57,7 @@ model CandidaturaVoluntariado {
   id_utilizador Int
   id_anuncio    Int
   estado        CandidaturaVoluntariado_estado? @default(Pendente)
+  mensagem      String?                         @db.Text
   Utilizador    Utilizador                      @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "candidaturavoluntariado_ibfk_1")
   Anuncio       Anuncio                         @relation(fields: [id_anuncio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "candidaturavoluntariado_ibfk_2")
 
