@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState ,useEffect} from 'react';
 import SidebarLayout from "../componentes/sidebarLayout"
 import SearchBar from "../componentes/searchbar";
 import Filter from "../componentes/filters";
@@ -6,7 +6,30 @@ import { FaShareAlt } from 'react-icons/fa'; // Ícone de compartilhamento
 import '../styles/ListaEventos.css';
 import { Link } from 'react-router-dom';
 
-const Eventos = ({ eventos = []  }) => {
+const Eventos = () => {
+     const [eventos, setEventos] = useState([]);
+
+  useEffect(() => {
+    const fetchEventos = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await fetch('http://localhost:3000/eventos', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) throw new Error('Erro ao buscar eventos');
+        const data = await res.json();
+        setEventos(data);
+      } catch (err) {
+        console.error(err);
+        alert('Erro ao carregar eventos.');
+      }
+    };
+
+    fetchEventos();
+  }, []);
   return (
 <SidebarLayout>
     <div className="lista-eventos">
@@ -14,10 +37,8 @@ const Eventos = ({ eventos = []  }) => {
                     <SearchBar />
         </div>
       <h2>Eventos</h2>
-      <div className='Eventos'>
-        <div>
+      <div className='Filtro'>
             <Filter />
-        </div>
       </div>
       {eventos.length === 0 ? (
         <p>Não há eventos disponíveis.</p>

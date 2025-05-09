@@ -70,7 +70,8 @@
   outline: none;
 }
 
-.Evento {
-    flex: 1;
-    margin-right: 20px;
+.Filtro{
+    position: fixed;
+    right: 20px;
+    top:20px
   }
