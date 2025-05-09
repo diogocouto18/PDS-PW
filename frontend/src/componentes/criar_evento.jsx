@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import '../styles/CriarEvento.css';
 
-  const CriarEvento = ({ setShowModal }) => {
+const CriarEvento = ({ setShowModal }) => {
   const [formData, setFormData] = useState({
-    nome: '',
+    titulo: '',
     localizacao: '',
-    data: '',
+    data_evento: '',
     descricao: '',
   });
+
   const [imagem, setImagem] = useState(null);
   const [imagemSelecionada, setImagemSelecionada] = useState(false);
 
@@ -29,18 +30,24 @@ import '../styles/CriarEvento.css';
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { nome, localizacao, data, descricao } = formData;
-    if (!nome || !localizacao || !data || !descricao) {
+    const { titulo, localizacao, data_evento, descricao } = formData;
+    if (!titulo || !localizacao || !data_evento || !descricao) {
       alert("Preencha todos os campos obrigatórios.");
       return;
     }
 
+    // Converte DD/MM/YYYY para ISO 8601
+    const [dia, mes, ano] = data_evento.split('/');
+    const dataISO = new Date(`${ano}-${mes}-${dia}`).toISOString();
+
     const payload = new FormData();
-    payload.append("nome", nome);
+    payload.append("titulo", titulo);
     payload.append("localizacao", localizacao);
-    payload.append("data", data);
+    payload.append("data_evento", dataISO);
     payload.append("descricao", descricao);
-    if (imagem) payload.append("imagem", imagem);
+    payload.append("id_administrador", localStorage.getItem("id_administrador")); // exemplo
+    payload.append("id_categoria", 1); // categoria padrão; idealmente você seleciona no form
+    if (imagem) payload.append("fotografia", imagem);
 
     try {
       const token = localStorage.getItem("token");
@@ -58,10 +65,6 @@ import '../styles/CriarEvento.css';
 
       alert("Evento criado com sucesso!");
       setShowModal(false);
-
-      // Atualiza a lista de eventos local
-      setEventos((prev) => [...prev, data]);
-
     } catch (err) {
       console.error(err);
       alert(err.message || "Erro ao enviar evento.");
@@ -72,21 +75,23 @@ import '../styles/CriarEvento.css';
     <div className="overlay">
       <form className="modal" onSubmit={handleSubmit}>
         <button type="button" className="close-btn" onClick={() => setShowModal(false)}>×</button>
-        
+
         <input
           type="text"
-          name="nome"
+          name="titulo"
           placeholder="Nome da Festa"
-          value={formData.nome}
+          value={formData.titulo}
           onChange={handleChange}
+          required
         />
 
         <input
           type="text"
           name="localizacao"
-          placeholder="Localizacao"
+          placeholder="Localização"
           value={formData.localizacao}
           onChange={handleChange}
+          required
         />
 
         <label htmlFor="file-upload" className="custom-file-upload">
@@ -96,10 +101,11 @@ import '../styles/CriarEvento.css';
 
         <input
           type="text"
-          name="data"
+          name="data_evento"
           placeholder="Data : DD/MM/YYYY"
-          value={formData.data}
+          value={formData.data_evento}
           onChange={handleChange}
+          required
         />
 
         <textarea
@@ -108,6 +114,7 @@ import '../styles/CriarEvento.css';
           className="description"
           value={formData.descricao}
           onChange={handleChange}
+          required
         />
 
         <button type="submit" className="create-btn">Criar</button>
