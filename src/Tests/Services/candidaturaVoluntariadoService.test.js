@@ -61,16 +61,20 @@ describe('CandidaturaVoluntariado Service', () => {
 
         const candidatura = await candidaturaVoluntariadoService.criarCandidatura(mockData);
 
+        // Ajustado para verificar 'mensagem' sendo null
         expect(candidatura).toEqual(mockCandidatura);
+
+        // A inserção no banco de dados deve ter sido feita com os parâmetros esperados
         expect(prisma.candidaturaVoluntariado.create).toHaveBeenCalledWith({
             data: {
                 id_utilizador: mockData.id_utilizador,
                 id_anuncio: mockData.id_anuncio,
                 estado: "Pendente",
+                mensagem: null,  // Esperamos que o valor 'mensagem' seja null, pois não foi fornecido no mock
             },
         });
 
-        // Verificar notificação
+        // Verificar se a notificação foi criada corretamente
         expect(notificacaoService.criarNotificacao).toHaveBeenCalledWith({
             id_utilizador: mockCandidatura.id_utilizador,
             id_administrador: mockAnuncio.id_administrador,
@@ -89,7 +93,8 @@ describe('CandidaturaVoluntariado Service', () => {
 
     test('criarCandidatura deve lançar erro se já existir uma candidatura pendente', async () => {
         prisma.anuncio.findUnique.mockResolvedValue(mockAnuncio);
-        prisma.candidaturaVoluntariado.findFirst.mockResolvedValue(mockCandidatura); // Candidatura já existente
+        // Simula que já existe uma candidatura pendente
+        prisma.candidaturaVoluntariado.findFirst.mockResolvedValue(mockCandidatura);
 
         await expect(candidaturaVoluntariadoService.criarCandidatura(mockData))
             .rejects

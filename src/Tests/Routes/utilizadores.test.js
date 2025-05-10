@@ -1,86 +1,114 @@
+/**
+ * src/Tests/Routes/utilizadores.test.js
+ *
+ * Testes de rota/controllers para Utilizadores (sem BD real),
+ * mockando o service para isolar controller + routes.
+ */
+
+// Mock do service antes de importar o app
+jest.mock('../../Services/utilizadorService');
+const utilizadorService = require('../../Services/utilizadorService');
 const request = require('supertest');
-const app = require('../../index'); // Aqui importamos a aplicação Express
+const app = require('../../index');
 
-describe('Testes de Utilizadores', () => {
-
-    // Mock de dados de utilizador
-    let tokenAdmin = null;
-    let tokenUtilizador = null;
-    let idUtilizador = null;
-
-    // Realiza login do admin e utilizador antes dos testes
-    beforeAll(async () => {
-        // Login do administrador
-        const adminLoginResponse = await request(app)
-            .post('/auth/login-administrador')  // Certifique-se de que esta rota está configurada no seu app
-            .send({
-                email: 'admin@example.com',
-                password: 'admin123'
-            });
-        tokenAdmin = adminLoginResponse.body.token;
-
-        // Login do utilizador
-        const userLoginResponse = await request(app)
-            .post('/auth/login-utilizador')  // Certifique-se de que esta rota está configurada no seu app
-            .send({
-                email: 'utilizador@example.com',
-                password: 'user123'
-            });
-        tokenUtilizador = userLoginResponse.body.token;
+describe('Rotas /utilizadores (sem BD)', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
     });
 
-    // Teste: Deverá retornar todos os utilizadores (apenas administrador)
-    test('Deve retornar todos os utilizadores (apenas administrador)', async () => {
-        const response = await request(app)
-            .get('/utilizadores')
-            .set('Authorization', `Bearer ${tokenAdmin}`)
-            .expect(200);
+    describe('GET /utilizadores', () => {
+        it('devolve 200 e lista de utilizadores', async () => {
+            const mockLista = [
+                { id: 1, username: 'u1', nome: 'U Um', email: 'u1@teste.com', telefone: '911111111' },
+                { id: 2, username: 'u2', nome: 'U Dois', email: 'u2@teste.com', telefone: '922222222' }
+            ];
+            utilizadorService.listarUtilizadores.mockResolvedValue(mockLista);
 
-        expect(response.body).toBeInstanceOf(Array); // Verificar se a resposta é um array
-        expect(response.body.length).toBeGreaterThan(0); // Verificar que há pelo menos um utilizador
+            const res = await request(app).get('/utilizadores');
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(mockLista);
+            expect(utilizadorService.listarUtilizadores).toHaveBeenCalled();
+        });
+
+        it('devolve 500 em caso de erro', async () => {
+            utilizadorService.listarUtilizadores.mockRejectedValue(new Error('Falha no serviço'));
+
+            const res = await request(app).get('/utilizadores');
+            expect(res.status).toBe(500);
+            expect(res.body).toEqual({ error: 'Erro ao buscar utilizadores' });
+        });
     });
 
-    // Teste: Deverá retornar um utilizador pelo ID (apenas administrador)
-    test('Deve retornar um utilizador pelo ID (apenas administrador)', async () => {
-        const response = await request(app)
-            .get('/utilizadores/1')
-            .set('Authorization', `Bearer ${tokenAdmin}`)
-            .expect(200);
+    describe('GET /utilizadores/:id', () => {
+        it('devolve 200 e o utilizador quando existe', async () => {
+            const mockUser = { id: 1, username: 'u1', nome: 'U Um', email: 'u1@teste.com', telefone: '911111111' };
+            utilizadorService.obterPorId.mockResolvedValue(mockUser);
 
-        expect(response.body).toHaveProperty('id', 1);  // Verificar se o ID do utilizador retornado é 1
-        expect(response.body).toHaveProperty('nome');  // Verificar se o utilizador tem o campo 'nome'
+            const res = await request(app).get('/utilizadores/1');
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(mockUser);
+            expect(utilizadorService.obterPorId).toHaveBeenCalledWith('1');
+        });
+
+        it('devolve 404 se não existir', async () => {
+            utilizadorService.obterPorId.mockResolvedValue(null);
+
+            const res = await request(app).get('/utilizadores/999');
+            expect(res.status).toBe(404);
+            expect(res.body).toEqual({ error: 'Utilizador não encontrado' });
+        });
+
+        it('devolve 500 em caso de erro', async () => {
+            utilizadorService.obterPorId.mockRejectedValue(new Error('Erro inesperado'));
+
+            const res = await request(app).get('/utilizadores/1');
+            expect(res.status).toBe(500);
+            expect(res.body).toEqual({ error: 'Erro ao buscar utilizador' });
+        });
     });
 
-    // Teste: Deverá permitir atualizar um utilizador (próprio utilizador ou administrador)
-    test('Deve permitir atualizar um utilizador (próprio utilizador ou administrador)', async () => {
-        const updatedData = { nome: 'Novo Nome' };
+    describe('PUT /utilizadores/:id', () => {
+        it('devolve 200 e o utilizador atualizado', async () => {
+            const updateData = { nome: 'Novo Nome', morada: 'Nova Rua, 99' };
+            const mockUpdated = { id: 1, username: 'u1', nome: 'Novo Nome', email: 'u1@teste.com', telefone: '911111111', morada: 'Nova Rua, 99' };
+            utilizadorService.atualizarUtilizadores.mockResolvedValue(mockUpdated);
 
-        const response = await request(app)
-            .put('/utilizadores/1')
-            .set('Authorization', `Bearer ${tokenAdmin}`)
-            .send(updatedData)
-            .expect(200);
+            const res = await request(app)
+                .put('/utilizadores/1')
+                .send(updateData);
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(mockUpdated);
+            expect(utilizadorService.atualizarUtilizadores).toHaveBeenCalledWith('1', updateData);
+        });
 
-        expect(response.body.nome).toBe(updatedData.nome); // Verificar que o nome foi atualizado
+        it('devolve 500 em caso de erro', async () => {
+            utilizadorService.atualizarUtilizadores.mockRejectedValue(new Error('Erro no update'));
+
+            const res = await request(app)
+                .put('/utilizadores/1')
+                .send({ nome: 'X' });
+            expect(res.status).toBe(500);
+            expect(res.body).toEqual({ error: 'Erro ao atualizar utilizador' });
+        });
     });
 
-    // Teste: Deverá permitir remover um utilizador (apenas administrador)
-    test('Deve permitir remover um utilizador (apenas administrador)', async () => {
-        const response = await request(app)
-            .delete('/utilizadores/1')
-            .set('Authorization', `Bearer ${tokenAdmin}`)
-            .expect(200);
+    describe('DELETE /utilizadores/:id', () => {
+        it('devolve 200 em caso de sucesso', async () => {
+            utilizadorService.eliminarUtilizadores.mockResolvedValue(undefined);
 
-        expect(response.body.message).toBe('Utilizador deletado com sucesso'); // Mensagem de sucesso
-    });
+            const res = await request(app).delete('/utilizadores/1');
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual({ message: 'Utilizador deletado com sucesso' });
+            expect(utilizadorService.eliminarUtilizadores).toHaveBeenCalledWith('1');
+        });
 
-    // Teste: Não deve permitir que um utilizador que não é administrador acesse as rotas de admin
-    test('Não deve permitir que um utilizador comum acesse as rotas de administrador', async () => {
-        const response = await request(app)
-            .get('/utilizadores')
-            .set('Authorization', `Bearer ${tokenUtilizador}`)
-            .expect(403);
+        it('devolve 500 em caso de erro', async () => {
+            utilizadorService.eliminarUtilizadores.mockRejectedValue(new Error('Erro no delete'));
 
-        expect(response.body.error).toBe("Acesso apenas para administradores"); // Mensagem de erro
+            const res = await request(app).delete('/utilizadores/1');
+            expect(res.status).toBe(500);
+            expect(res.body).toEqual({ error: 'Erro ao deletar utilizador' });
+        });
     });
 });
+

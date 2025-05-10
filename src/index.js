@@ -46,12 +46,12 @@ app.use('/sorteio-rifas', sorteioRifasRoutes);
 app.use('/suportes', suporteRoutes);
 app.use('/utilizadores', utilizadorRoutes);
 
-// Definir a porta do servidor
-const PORT = process.env.PORT || 3000;
-
-// Iniciar o servidor
-app.listen(PORT, () => {
-    console.log(`Servidor está a correr na porta ${PORT}`);
-});
+// Iniciar o servidor apenas se não estivermos em modo de testes
+if (process.env.NODE_ENV !== 'test') {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Servidor está a correr na porta ${PORT}`);
+    });
+}
 
 module.exports = app;
