@@ -5,30 +5,27 @@ async function criarSorteio(req, res) {
   try {
     const data = {
       ...req.body,
-      
       id_administrador: parseInt(req.body.id_administrador),
       id_evento: parseInt(req.body.id_evento),
     };
     const sorteio = await sorteioService.criarSorteio(data);
     res.status(201).json(sorteio);
-  } 
-    catch (error) {
+  } catch (error) {
     console.error("criarSorteio:", error);
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error: error.message });
   }
-};
+}
 
 // Get - Lista todos os sorteios com as rifas associadas
 async function listarSorteios(req, res) {
   try {
     const lista = await sorteioService.listarSorteios();
     res.json(lista);
-  } 
-    catch (error) {
+  } catch (error) {
     console.error("listarSorteios:", error);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: error.message });
   }
-};
+}
 
 // Put - Atualiza campos de um sorteio existente
 async function atualizarSorteio(req, res) {
@@ -36,12 +33,11 @@ async function atualizarSorteio(req, res) {
     const { id } = req.params;
     const updated = await sorteioService.atualizarSorteio(id, req.body);
     res.json(updated);
-  } 
-    catch (error) {
+  } catch (error) {
     console.error("atualizarSorteio:", error);
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error: error.message });
   }
-};
+}
 
 // Delete - Remove um sorteio e todas as rifas relacionadas com este sorteio
 async function eliminarSorteio(req, res) {
@@ -49,12 +45,11 @@ async function eliminarSorteio(req, res) {
     const { id } = req.params;
     await sorteioService.eliminarSorteio(id);
     res.json({ message: "Sorteio removido com sucesso" });
-  } 
-    catch (error) {
+  } catch (error) {
     console.error("eliminarSorteio:", error);
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error: error.message });
   }
-};
+}
 
 // Post - Sortear primeiro lugar
 async function sortearVencedor(req, res) {
@@ -65,7 +60,7 @@ async function sortearVencedor(req, res) {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};
+}
 
 // Post - Sortear segundo lugar
 async function sortearSegundoLugar(req, res) {
@@ -76,7 +71,7 @@ async function sortearSegundoLugar(req, res) {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};
+}
 
 // Post - Sortear terceiro lugar
 async function sortearTerceiroLugar(req, res) {
@@ -87,7 +82,7 @@ async function sortearTerceiroLugar(req, res) {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};
+}
 
 module.exports = {
   criarSorteio,

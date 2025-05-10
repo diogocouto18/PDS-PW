@@ -1,5 +1,5 @@
 /**
- * src/Tests/Routes/auth.test.js
+ * src/Tests/RoutesControllers/auth.test.js
  *
  * Testes de "integração" ligeira para as rotas e controllers de autenticação,
  * usando mocks dos serviços para evitar chamadas ao BD.
