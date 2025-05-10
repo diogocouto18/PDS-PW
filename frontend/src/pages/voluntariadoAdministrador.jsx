@@ -39,20 +39,20 @@ const AnunciosAdministrador = () => {
     );
   };
 
-  const primeiroAnuncioAtivo = anuncios.find((a) => a.estado === 'Ativo');
+
 
   return (
     <SidebarLayout>
       <div className="voluntariado-page">
         <h2>Candidaturas Recebidas</h2>
-        <div className="anuncios-grid">
+        <div className="candidaturas-grid">
           {anuncios.filter(a => a.estado === 'Ativo').length > 0
             ? anuncios
                 .filter(a => a.estado === 'Ativo')
                 .map(anuncioActivo => (
                   <section key={anuncioActivo.id}>
                     <h3>Candidaturas para: {anuncioActivo.cargo}</h3>
-                    <CandidaturasCartazAdministrador anuncioId={anuncioActivo.id} />
+                    <CandidaturasCartazAdministrador anuncioId={anuncioActivo.id}  />
                   </section>
                 ))
             : <p>Sem anúncios activos para listar candidaturas.</p>

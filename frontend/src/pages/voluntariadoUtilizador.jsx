@@ -3,7 +3,7 @@ import AnunciosCartazUtilizador from '../componentes/anunciosUtilizador';
 import NovaCandidatura from '../componentes/novoCandidatura';
 import CandidaturaCartazUtilizador from '../componentes/candidaturaUtilizador';
 import SidebarLayout from '../componentes/sidebarLayout';
-import '../styles/voluntariadoAdministrador.css';
+import '../styles/voluntariadoUtilizador.css';
 
 const Voluntariado = () => {
   const [anuncios, setAnuncios] = useState([]);

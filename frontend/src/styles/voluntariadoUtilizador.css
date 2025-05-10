@@ -1,32 +1,38 @@
 .voluntariado-page {
-    padding: 6rem;
-    background-color: #ffffff;
-    min-height: 100vh;
-  }
-  
-  .voluntariado-page h2 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    color: #0d415a;
-  }
-  
-  .anuncios-grid {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-    max-height: 60vh;
-    overflow-y: auto;
-    padding-right: 0.5rem;
-    box-sizing: border-box;
-  }
-  
-  .candidaturas-grid {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-    max-height: 25vh;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-  }
+  padding: 5rem;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.voluntariado-page h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #0d415a;
+}
+
+.anuncios-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  max-height: 45vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  box-sizing: border-box;
+}
+
+.voluntariado-page .candidaturas-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  max-height: 30vh;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+  width:inherit;
+  flex-direction: row;
+  justify-content: left;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+}

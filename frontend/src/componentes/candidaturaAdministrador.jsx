@@ -32,23 +32,24 @@ const CandidaturasCartazAdministrador = ({ anuncioId }) => {
     }
   };
 
-  if (!candidaturas.length) return <p>Sem candidaturas para este anúncio.</p>;
+  //if (!candidaturas.length) return <p>Sem candidaturas para este anúncio.</p>;
 
   return (
     <div className="candidaturas-grid">
+      
       {candidaturas.map((c) => (
         <div key={c.id} className="anuncio-card">
+          <p><strong>Evento:</strong> {c.Anuncio?.Evento?.titulo || 'Sem nome'}</p>
           <p><strong>Voluntário:</strong> {c.Utilizador?.username || 'Desconhecido'}</p>
           <p><strong>Mensagem:</strong> {c.mensagem || '—'}</p>
           <p><strong>Estado:</strong> {c.estado}</p>
-          <select
-            value={c.estado}
-            onChange={(e) => handleAvaliacao(c.id, e.target.value)}
-          >
-            <option value="Pendente">Pendente</option>
-            <option value="Aceite">Aceite</option>
-            <option value="Rejeitado">Rejeitado</option>
-          </select>
+          
+          {c.estado === 'Pendente' && (
+            <div className="candidaturas-grid__botoes">
+              <button  onClick={() => handleAvaliacao(c.id, 'Aceite')}>Aceitar</button>
+              <button  onClick={() => handleAvaliacao(c.id, 'Rejeitado')}>Rejeitar</button>
+            </div>
+          )}
         </div>
       ))}
     </div>

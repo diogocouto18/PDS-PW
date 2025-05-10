@@ -76,7 +76,7 @@ const avaliarCandidatura = async (id, novoEstado, idAdministrador) => {
 const listarPorAnuncio = async (id_anuncio) => {
     return await prisma.candidaturaVoluntariado.findMany({
         where: { id_anuncio: parseInt(id_anuncio) },
-        include: { Utilizador: true },
+        include: { Utilizador: true, Anuncio: { include: { Evento: true }}},
     });
 };
 

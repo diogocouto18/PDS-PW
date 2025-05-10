@@ -1,13 +1,11 @@
 .candidatura-card-utilizador {
   position: relative;
-  width: 160px;
   padding: 1rem;
-  background: #fafafa;
   border: 1px solid #ddd;
   border-radius: 12px;
   box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
   display: flex;
-  flex-direction: column;
+  width: 200px;
 }
 
 .remove-btn {

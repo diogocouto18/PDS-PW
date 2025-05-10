@@ -15,19 +15,18 @@ h2 {
   gap: 1rem;
   flex-wrap: wrap;
   margin-bottom: 2rem;
-  max-height: 40vh;       
+  max-height: 35vh;       
   overflow-y: auto;
   padding-right: 0.5rem;  
   box-sizing: border-box;
 }
-
 
 .anuncios-grid {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
   margin-bottom: 2rem;
-  max-height: 40vh;       
+  max-height: 35vh;       
   overflow-y: auto;
   padding-right: 0.5rem;  
   box-sizing: border-box;
