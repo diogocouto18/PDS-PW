@@ -1,15 +1,18 @@
-// Testes unitários para o serviço de autenticação
-// Validamos as funções de registo e login de utilizadores e administradores.
+/**
+ *
+ * Testes unitários para o serviço de autenticação.
+ * Usamos Jest para validar as funções de registo e login de utilizadores e administradores.
+ */
 
-require('dotenv').config(); // Carrega variáveis de ambiente
+require('dotenv').config();
 
-// Mock do PrismaClient para simular interações com a base de dados
+// Mock do PrismaClient antes de importar o módulo a testar
 jest.mock('@prisma/client', () => {
     const mPrismaClient = jest.fn();
     return { PrismaClient: mPrismaClient };
 });
 
-// Mock de bcryptjs e jsonwebtoken para simular hashing e criação de tokens
+// Mock de bcryptjs e jsonwebtoken para controlo de hashing e criação de tokens
 jest.mock('bcryptjs');
 jest.mock('jsonwebtoken');
 
@@ -19,12 +22,12 @@ let loginUtilizador;
 let loginAdministrador;
 let prisma;
 
-// Configuração inicial antes de cada teste
 beforeEach(() => {
-    jest.resetModules(); // Reinicializa módulos entre testes
-    jest.clearAllMocks(); // Limpa todos os mocks
+    // Reinicializa módulos e mocks entre testes
+    jest.resetModules();
+    jest.clearAllMocks();
 
-    // Define stubs para os delegates do Prisma: utilizador e administrador
+    // Define stubs para os delegates: utilizador e administrador
     const mockUtilizador = { findUnique: jest.fn(), create: jest.fn() };
     const mockAdministrador = { findUnique: jest.fn(), create: jest.fn() };
     prisma = { utilizador: mockUtilizador, administrador: mockAdministrador };
@@ -33,7 +36,7 @@ beforeEach(() => {
     const { PrismaClient } = require('@prisma/client');
     PrismaClient.mockImplementation(() => prisma);
 
-    // Importa o authService após configurar o mock do PrismaClient
+    // Importa o authService só depois de configurar o mock do PrismaClient
     const authService = require('../../Services/authService');
     registerUtilizador = authService.registerUtilizador;
     registerAdministrador = authService.registerAdministrador;
@@ -41,9 +44,8 @@ beforeEach(() => {
     loginAdministrador = authService.loginAdministrador;
 });
 
-// Suite de testes para o authService
 describe('authService', () => {
-    // Testes para o registo de utilizadores
+
     describe('registerUtilizador', () => {
         const dadosUtilizador = {
             username: 'utilizadorTeste',
@@ -51,11 +53,13 @@ describe('authService', () => {
             email: 'teste@exemplo.com',
             telefone: '912345678',
             password: 'senha123',
-            morada: 'Rua de Exemplo, 123',
+            morada: 'Rua de Exemplo, 123'
         };
 
         test('lança erro se o username já existir', async () => {
+            // username duplicado no utilizador
             prisma.utilizador.findUnique.mockResolvedValueOnce({});
+            // username duplicado no administrador (inexistente)
             prisma.administrador.findUnique.mockResolvedValueOnce(null);
 
             await expect(registerUtilizador(dadosUtilizador))
@@ -63,9 +67,13 @@ describe('authService', () => {
         });
 
         test('lança erro se o email já existir', async () => {
+            // username livre
             prisma.utilizador.findUnique.mockResolvedValueOnce(null);
             prisma.administrador.findUnique.mockResolvedValueOnce(null);
+            // email duplicado no utilizador
             prisma.utilizador.findUnique.mockResolvedValueOnce({});
+            // email duplicado no administrador (inexistente)
+            prisma.administrador.findUnique.mockResolvedValueOnce(null);
 
             await expect(registerUtilizador(dadosUtilizador))
                 .rejects.toThrow('Email já registado');
@@ -73,6 +81,10 @@ describe('authService', () => {
 
         test('lança erro se o telefone estiver vazio', async () => {
             const dadosSemTelefone = { ...dadosUtilizador, telefone: '   ' };
+            // username livre
+            prisma.utilizador.findUnique.mockResolvedValueOnce(null);
+            prisma.administrador.findUnique.mockResolvedValueOnce(null);
+            // email livre
             prisma.utilizador.findUnique.mockResolvedValueOnce(null);
             prisma.administrador.findUnique.mockResolvedValueOnce(null);
 
@@ -80,10 +92,25 @@ describe('authService', () => {
                 .rejects.toThrow('O telefone não pode estar vazio');
         });
 
+        test('lança erro se o telefone já existir', async () => {
+            // username e email livres
+            prisma.utilizador.findUnique.mockResolvedValueOnce(null);
+            prisma.administrador.findUnique.mockResolvedValueOnce(null);
+            prisma.utilizador.findUnique.mockResolvedValueOnce(null);
+            prisma.administrador.findUnique.mockResolvedValueOnce(null);
+            // telefone duplicado
+            prisma.utilizador.findUnique.mockResolvedValueOnce({});
+
+            await expect(registerUtilizador(dadosUtilizador))
+                .rejects.toThrow('Telefone já registado');
+        });
+
         test('regista utilizador com sucesso', async () => {
+            // todas as verificações livres (nome, email, telefone)
             prisma.utilizador.findUnique.mockResolvedValue(null);
             prisma.administrador.findUnique.mockResolvedValue(null);
 
+            // mock do bcrypt e criação efetiva do utilizador
             const bcrypt = require('bcryptjs');
             bcrypt.hash.mockResolvedValue('hashfalsa');
             prisma.utilizador.create.mockResolvedValue({ id: 1, password_hash: 'hashfalsa', ...dadosUtilizador });
@@ -98,14 +125,13 @@ describe('authService', () => {
                     email: 'teste@exemplo.com',
                     telefone: '912345678',
                     password_hash: 'hashfalsa',
-                    morada: 'Rua de Exemplo, 123',
-                }),
+                    morada: 'Rua de Exemplo, 123'
+                })
             });
             expect(resultado).toEqual({ id: 1, password_hash: 'hashfalsa', ...dadosUtilizador });
         });
     });
 
-    // Testes para o registo de administradores
     describe('registerAdministrador', () => {
         const passCorreta = process.env.ADMINISTRADOR_PASSPHRASE;
         const dadosAdmin = {
@@ -113,7 +139,7 @@ describe('authService', () => {
             nome: 'Administrador de Teste',
             email: 'admin@exemplo.com',
             password: 'senhaAdm',
-            passphrase: passCorreta,
+            passphrase: passCorreta
         };
 
         test('lança erro se a passphrase estiver incorreta', async () => {
@@ -121,7 +147,30 @@ describe('authService', () => {
                 .rejects.toThrow('Frase-passe incorreta');
         });
 
+        test('lança erro se o username já existir', async () => {
+            // username duplicado
+            prisma.administrador.findUnique.mockResolvedValueOnce({});
+            prisma.utilizador.findUnique.mockResolvedValueOnce(null);
+
+            await expect(registerAdministrador(dadosAdmin))
+                .rejects.toThrow('Nome de Utilizador já registado');
+        });
+
+        test('lança erro se o email já existir', async () => {
+            // username livre
+            prisma.administrador.findUnique.mockResolvedValueOnce(null);
+            prisma.utilizador.findUnique.mockResolvedValueOnce(null);
+            // email duplicado no administrador
+            prisma.administrador.findUnique.mockResolvedValueOnce({});
+            // email utilizador inexistente
+            prisma.utilizador.findUnique.mockResolvedValueOnce(null);
+
+            await expect(registerAdministrador(dadosAdmin))
+                .rejects.toThrow('Email já registado');
+        });
+
         test('regista administrador com sucesso', async () => {
+            // todas as verificações livres (username, email)
             prisma.administrador.findUnique.mockResolvedValue(null);
             prisma.utilizador.findUnique.mockResolvedValue(null);
 
@@ -137,23 +186,34 @@ describe('authService', () => {
                     username: 'adminTeste',
                     nome: 'Administrador de Teste',
                     email: 'admin@exemplo.com',
-                    password_hash: 'hashAdmFalsa',
-                }),
+                    password_hash: 'hashAdmFalsa'
+                })
             });
             expect(resultado).toEqual({ id: 2, password_hash: 'hashAdmFalsa', ...dadosAdmin });
         });
     });
 
-    // Testes para o login de utilizadores
     describe('loginUtilizador', () => {
         const creds = { email: 'user@exa.com', password: 'passUser' };
 
+        test('lança erro se o utilizador não existir', async () => {
+            prisma.utilizador.findUnique.mockResolvedValue(null);
+            await expect(loginUtilizador(creds))
+                .rejects.toThrow('Credenciais inválidas');
+        });
+
+        test('lança erro se a password for inválida', async () => {
+            prisma.utilizador.findUnique.mockResolvedValue({ id: 3, email: creds.email, password_hash: 'hash' });
+            const bcrypt = require('bcryptjs'); bcrypt.compare.mockResolvedValue(false);
+
+            await expect(loginUtilizador(creds))
+                .rejects.toThrow('Credenciais inválidas');
+        });
+
         test('devolve token em caso de sucesso', async () => {
             prisma.utilizador.findUnique.mockResolvedValue({ id: 3, email: creds.email, password_hash: 'hash' });
-            const bcrypt = require('bcryptjs');
-            bcrypt.compare.mockResolvedValue(true);
-            const jwt = require('jsonwebtoken');
-            jwt.sign.mockReturnValue('tokenUser');
+            const bcrypt = require('bcryptjs'); bcrypt.compare.mockResolvedValue(true);
+            const jwt = require('jsonwebtoken'); jwt.sign.mockReturnValue('tokenUser');
 
             const resultado = await loginUtilizador(creds);
 
@@ -166,16 +226,35 @@ describe('authService', () => {
         });
     });
 
-    // Testes para o login de administradores
     describe('loginAdministrador', () => {
         const credsAdm = { email: 'adm@exa.com', password: 'passAdm' };
 
+        test('lança erro se o administrador não existir', async () => {
+            prisma.administrador.findUnique.mockResolvedValue(null);
+            await expect(loginAdministrador(credsAdm))
+                .rejects.toThrow('Credenciais inválidas');
+        });
+
+        test('lança erro se a password for inválida', async () => {
+            prisma.administrador.findUnique.mockResolvedValue({ id: 4, email: credsAdm.email, password_hash: 'hash', ativo: true });
+            const bcrypt = require('bcryptjs'); bcrypt.compare.mockResolvedValue(false);
+
+            await expect(loginAdministrador(credsAdm))
+                .rejects.toThrow('Credenciais inválidas');
+        });
+
+        test('lança erro se a conta estiver desativada', async () => {
+            prisma.administrador.findUnique.mockResolvedValue({ id: 4, email: credsAdm.email, password_hash: 'hash', ativo: false });
+            const bcrypt = require('bcryptjs'); bcrypt.compare.mockResolvedValue(true);
+
+            await expect(loginAdministrador(credsAdm))
+                .rejects.toThrow('Conta de administrador desativada');
+        });
+
         test('devolve token em caso de sucesso', async () => {
             prisma.administrador.findUnique.mockResolvedValue({ id: 4, email: credsAdm.email, password_hash: 'hash', ativo: true });
-            const bcrypt = require('bcryptjs');
-            bcrypt.compare.mockResolvedValue(true);
-            const jwt = require('jsonwebtoken');
-            jwt.sign.mockReturnValue('tokenAdm');
+            const bcrypt = require('bcryptjs'); bcrypt.compare.mockResolvedValue(true);
+            const jwt = require('jsonwebtoken'); jwt.sign.mockReturnValue('tokenAdm');
 
             const resultado = await loginAdministrador(credsAdm);
 
@@ -187,4 +266,5 @@ describe('authService', () => {
             expect(resultado).toEqual({ token: 'tokenAdm', role: 'Administrador', id: 4 });
         });
     });
+
 });

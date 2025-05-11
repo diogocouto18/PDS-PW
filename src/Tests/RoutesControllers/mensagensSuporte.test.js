@@ -1,40 +1,48 @@
-// Mocks dos middlewares de autenticação
+/**
+ * Testes de rota/controllers para Mensagens de Suporte (sem BD real),
+ * mocka mensagemSuporteService e ignora autenticação.
+ *
+ * Aborda:
+ * - POST /mensagens-suporte
+ * - POST /mensagens-suporte/:id_ticket/responder
+ * - PUT /mensagens-suporte/:id_ticket/fechar
+ * - GET /mensagens-suporte/:id_ticket
+ * - DELETE /mensagens-suporte/suporte/:id_ticket
+ */
+
 jest.mock('../../Middlewares/authMiddlewares', () => ({
-    autenticacao: (req, res, next) => next(), // Mock para autenticação
-    apenasUtilizadores: (req, res, next) => next(), // Mock para garantir que apenas utilizadores podem acessar
-    proprioUtilizadorOuAdministrador: (req, res, next) => next(), // Mock para permitir acesso ao próprio utilizador ou administradores
-    apenasAdministrador: (req, res, next) => next(), // Mock para garantir que apenas administradores podem acessar
+    autenticacao: (req, res, next) => next(), // Ignora autenticação
+    apenasUtilizadores: (req, res, next) => next(), // Ignora restrição para utilizadores
+    proprioUtilizadorOuAdministrador: (req, res, next) => next(), // Ignora restrição para utilizador ou admin
+    apenasAdministrador: (req, res, next) => next(), // Ignora restrição para administradores
 }));
 
-// Mock do service de mensagem de suporte
 jest.mock('../../Services/mensagemSuporteService', () => ({
-    criarMensagemInicial: jest.fn(), // Mock para criar a mensagem inicial
-    enviarResposta: jest.fn(), // Mock para enviar uma resposta
-    fecharTicket: jest.fn(), // Mock para fechar um ticket
+    criarMensagemInicial: jest.fn(), // Mock para criar mensagem inicial
+    enviarResposta: jest.fn(), // Mock para enviar resposta
+    fecharTicket: jest.fn(), // Mock para fechar ticket
     listarMensagensDoTicket: jest.fn(), // Mock para listar mensagens de um ticket
-    removerTicket: jest.fn(), // Mock para remover um ticket
+    removerTicket: jest.fn(), // Mock para remover ticket
 }));
 const suporteService = require('../../Services/mensagemSuporteService');
 
-const request = require('supertest'); // Biblioteca para testar endpoints HTTP
-const express = require('express'); // Framework para criar a aplicação
-const router = require('../../Routes/mensagensSuporte'); // Router de mensagens de suporte
+const request = require('supertest');
+const express = require('express');
+const router = require('../../Routes/mensagensSuporte');
 
-// Monta app Express isolada apenas com o router de mensagensSuporte
+// Configuração da aplicação Express isolada
 const app = express();
-app.use(express.json()); // Middleware para interpretar JSON
+app.use(express.json());
 // Injeta req.utilizador.id e tipo via header
 app.use((req, res, next) => {
     const tipo = req.headers['x-user-type'];
     req.utilizador = { id: 10, tipo: tipo || 'Utilizador' }; // Simula um utilizador autenticado
     next();
 });
-app.use('/mensagens-suporte', router); // Adiciona o router de mensagens de suporte
+app.use('/mensagens-suporte', router);
 
-// Suite de testes para as rotas /mensagens-suporte
 describe('Rotas /mensagens-suporte (sem BD)', () => {
-    // Limpa os mocks antes de cada teste
-    beforeEach(() => jest.clearAllMocks());
+    beforeEach(() => jest.clearAllMocks()); // Limpa os mocks antes de cada teste
 
     // Testes para a rota POST /mensagens-suporte
     describe('POST /mensagens-suporte', () => {
@@ -46,11 +54,8 @@ describe('Rotas /mensagens-suporte (sem BD)', () => {
                 .post('/mensagens-suporte')
                 .send({ mensagem: 'Help' });
 
-            // Verifica se o status e o corpo da resposta estão corretos
             expect(res.status).toBe(201);
             expect(res.body).toEqual(mockMsg);
-
-            // Verifica se o serviço foi chamado com os dados corretos
             expect(suporteService.criarMensagemInicial).toHaveBeenCalledWith({
                 id_ticket: expect.any(Number),
                 id_utilizador: 10,
@@ -65,7 +70,6 @@ describe('Rotas /mensagens-suporte (sem BD)', () => {
                 .post('/mensagens-suporte')
                 .send({ mensagem: 'X' });
 
-            // Verifica se o status e o corpo da resposta estão corretos
             expect(res.status).toBe(500);
             expect(res.body).toEqual({ error: 'Erro criar' });
         });
@@ -81,11 +85,8 @@ describe('Rotas /mensagens-suporte (sem BD)', () => {
                 .post('/mensagens-suporte/123/responder')
                 .send({ mensagem: 'Reply' });
 
-            // Verifica se o status e o corpo da resposta estão corretos
             expect(res.status).toBe(200);
             expect(res.body).toEqual(mockResp);
-
-            // Verifica se o serviço foi chamado com os dados corretos
             expect(suporteService.enviarResposta).toHaveBeenCalledWith({
                 id_ticket: '123',
                 mensagem: 'Reply',
@@ -103,11 +104,8 @@ describe('Rotas /mensagens-suporte (sem BD)', () => {
                 .set('x-user-type', 'Administrador')
                 .send({ mensagem: 'Admin' });
 
-            // Verifica se o status e o corpo da resposta estão corretos
             expect(res.status).toBe(200);
             expect(res.body).toEqual(mockAdmin);
-
-            // Verifica se o serviço foi chamado com os dados corretos
             expect(suporteService.enviarResposta).toHaveBeenCalledWith({
                 id_ticket: '123',
                 mensagem: 'Admin',
@@ -123,7 +121,6 @@ describe('Rotas /mensagens-suporte (sem BD)', () => {
                 .post('/mensagens-suporte/999/responder')
                 .send({ mensagem: 'X' });
 
-            // Verifica se o status e o corpo da resposta estão corretos
             expect(res.status).toBe(500);
             expect(res.body).toEqual({ error: 'Erro resp' });
         });
@@ -137,11 +134,8 @@ describe('Rotas /mensagens-suporte (sem BD)', () => {
 
             const res = await request(app).put('/mensagens-suporte/123/fechar');
 
-            // Verifica se o status e o corpo da resposta estão corretos
             expect(res.status).toBe(200);
             expect(res.body).toEqual({ message: 'Ticket fechado com sucesso.', updates: mockUpdates });
-
-            // Verifica se o serviço foi chamado com o ID correto
             expect(suporteService.fecharTicket).toHaveBeenCalledWith('123');
         });
 
@@ -150,7 +144,6 @@ describe('Rotas /mensagens-suporte (sem BD)', () => {
 
             const res = await request(app).put('/mensagens-suporte/123/fechar');
 
-            // Verifica se o status e o corpo da resposta estão corretos
             expect(res.status).toBe(500);
             expect(res.body).toEqual({ error: 'Erro fechar' });
         });
@@ -164,11 +157,8 @@ describe('Rotas /mensagens-suporte (sem BD)', () => {
 
             const res = await request(app).get('/mensagens-suporte/123');
 
-            // Verifica se o status e o corpo da resposta estão corretos
             expect(res.status).toBe(200);
             expect(res.body).toEqual(mockList);
-
-            // Verifica se o serviço foi chamado com o ID correto
             expect(suporteService.listarMensagensDoTicket).toHaveBeenCalledWith('123');
         });
 
@@ -177,7 +167,6 @@ describe('Rotas /mensagens-suporte (sem BD)', () => {
 
             const res = await request(app).get('/mensagens-suporte/123');
 
-            // Verifica se o status e o corpo da resposta estão corretos
             expect(res.status).toBe(500);
             expect(res.body).toEqual({ error: 'Erro listar' });
         });
@@ -190,11 +179,8 @@ describe('Rotas /mensagens-suporte (sem BD)', () => {
 
             const res = await request(app).delete('/mensagens-suporte/suporte/123');
 
-            // Verifica se o status e o corpo da resposta estão corretos
             expect(res.status).toBe(200);
             expect(res.body).toEqual({ message: 'Ticket removido com sucesso' });
-
-            // Verifica se o serviço foi chamado com o ID correto
             expect(suporteService.removerTicket).toHaveBeenCalledWith('123');
         });
 
@@ -203,7 +189,6 @@ describe('Rotas /mensagens-suporte (sem BD)', () => {
 
             const res = await request(app).delete('/mensagens-suporte/suporte/123');
 
-            // Verifica se o status e o corpo da resposta estão corretos
             expect(res.status).toBe(500);
             expect(res.body).toEqual({ error: 'Erro ao remover ticket' });
         });
