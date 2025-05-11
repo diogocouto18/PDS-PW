@@ -9,7 +9,9 @@ const SidebarFixed = () => {
   return (
     <aside className="sidebar">
       <div className="sidebar-top">
-        <FaEnvelope className="sidebar-icon" />
+        <Link to={role === "Administrador" ? "/notificacaoAdministrador" : "/notificacao"}>
+          <FaEnvelope className="sidebar-icon" />
+        </Link>       
       </div>
 
       <nav className="sidebar-menu">

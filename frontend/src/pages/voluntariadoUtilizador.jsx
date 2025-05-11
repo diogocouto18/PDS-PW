@@ -82,15 +82,19 @@ const Voluntariado = () => {
         </div>
 
 
-        <h2>Anúncios Disponíveis</h2>
+      <h2>Anúncios Disponíveis</h2>
         <div className="anuncios-grid">
-          {anuncios.map(a => (
-            <AnunciosCartazUtilizador
-              key={a.id}
-              anuncio={a}
-              onCandidatar={handleCandidatar}
-            />
-          ))}
+          {anuncios.length > 0 ? (
+            anuncios.map(a => (
+              <AnunciosCartazUtilizador
+                key={a.id}
+                anuncio={a}
+                onCandidatar={handleCandidatar}
+              />
+            ))
+          ) : (
+            <p>Ainda não existem anuncios disponiveis.</p>
+          )}
         </div>
 
         {showModal && selected && (

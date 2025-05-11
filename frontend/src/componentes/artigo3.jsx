@@ -1,5 +1,5 @@
 import React from "react";
-import '../styles/CriarEvento.css';
+//import '../styles/CriarEvento.css';
 
 const Artigo3= ({ setShowArtigo3 }) => {
     return (

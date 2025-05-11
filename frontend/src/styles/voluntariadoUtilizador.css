@@ -10,7 +10,7 @@
   color: #0d415a;
 }
 
-.anuncios-grid {
+.voluntariado-page .anuncios-grid {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
@@ -19,6 +19,7 @@
   overflow-y: auto;
   padding-right: 0.5rem;
   box-sizing: border-box;
+  padding: 1rem;
 }
 
 .voluntariado-page .candidaturas-grid {

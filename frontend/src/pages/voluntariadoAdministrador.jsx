@@ -55,7 +55,7 @@ const AnunciosAdministrador = () => {
                     <CandidaturasCartazAdministrador anuncioId={anuncioActivo.id}  />
                   </section>
                 ))
-            : <p>Sem anúncios activos para listar candidaturas.</p>
+            : <p>Sem anúncios ativos para listar candidaturas.</p>
           }
         </div>
         <h2>Anúncios</h2>
