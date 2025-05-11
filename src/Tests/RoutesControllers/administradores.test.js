@@ -1,4 +1,4 @@
-// Faz mock dos middlewares de autenticação para sempre chamar next()
+// Faz mock dos middlewares de autenticação para chamar sempre next()
 jest.mock('../../Middlewares/authMiddlewares', () => ({
     autenticacao: (req, res, next) => next(),
     apenasAdministrador: (req, res, next) => next(),
@@ -29,6 +29,7 @@ describe('Rotas /administradores (sem BD)', () => {
         jest.resetAllMocks();
     });
 
+    // Testes para a rota GET /administradores
     describe('GET /administradores', () => {
         it('devolve 200 e lista de administradores', async () => {
             const mockLista = [
@@ -52,6 +53,7 @@ describe('Rotas /administradores (sem BD)', () => {
         });
     });
 
+    // Testes para a rota GET /administradores/:id
     describe('GET /administradores/:id', () => {
         it('devolve 200 e o administrador quando existe', async () => {
             const mockAdmin = { id: 1, nome: 'Admin Um', email: 'a1@teste.com' };
@@ -80,6 +82,7 @@ describe('Rotas /administradores (sem BD)', () => {
         });
     });
 
+    // Testes para a rota PUT /administradores/:id
     describe('PUT /administradores/:id', () => {
         it('devolve 200 e o administrador atualizado', async () => {
             const updateData = { nome: 'Novo Nome' };
@@ -108,6 +111,7 @@ describe('Rotas /administradores (sem BD)', () => {
         });
     });
 
+    // Testes para a rota DELETE /administradores/:id
     describe('DELETE /administradores/:id', () => {
         it('devolve 200 em caso de sucesso', async () => {
             administradorService.eliminarAdministradores.mockResolvedValue();

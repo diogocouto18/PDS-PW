@@ -1,6 +1,11 @@
+// Importa o PrismaClient para interagir com a base de dados
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+
+// Importa o serviço de notificações
 const notificacaoService = require('../../Services/notificacaoService');
+
+// Importa as funções do serviço de sorteio de rifas que serão testadas
 const {
     criarSorteio,
     listarSorteios,
@@ -11,37 +16,40 @@ const {
     sortearTerceiroLugar,
 } = require('../../Services/sorteioRifasService');
 
-// Mock do PrismaClient
+// Mock do PrismaClient para simular interações com a base de dados
 jest.mock('@prisma/client', () => {
     const mPrismaClient = {
         sorteioRifas: {
-            create: jest.fn(),
-            findMany: jest.fn(),
-            update: jest.fn(),
-            delete: jest.fn(),
+            create: jest.fn(), // Mock para criar sorteios
+            findMany: jest.fn(), // Mock para listar sorteios
+            update: jest.fn(), // Mock para atualizar sorteios
+            delete: jest.fn(), // Mock para eliminar sorteios
         },
         rifa: {
-            createMany: jest.fn(),
-            findMany: jest.fn(),
-            update: jest.fn(),
+            createMany: jest.fn(), // Mock para criar rifas
+            findMany: jest.fn(), // Mock para listar rifas
+            update: jest.fn(), // Mock para atualizar rifas
         },
         utilizador: {
-            findMany: jest.fn(),
+            findMany: jest.fn(), // Mock para listar utilizadores
         }
     };
     return { PrismaClient: jest.fn(() => mPrismaClient) };
 });
 
-// Mock do notificacaoService
+// Mock do serviço de notificações
 jest.mock('../../Services/notificacaoService', () => ({
-    criarNotificacao: jest.fn()
+    criarNotificacao: jest.fn(), // Mock para criar notificações
 }));
 
+// Suite de testes para o serviço de sorteio de rifas
 describe('Sorteio Rifas Service', () => {
+    // Limpa os mocks antes de cada teste
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
+    // Teste para criar um novo sorteio e gerar rifas
     test('criarSorteio deve criar um novo sorteio e gerar rifas', async () => {
         const mockData = {
             nome: 'Sorteio Teste',
@@ -61,7 +69,7 @@ describe('Sorteio Rifas Service', () => {
             quantidadeTotal: 5,
             descricao: 'Sorteio de uma TV',
             premio: 'TV',
-            data_sorteio: new Date('2025-12-31'),  // Convertendo para Date
+            data_sorteio: new Date('2025-12-31'), // Convertendo para Date
             id_administrador: 1,
             id_evento: 2,
         };
@@ -71,6 +79,7 @@ describe('Sorteio Rifas Service', () => {
             estado: "PorComprar",
         }));
 
+        // Configura os mocks para criar sorteios e rifas
         prisma.sorteioRifas.create.mockResolvedValue(mockSorteio);
         prisma.rifa.createMany.mockResolvedValue(mockRifas);
 
@@ -79,6 +88,7 @@ describe('Sorteio Rifas Service', () => {
 
         const sorteio = await criarSorteio(mockData);
 
+        // Verifica se o sorteio foi criado corretamente
         expect(sorteio).toEqual(mockSorteio);
         expect(prisma.sorteioRifas.create).toHaveBeenCalledWith({
             data: {
@@ -87,7 +97,7 @@ describe('Sorteio Rifas Service', () => {
                 quantidadeTotal: parseInt(mockData.quantidadeTotal),
                 descricao: mockData.descricao,
                 premio: mockData.premio,
-                data_sorteio: expect.any(Date),  // Verifica se é uma instância de Date
+                data_sorteio: expect.any(Date), // Verifica se é uma instância de Date
                 id_administrador: parseInt(mockData.id_administrador),
                 id_evento: parseInt(mockData.id_evento),
             }
@@ -97,6 +107,7 @@ describe('Sorteio Rifas Service', () => {
         expect(notificacaoService.criarNotificacao).toHaveBeenCalledTimes(2); // Verifica se a notificação foi chamada para cada utilizador
     });
 
+    // Teste para listar todos os sorteios
     test('listarSorteios deve listar todos os sorteios existentes', async () => {
         const mockSorteios = [
             { id: 1, nome: 'Sorteio 1', data_sorteio: new Date('2025-12-31'), id_administrador: 1 },
@@ -110,6 +121,7 @@ describe('Sorteio Rifas Service', () => {
         expect(prisma.sorteioRifas.findMany).toHaveBeenCalled();
     });
 
+    // Teste para atualizar os dados de um sorteio
     test('atualizarSorteio deve atualizar os dados de um sorteio', async () => {
         const updatedData = { nome: 'Novo Sorteio Teste' };
         const mockSorteioAtualizado = { ...updatedData, id: 1, data_sorteio: new Date('2025-12-31') };
@@ -124,6 +136,7 @@ describe('Sorteio Rifas Service', () => {
         });
     });
 
+    // Teste para eliminar um sorteio e suas rifas
     test('eliminarSorteio deve remover um sorteio e suas rifas', async () => {
         const mockSorteio = { id: 1, nome: 'Sorteio 1', data_sorteio: new Date('2025-12-31'), id_administrador: 1 };
 
@@ -136,6 +149,7 @@ describe('Sorteio Rifas Service', () => {
         });
     });
 
+    // Teste para sortear um vencedor
     test('sortearVencedor deve sortear um vencedor e atualizar o estado da rifa', async () => {
         const mockRifa = { id: 1, estado: 'Comprada', id_utilizador: 2, id_sorteio: 1 };
         const mockRifaAtualizada = { ...mockRifa, estado: 'Vencedor' };
@@ -153,6 +167,7 @@ describe('Sorteio Rifas Service', () => {
         expect(notificacaoService.criarNotificacao).toHaveBeenCalled();
     });
 
+    // Teste para sortear o segundo lugar
     test('sortearSegundoLugar deve sortear o segundo lugar e atualizar o estado da rifa', async () => {
         const mockRifa = { id: 1, estado: 'Comprada', id_utilizador: 2, id_sorteio: 1 };
         const mockRifaAtualizada = { ...mockRifa, estado: 'SegundoLugar' };
@@ -170,6 +185,7 @@ describe('Sorteio Rifas Service', () => {
         expect(notificacaoService.criarNotificacao).toHaveBeenCalled();
     });
 
+    // Teste para sortear o terceiro lugar
     test('sortearTerceiroLugar deve sortear o terceiro lugar e atualizar o estado da rifa', async () => {
         const mockRifa = { id: 1, estado: 'Comprada', id_utilizador: 2, id_sorteio: 1 };
         const mockRifaAtualizada = { ...mockRifa, estado: 'TerceiroLugar' };

@@ -1,38 +1,46 @@
+// Importa o PrismaClient para interagir com a base de dados
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+
+// Importa o serviço de notificações
 const notificacaoService = require('../../Services/notificacaoService');
+
+// Importa a função do serviço de pagamentos que será testada
 const { comprarRifas } = require('../../Services/pagamentoService');
 
-// Mock do PrismaClient
+// Mock do PrismaClient para simular interações com a base de dados
 jest.mock('@prisma/client', () => {
     const mPrismaClient = {
         rifa: {
-            findMany: jest.fn(),
-            update: jest.fn(),
+            findMany: jest.fn(), // Mock para listar rifas disponíveis
+            update: jest.fn(), // Mock para atualizar o estado de uma rifa
         },
         sorteioRifas: {
-            findUnique: jest.fn(),
+            findUnique: jest.fn(), // Mock para obter detalhes de um sorteio
         },
         pagamento: {
-            create: jest.fn(),
+            create: jest.fn(), // Mock para criar um pagamento
         },
         utilizador: {
-            findMany: jest.fn(),
+            findMany: jest.fn(), // Mock para listar utilizadores
         },
     };
     return { PrismaClient: jest.fn(() => mPrismaClient) };
 });
 
-// Mock do notificacaoService
+// Mock do serviço de notificações
 jest.mock('../../Services/notificacaoService', () => ({
-    criarNotificacao: jest.fn()
+    criarNotificacao: jest.fn(), // Mock para criar notificações
 }));
 
+// Suite de testes para o serviço de pagamentos
 describe('Pagamento Service', () => {
+    // Limpa os mocks antes de cada teste
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
+    // Teste para processar a compra de rifas e gerar o pagamento
     test('comprarRifas deve processar a compra de rifas e gerar o pagamento', async () => {
         const mockData = {
             id_utilizador: 1,
@@ -68,13 +76,11 @@ describe('Pagamento Service', () => {
             estado: 'Pago',
         };
 
-        // Mocking dos métodos Prisma
+        // Configura os mocks para simular o comportamento esperado
         prisma.rifa.findMany.mockResolvedValue(mockRifasDisponiveis);
         prisma.sorteioRifas.findUnique.mockResolvedValue(mockSorteio);
         prisma.pagamento.create.mockResolvedValue(mockPagamento);
         prisma.rifa.update.mockResolvedValue({ ...mockRifasDisponiveis[0], estado: 'Comprada' });
-
-        // Mocking da notificação
         notificacaoService.criarNotificacao.mockResolvedValue({});
 
         // Chama a função comprarRifas
@@ -85,7 +91,7 @@ describe('Pagamento Service', () => {
             mockData.metodo_pagamento
         );
 
-        // Verificações
+        // Verifica se o pagamento foi criado corretamente
         expect(pagamento).toEqual(mockPagamento);
         expect(prisma.rifa.findMany).toHaveBeenCalledWith({
             where: {
@@ -104,7 +110,7 @@ describe('Pagamento Service', () => {
                 estado: 'Pago',
             },
         });
-        expect(prisma.rifa.update).toHaveBeenCalledTimes(mockData.quantidadeCompra); // Verifica quantas rifas foram atualizadas
+        expect(prisma.rifa.update).toHaveBeenCalledTimes(mockData.quantidadeCompra); // Verifica se o número correto de rifas foi atualizado
         expect(notificacaoService.criarNotificacao).toHaveBeenCalledWith({
             id_utilizador: mockData.id_utilizador,
             id_administrador: mockSorteio.id_administrador,
@@ -113,6 +119,7 @@ describe('Pagamento Service', () => {
         });
     });
 
+    // Teste para lançar erro quando não houver rifas suficientes disponíveis
     test('comprarRifas deve lançar erro quando não houver rifas suficientes disponíveis', async () => {
         const mockData = {
             id_utilizador: 1,
@@ -127,13 +134,13 @@ describe('Pagamento Service', () => {
             { id: 3, estado: 'PorComprar' },
         ];
 
+        // Configura os mocks para simular rifas insuficientes
         prisma.rifa.findMany.mockResolvedValue(mockRifasDisponiveis);
         prisma.sorteioRifas.findUnique.mockResolvedValue({ id: 1, preco: 10 });
 
-        // Teste para rifas insuficientes
+        // Verifica se a função lança um erro ao tentar comprar mais rifas do que as disponíveis
         await expect(
             comprarRifas(mockData.id_utilizador, mockData.id_sorteio, 5, mockData.metodo_pagamento)
         ).rejects.toThrow('Não há rifas suficientes disponíveis.');
     });
-
 });

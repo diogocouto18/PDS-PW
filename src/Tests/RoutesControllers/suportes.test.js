@@ -1,14 +1,7 @@
-/**
- * src/Tests/RoutesControllers/suportes.test.js
- *
- * Testes de rota/controllers para Suporte (sem BD real),
- * mockando suporteService e ignorando autenticação.
- */
-
 // Mock dos middlewares de autenticação
 jest.mock('../../Middlewares/authMiddlewares', () => ({
-    autenticacao: (req, res, next) => next(),
-    apenasAdministrador: (req, res, next) => next(),
+    autenticacao: (req, res, next) => next(), // Mock para autenticação
+    apenasAdministrador: (req, res, next) => next(), // Mock para autorização de administradores
 }));
 
 // Mock do service de suporte
@@ -30,9 +23,12 @@ const app = express();
 app.use(express.json());
 app.use('/suportes', suportesRouter);
 
+// Suite de testes para as rotas /suportes
 describe('Rotas /suportes (sem BD)', () => {
+    // Limpa os mocks antes de cada teste
     beforeEach(() => jest.clearAllMocks());
 
+    // Testes para a rota POST /suportes/artigos
     describe('POST /suportes/artigos', () => {
         it('devolve 201 e cria artigo', async () => {
             const mockArtigo = { id: 1, artigo: 'FAQ', descricao: 'Perguntas frequentes' };
@@ -44,8 +40,7 @@ describe('Rotas /suportes (sem BD)', () => {
 
             expect(res.status).toBe(201);
             expect(res.body).toEqual(mockArtigo);
-            expect(suporteService.criarArtigo)
-                .toHaveBeenCalledWith({ artigo: 'FAQ', descricao: 'Perguntas frequentes' });
+            expect(suporteService.criarArtigo).toHaveBeenCalledWith({ artigo: 'FAQ', descricao: 'Perguntas frequentes' });
         });
 
         it('devolve 500 em caso de erro', async () => {
@@ -60,6 +55,7 @@ describe('Rotas /suportes (sem BD)', () => {
         });
     });
 
+    // Testes para a rota GET /suportes/artigos
     describe('GET /suportes/artigos', () => {
         it('devolve 200 e lista de artigos', async () => {
             const mockList = [{ id: 2, artigo: 'Guia', descricao: 'Como usar' }];
@@ -80,6 +76,7 @@ describe('Rotas /suportes (sem BD)', () => {
         });
     });
 
+    // Testes para a rota GET /suportes/artigos/:id
     describe('GET /suportes/artigos/:id', () => {
         it('devolve 200 e artigo existente', async () => {
             const mockArtigo = { id: 3, artigo: 'Dica', descricao: 'Dica útil' };
@@ -108,6 +105,7 @@ describe('Rotas /suportes (sem BD)', () => {
         });
     });
 
+    // Testes para a rota PUT /suportes/artigos/:id
     describe('PUT /suportes/artigos/:id', () => {
         it('devolve 200 e artigo atualizado', async () => {
             const mockUpdated = { id: 4, artigo: 'FAQ', descricao: 'Atualizado' };
@@ -134,6 +132,7 @@ describe('Rotas /suportes (sem BD)', () => {
         });
     });
 
+    // Testes para a rota DELETE /suportes/artigos/:id
     describe('DELETE /suportes/artigos/:id', () => {
         it('devolve 200 em caso de sucesso', async () => {
             suporteService.eliminarArtigo.mockResolvedValue();
