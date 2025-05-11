@@ -31,32 +31,13 @@ Este projeto foi desenvolvido no âmbito da unidade curricular de **Projeto de D
 
 ### 🔹 Backend
 - **Node.js** com **Express**
-- **Prisma ORM**
+- **Prisma**
 - **MySQL** (base de dados relacional)
 - Autenticação com **JWT**
 - Middlewares de autorização
+- Testes em Jest e Supertest
 
 ### 🔹 Frontend
-- **React** com **Vite**
-- **React Router DOM** para navegação
+- **React**
 - Estilização com **CSS Modules**
-- Comunicação com a API via **Axios**
-
-## 📁 Estrutura de Pastas
-
-```bash
-├── backend/
-│   ├── Controllers/
-│   ├── Routes/
-│   ├── Middlewares/
-│   ├── prisma/
-│   ├── index.js
-│   └── .env
-├── frontend/
-│   ├── src/
-│   │   ├── pages/
-│   │   ├── components/
-│   │   ├── styles/
-│   │   └── App.jsx
-│   └── vite.config.js
-
+- Comunicação com a API
