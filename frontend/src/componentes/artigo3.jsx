@@ -1,6 +1,5 @@
 import React from "react";
-//import '../styles/CriarEvento.css';
-
+import '../styles/PopUp.css';
 const Artigo3= ({ setShowArtigo3 }) => {
     return (
         <div className="overlay">
