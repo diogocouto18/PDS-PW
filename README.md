@@ -39,5 +39,6 @@ Este projeto foi desenvolvido no âmbito da unidade curricular de **Projeto de D
 
 ### 🔹 Frontend
 - **React**
+- JavaScript
 - Estilização com **CSS Modules**
 - Comunicação com a API
