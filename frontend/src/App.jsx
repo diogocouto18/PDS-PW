@@ -30,11 +30,6 @@ function App() {
 
           <Route path="/voluntariado" element={<Voluntariado />} />
           <Route path="/suporte" element={<Suporte />} />
-<<<<<<< HEAD
-=======
-          <Route path="/suporte3" element={<Suporte3 />} />
-          
->>>>>>> 1427d2820dd0d574b6d6d3ed4cc3c12a47d73760
           <Route path="/perfil" element={<PerfilUtilizador />} />
           
         </Routes>

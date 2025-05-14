@@ -3,7 +3,7 @@ import '../styles/eventosAdministrador.css';
 import Sidebar from "../componentes/Sidebar";
 import SearchBar from "../componentes/searchbar";
 import Filter from "../componentes/filters";
-import CriarEvento from '../componentes/criar_evento';
+/* import CriarEvento from '../componentes/criar_evento'; */
 
 const PerfilAdministrador = () => {
     const [showModal, setShowModal] = useState(false);
