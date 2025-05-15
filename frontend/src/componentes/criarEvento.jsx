@@ -10,6 +10,7 @@ const CriarEvento = ({ setShowModal }) => {
     localEvento: "",
     descricaoEvento: "",
     idCategoria: "",
+    foto: null, // Novo campo para armazenar a foto
   });
 
   const handleChange = (e) => {
@@ -17,24 +18,28 @@ const CriarEvento = ({ setShowModal }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData((prev) => ({ ...prev, foto: file }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { nomeEvento, dataEvento, localEvento, descricaoEvento, idCategoria } = formData;
-    const idAdministrador = "1" ;// Pegue o id do admin
-    const foto ="Teste";
+    const { nomeEvento, dataEvento, localEvento, descricaoEvento, idCategoria, foto } = formData;
+    const idAdministrador = "1" // Pegue o id do admin
 
     const payload = new FormData();
     payload.append("titulo", nomeEvento);
     payload.append("data_evento", dataEvento);
     payload.append("localizacao", localEvento);
-    payload.append("descricao", descricaoEvento); 
+    payload.append("descricao", descricaoEvento || ""); // Pode enviar vazio se for opcional
     payload.append("id_categoria", Number(idCategoria));
     payload.append("id_administrador", Number(idAdministrador)); // Importante enviar esse campo
-    payload.append("fotografia", foto);
-   
+
+    if (foto) {
+      payload.append("fotografia", foto);
+    }
 
     try {
       const token = localStorage.getItem("token");
