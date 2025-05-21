@@ -1,0 +1,114 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.fundo{
+  height: 100%;
+  background-color: #0e4b68;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.register-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.logo {
+  width: 650px;
+  margin-bottom: 50px;
+}
+
+.form-wrapper {
+  background-color: #fff;
+  padding: 30px 40px;
+  text-align: center;
+  height: 450px;
+  width:800px;
+}
+
+.title-register{
+  position: absolute;
+  top: 260px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #e4c5b8;
+  color: #001d36;
+  font-size: 30px;
+  font-weight: 800;
+  padding: 8px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.input-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.input-group input {
+  padding: 12px;
+  border: none;
+  background-color: #cfcfcf;
+  font-size: 16px;
+}
+
+.terms {
+  margin: 20px 0;
+  text-align: center;
+  font-size: 14px;
+}
+
+.register-btn {
+  background-color: #e3c6b5;
+  color: #001d36;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.register-btn:hover {
+  background-color: #e7b496;
+}
+
+.login-link {
+  margin-top: 15px;
+  font-size: 0.9em;
+  text-align: center;
+  color: #000;
+}
+
+.login-link a {
+  color: #333;
+  font-weight: 500;
+  text-decoration: underline;
+}
+.form-wrapper
+input[type='text'],
+input[type='password'],
+input[type='email']{
+  width: 100%;
+  padding: 12px;
+  margin-top: 18px;
+  background-color: #cfcfcf;
+  border: none;
+  border-radius: 2px;
+  font-size: 14px;
+}
+
+input[type='checkbox']:checked {
+  accent-color: #e4c5b8;
+}
+
+.campo-desativado {
+  background-color: #333 !important;
+  cursor: not-allowed;
+}

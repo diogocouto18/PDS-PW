@@ -1,0 +1,154 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fundo geral */
+.fundo{
+  height: 100%;
+  background-color: #0e4b68;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container principal */
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  width: 650px;
+  margin-bottom: 50px;
+}
+
+/* Campos */
+.login-page
+input[type='text'],
+input[type='password'],
+input[type='email']{
+  width: 100%;
+  padding: 12px;
+  margin-top: 18px;
+  background-color: #AAAAAA;
+  border: none;
+  border-radius: 2px;
+  font-size: 14px;
+}
+
+input[type='checkbox']:checked {
+  accent-color: #e4c5b8;
+}
+
+/* Campo da password com olho */
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 65%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Lembrar + link */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85em;
+  margin-top: 10px;
+}
+
+.options input[type='checkbox'] {
+  margin-right: 5px;
+}
+
+.options a {
+  color: #1f1f1f;
+  text-decoration: underline;
+}
+
+/* Botão */
+button[type='submit'] {
+  width: 100%;
+  background-color: #e4c5b8;
+  border: none;
+  display: block;
+  margin: 25px auto 0 auto;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #1a1a1a;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #d4b3a6;
+}
+
+/* Link de registo */
+.register {
+  margin-top: 15px;
+  font-size: 0.9em;
+  text-align: center;
+  color: #000;
+}
+
+.register a {
+  color: #333;
+  font-weight: 500;
+  text-decoration: underline;
+}
+.form-wrapper-login {
+  position: relative;
+  background-color: white;
+  padding: 70px;
+  width: 484px;
+  height: 384px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-wrapper-login h2 {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #e4c5b8;
+  color: #001d36;
+  font-size: 30px;
+  font-weight: 800;
+  padding: 8px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.eyeIco{
+  width: 20px;
+  box-shadow: inset #000;
+}
+
+
+.mensagem {
+  margin-top: 15px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.95em;
+}
+
+.mensagem.sucesso {
+  color: green;
+}
+
+.mensagem.erro {
+  color: red;
+}
+
