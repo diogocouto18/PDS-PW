@@ -1,53 +1,75 @@
-
+/* Grid de candidaturas: lado a lado com quebra automática */
 .candidaturas-grid {
   display: flex;
-  flex-direction: column;      /* empilha elementos verticalmente */
-  justify-content: space-between; /* botão no fundo */
-  background-color: #f9f9f9;
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  width: 200px;               /* mantém largura fixa */
-  max-width: 100%;            /* responsivo em telas pequenas */
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;              
+  gap: 1rem;                     
+  padding: 0.75rem;
+  justify-content: center;
+  width: 100%;           /* ou max-width: 100% */
+  margin: 0 auto;
   box-sizing: border-box;
+  overflow-y: auto;
+  max-height: 150vh;             /* ou o valor que queiras */
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none; 
 }
 
-/* título */
-.candidaturas-grid h3 {
-  margin: 0 0 0.5rem;
-  color: #0d415a;
-  font-size: 1.2rem;
-  line-height: 1.3;
+/* Cartão individual de candidatura */
+.anuncio-card {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  flex: 1 1 250px;
+  max-width: 300px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.05);
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  
 }
 
-/* parágrafos */
-.candidaturas-grid p {
+/* Título h3 (no componente pai) */
+.candidatura-section h3 {
+  margin: 2rem auto 0.5rem;
+  color: #0d415a;                
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  max-width: 100%;              /* (opcional) garante que respeita a largura do container */
+  word-wrap: break-word;
+}
+
+/* Parágrafos dentro de cada candidatura */
+.anuncio-card p {
   margin: 0.25rem 0;
   font-size: 0.95rem;
   line-height: 1.4;
-  word-break: break-word;       /* força quebra de palavra se necessário */
+  word-break: break-word;
+  max-height: 320px;       /* ou outro valor razoável */
+  overflow: hidden;
 }
 
-/* destaca o label forte */
-.candidaturas-grid p strong {
+/* Label em bold */
+.anuncio-card p strong {
   color: #0d415a;
 }
 
-
-.candidaturas-grid__botoes{
+/* Botões */
+.candidaturas-grid__botoes {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 1rem;
-  margin-top: 1rem;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
 }
-
 
 .candidaturas-grid__botoes button {
   flex: 1;
   height: 30px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: inherit;
   border: none;
   border-radius: 8px;
@@ -55,9 +77,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s ease;
-  background-color: #0d415a;
-  color: white;
   background-color: #052030;
+  color: white;
+  transition: background-color 0.2s ease;
 }
 
+.candidaturas-grid__botoes button:hover {
+  background-color: #0d415a;
+}
+
+.mensagem-scroll {
+  max-height: 55px;               /* Ajusta conforme o espaço que quiseres */
+  overflow-y: auto;
+  margin: 0.25rem 0;
+  font-size: 0.80rem;
+  line-height: 1.4;
+  word-break: break-word;
+
+  scrollbar-width: none;           /* Firefox */
+  -ms-overflow-style: none;        /* IE */
+  padding-right: 5px;
+}
+
+.mensagem-scroll::-webkit-scrollbar {
+  display: none;                   /* Chrome, Safari */
+}

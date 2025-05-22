@@ -41,7 +41,8 @@ const CandidaturasCartazAdministrador = ({ anuncioId }) => {
         <div key={c.id} className="anuncio-card">
           <p><strong>Evento:</strong> {c.Anuncio?.Evento?.titulo || 'Sem nome'}</p>
           <p><strong>Voluntário:</strong> {c.Utilizador?.username || 'Desconhecido'}</p>
-          <p><strong>Mensagem:</strong> {c.mensagem || '—'}</p>
+          <p><strong>Mensagem:</strong></p>
+          <div className="mensagem-scroll">{c.mensagem || '—'}</div>
           <p><strong>Estado:</strong> {c.estado}</p>
           
           {c.estado === 'Pendente' && (
