@@ -50,6 +50,7 @@
 
 .evento-share-btn:hover {
   color: #000;
+  background-color: transparent; 
 }
 
 .Filtro{
