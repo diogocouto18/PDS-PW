@@ -4,7 +4,12 @@ const eventoService = require("../Services/eventoService");
 async function criarEvento(req, res) {
     try {
         const { id } = req.utilizador;
-        const eventoData = { ...req.body, id_administrador: id };
+        const fotografia = req.file ? req.file.filename : null;
+
+        if (!fotografia) {
+        return res.status(400).json({ error: "A fotografia é obrigatória." });
+    }
+        const eventoData = { ...req.body, id_administrador: id, id_categoria: Number(req.body.id_categoria), fotografia };
         const novoEvento = await eventoService.criarEvento(eventoData);
         res.status(201).json(novoEvento);
     } 

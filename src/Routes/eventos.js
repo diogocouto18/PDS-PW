@@ -3,9 +3,10 @@ const router = express.Router();
 const eventoController = require("../Controllers/eventoController");
 
 const {autenticacao, apenasAdministrador} = require("../Middlewares/authMiddlewares");
+const upload = require("../Middlewares/uploadMiddlewares");
 
 // Criar um novo evento (apenas administrador)
-router.post("/", autenticacao, apenasAdministrador, eventoController.criarEvento);
+router.post("/", autenticacao, apenasAdministrador, upload.single("fotografia"), eventoController.criarEvento);
 
 // Lista todos os eventos existentes (qualquer utilizador)
 router.get("/", autenticacao, eventoController.listarEventos);

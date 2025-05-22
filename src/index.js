@@ -2,6 +2,8 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
+const multer = require('multer');
 
 // Inicializa o dotenv para usar variáveis de ambiente
 dotenv.config();
@@ -13,6 +15,8 @@ const app = express();
 app.use(express.json()); // Para o parsing de JSON
 app.use(express.urlencoded({ extended: true })); // Para o parsing de dados do formulário
 app.use(cors()); // Permitir comunicação com o frontend
+
+app.use('/uploads', express.static(path.join(__dirname, 'Uploads')));
 
 // Importa as rotas
 const administradorRoutes = require('./Routes/administradores');
@@ -45,6 +49,16 @@ app.use('/rifas', rifaRoutes);
 app.use('/sorteio-rifas', sorteioRifasRoutes);
 app.use('/suportes', suporteRoutes);
 app.use('/utilizadores', utilizadorRoutes);
+
+
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    return res.status(400).json({ error: err.message });
+  }
+  console.error('Erro não tratado:', err);
+  res.status(500).json({ error: 'Erro interno do servidor', detalhes: err.message });
+});
+
 
 // Iniciar o servidor apenas se não estivermos em modo de testes
 if (process.env.NODE_ENV !== 'test') {
