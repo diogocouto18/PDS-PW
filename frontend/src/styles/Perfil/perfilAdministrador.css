@@ -1,3 +1,11 @@
+
+.PerfilPage {
+  background-color: #fff;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 250px; /* ajuste se o Sidebarfixed ocupar espaço fixo à esquerda */
+}
+
 .body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -16,22 +24,24 @@
 .profile-section {
   display: flex;
   align-items: flex-start;
-  gap: 1.5rem;
+  gap: 2rem;
+  margin-left: 180px;
+  margin-top: 190px;
 }
 
 .admin-avatar {
-  width: 130px;
-  height: 130px;
+  width: 400px;
+  height: 350px;
   background-color: #f4cbb8;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 .admin-avatar::before {
   content: "👔";
-  font-size: 64px;
+  font-size: 256px;
 }
 
 .admin-info {
@@ -63,15 +73,17 @@
 }
 
 .admin-button {
-  width: 160px;
-  padding: 8px 12px;
+  width: 414px;
+  padding: 25px 42px;
   background-color: #e3e3e3;
   border: none;
   border-radius: 4px;
-  font-weight: bold;
+  font-weight: 800;
   cursor: pointer;
   text-align: center;
   transition: background 0.3s;
+  margin-bottom: 300px;
+  margin-left: 30px;
 }
 
 .admin-button:hover {
@@ -80,13 +92,13 @@
 
 .logout-button {
   position: absolute;
-  bottom: 20px;
+  width: 414px;
   right: 20px;
-  padding: 8px 16px;
+  padding: 12px 42px;
   background-color: #d3d3d3;
   border: none;
   border-radius: 4px;
-  font-weight: bold;
+  font-weight: 800;
   cursor: pointer;
   transition: background 0.3s;
 }

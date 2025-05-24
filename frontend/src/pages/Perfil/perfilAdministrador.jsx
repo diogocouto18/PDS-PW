@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/Perfil/perfilAdministrador.css";
+import SidebarFixed from "../../componentes/Sidebar/sidebarFixed";
 
 const PerfilAdministrador = () => {
   const [administrador, setAdministrador] = useState(null);
@@ -14,7 +15,8 @@ const PerfilAdministrador = () => {
       return;
     }
 
-    fetch(`http://localhost:3000/administrador/${id}`, {
+    fetch(`http://localhost:3000/administradores/${id}`, {
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -36,7 +38,7 @@ const PerfilAdministrador = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("id");
     localStorage.removeItem("role");
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   if (error) {
@@ -48,25 +50,27 @@ const PerfilAdministrador = () => {
   }
 
   return (
-    <div className="admin-container">
-      <div className="profile-section">
-        <div className="admin-avatar"></div>
-        <div className="admin-info">
-          <h2>{administrador.username}</h2>
-          <p><strong>{administrador.nome}</strong></p>
-          <p>{administrador.email}</p>
+    <div className="PerfilPage">
+      <SidebarFixed />
+      <div className="admin-container">
+        <div className="profile-section">
+          <div className="admin-avatar"></div>
+          <div className="admin-info">
+            <h2>Nome Utilizador: {administrador.username}</h2>
+            <p><strong>Nome: {administrador.nome}</strong></p>
+            <p>Email: {administrador.email}</p>
+          </div>
         </div>
-      </div>
 
-      <div className="admin-actions">
-        <button className="admin-button">Sortear Rifas</button>
-        <button className="admin-button">Gerir Doações</button>
-      </div>
+        <div className="admin-actions">
+          <button className="admin-button">Sortear Rifas</button>
+        </div>
 
-      <button className="logout-button" onClick={handleLogout}>
-        Terminar Sessão
-      </button>
-    </div>
+        <button className="logout-button" onClick={handleLogout}>
+          Terminar Sessão
+        </button>
+      </div>
+    </div>  
   );
 };
 
