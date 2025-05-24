@@ -32,7 +32,7 @@ async function listarEventos(req, res) {
 };
 
 // Get - Obtem um evento por ID
-async function obterEventoPorId(req, res) {
+/*async function obterEventoPorId(req, res) {
     try {
         const { id } = req.params;
         const evento = await eventoService.obterEventoPorId(id);
@@ -43,7 +43,7 @@ async function obterEventoPorId(req, res) {
         console.error("Erro ao obter evento:", error);
         res.status(500).json({ error: "Erro ao buscar evento" });
     }
-};
+};*/
 
 // Put - Atualiza um evento 
 async function atualizarEvento(req, res) {
@@ -68,11 +68,33 @@ async function eliminarEvento(req, res) {
         res.status(500).json({ error: "Erro ao eliminar evento" });
     }
 };
+const pesquisarEventos = async (req, res) => {
+  try {
+    const termo = req.query.q || '';
+    const eventos = await eventoService.pesquisarEventos(termo);
+    res.json(eventos);
+  } catch (error) {
+    console.error('Erro ao pesquisar eventos:', error);
+    res.status(500).json({ error: 'Erro ao pesquisar eventos' });
+  }
+};
+
+const listarTodosEventos = async (req, res) => {
+  try {
+    const eventos = await eventoService.listarTodosEventos();
+    res.json(eventos);
+  } catch (error) {
+    console.error('Erro ao listar eventos:', error);
+    res.status(500).json({ error: 'Erro ao listar eventos' });
+  }
+};
 
 module.exports = {
     criarEvento,
     listarEventos,
-    obterEventoPorId,
+    //obterEventoPorId,
     atualizarEvento,
-    eliminarEvento
+    eliminarEvento,
+    pesquisarEventos,
+    listarTodosEventos
 };

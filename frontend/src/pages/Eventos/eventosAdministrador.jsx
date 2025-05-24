@@ -14,11 +14,10 @@ const EventosAdministrador = () => {
                 <div className="search-container">
                     <SearchBar />
                 </div>
+                <Filter />
                 <div className="eventos-container">
                     <div className="Evento"></div>
-                    <div>
-                        <Filter />
-                    </div>
+                    
                     <button className="criar-evento-btn" onClick={() => setShowModal(true)}>
                         +
                     </button>

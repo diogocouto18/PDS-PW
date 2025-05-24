@@ -4,38 +4,52 @@ import SearchBar from "../../componentes/searchbar";
 import Filter from "../../componentes/filters";
 import { FaShareAlt } from 'react-icons/fa';
 import '../../styles/Eventos/ListaEventos.css';
-import { Link } from 'react-router-dom';
 
 const Eventos = () => {
   const [eventos, setEventos] = useState([]);
+  const [termoPesquisa, setTermoPesquisa] = useState('');
 
-  useEffect(() => {
-    const fetchEventos = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:3000/eventos', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  // Função para buscar eventos, pode buscar todos ou filtrar pela pesquisa
+  const fetchEventos = async (termo = '') => {
+    try {
+      const token = localStorage.getItem('token');
+      let url = 'http://localhost:3000/eventos/';
 
-        if (!res.ok) throw new Error('Erro ao buscar eventos');
-        const data = await res.json();
-        setEventos(data);
-      } catch (err) {
-        console.error(err);
-        alert('Erro ao carregar eventos.');
+      if (termo.trim() !== '') {
+        url = `http://localhost:3000/eventos/pesquisar?q=${encodeURIComponent(termo)}`;
       }
-    };
 
+      const res = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error('Erro ao buscar eventos');
+
+      const data = await res.json();
+      setEventos(data);
+    } catch (err) {
+      console.error(err);
+      alert('Erro ao carregar eventos.');
+    }
+  };
+
+  // Carrega todos eventos ao montar o componente
+  useEffect(() => {
     fetchEventos();
   }, []);
+
+  // Atualiza eventos sempre que o termo de pesquisa mudar
+  useEffect(() => {
+    fetchEventos(termoPesquisa);
+  }, [termoPesquisa]);
 
   return (
     <SidebarLayout>
       <div className="lista-eventos">
         <div className="search-container">
-          <SearchBar />
+          <SearchBar onSearch={setTermoPesquisa} />
         </div>
         <h2>Eventos</h2>
         <div className='Filtro'>
@@ -49,10 +63,10 @@ const Eventos = () => {
             {eventos.map((evento) => (
               <div className="evento-card" key={evento.id}>
                 <div className="evento-header">
+                  <span className="evento-nome">{evento.titulo}</span>
                   <span className="evento-data">
                     {new Date(evento.data_evento).toLocaleDateString('pt-PT')}
                   </span>
-                  <span className="evento-nome">{evento.titulo}</span>
                 </div>
 
                 {evento.fotografia && (
