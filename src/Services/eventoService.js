@@ -37,11 +37,11 @@ const listarEventos = async () => {
 };
 
 // Obtem um evento por ID
-const obterEventoPorId = async (id) => {
+/*const obterEventoPorId = async (id) => {
     return await prisma.evento.findUnique({
         where: { id: parseInt(id) },
     });
-};
+};*/
 
 // Atualiza um evento
 const atualizarEvento = async (id, data) => {
@@ -58,10 +58,27 @@ const eliminarEvento = async (id) => {
     });
 };
 
+const pesquisarEventos = async (termo) => {
+  if (!termo || termo.trim() === '') {
+    return listarEventos();
+  }
+
+  return await prisma.evento.findMany({
+  where: {
+    OR: [
+      { titulo: { contains: termo } },
+      { localizacao: { contains: termo } }
+    ]
+  }
+});
+
+};
+
 module.exports = { 
     criarEvento,
     listarEventos,
-    obterEventoPorId,
+    //obterEventoPorId,
     atualizarEvento,
-    eliminarEvento
+    eliminarEvento,
+    pesquisarEventos
 };
