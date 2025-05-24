@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/perfilAdministrador.css";
+import "../../styles/Perfil/perfilAdministrador.css";
 
 const PerfilAdministrador = () => {
   const [administrador, setAdministrador] = useState(null);
@@ -9,19 +9,24 @@ const PerfilAdministrador = () => {
     const id = localStorage.getItem("id");
     const token = localStorage.getItem("token");
 
+    if (!id || !token) {
+      setError("ID ou token ausente.");
+      return;
+    }
+
     fetch(`http://localhost:3000/administrador/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(res => {
+      .then((res) => {
         if (!res.ok) {
           throw new Error("Erro ao buscar dados do administrador");
         }
         return res.json();
       })
-      .then(data => setAdministrador(data))
-      .catch(err => {
+      .then((data) => setAdministrador(data))
+      .catch((err) => {
         console.error(err);
         setError(err.message);
       });
