@@ -8,12 +8,13 @@ import MenuAdministrador from "./pages/Menu/menuAdministradores";
 import EventosAdministrador from "./pages/Eventos/eventosAdministrador";
 import AnunciosAdministrador from "./pages/Voluntariado/voluntariadoAdministrador";
 import SuporteAdministrador from "./pages/Suporte/suporteAdministrador";
-
+import PerfilAdministrador from "./pages/perfilAdministrador";
 import Suporte from "./pages/Suporte/suporte";
 import Suporte3 from "./pages/Suporte/suporte3";
 import PerfilUtilizador from "./pages/Perfil/perfilUtilizador";
 import Voluntariado from "./pages/Voluntariado/voluntariadoUtilizador";
 import NotificacoesPage from "./pages/Notificacao/notificacoes"
+import Eventos from "./pages/Eventos/eventos";
 
 function App() {
   return (
@@ -26,13 +27,14 @@ function App() {
           <Route path="/eventosAdministrador" element={<EventosAdministrador />} />
           <Route path="/voluntariadoAdministrador" element={<AnunciosAdministrador />} />
           <Route path="/suporteAdministrador" element={<SuporteAdministrador />} />
-          
+          <Route path="/perfilAdministrador" element={<PerfilAdministrador />} />
           <Route path="/menu" element={<Menu />} />
-
+          <Route path="/eventos" element={<Eventos />} />
           <Route path="/voluntariado" element={<Voluntariado />} />
           <Route path="/suporte" element={<Suporte />} />
           <Route path="/perfil" element={<PerfilUtilizador />} />
           <Route path="/notificacao" element={<NotificacoesPage />} />
+          <Route path="/suporte3" element={<Suporte3 />} />
         </Routes>
       </div>
     </Router>
@@ -40,7 +42,7 @@ function App() {
 }
 
 export default App;
-//<Route path="/suporte3" element={<Suporte3 />} />
+
        
 
 // <Route path="/eventos" element={<Eventos />} />
