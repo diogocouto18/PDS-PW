@@ -1,97 +1,81 @@
-import React, { useEffect, useState } from 'react';
-import Sidebar from '../../componentes/Sidebar/sidebar';
-import '../../styles/Perfil/perfilUtilizador.css';
-import { FaUser } from 'react-icons/fa';
+import React, { useEffect, useState } from "react";
+import { FaUserAlt } from "react-icons/fa";
+import "../../styles/Perfil/perfilUtilizador.css";
+import SidebarFixed from "../../componentes/Sidebar/sidebarFixed";
 
-function PerfilUtilizador() {
+const PerfilUtilizador = () => {
   const [utilizador, setUtilizador] = useState(null);
-
-  const utilizadorId = localStorage.getItem('id');
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (utilizadorId) {
-      fetch(`http://localhost:3000/utilizadores/${utilizadorId}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`, // Envia o token de autorização
-        },
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error('Erro ao buscar perfil');
-          }
-          return res.json(); // Retorna a resposta como JSON
-        })
-        .then((data) => {
-          setUtilizador(data); // Armazena os dados recebidos no estado
-        })
-        .catch((err) => {
-          console.error('Erro ao buscar perfil:', err); // Lida com qualquer erro
-        });
-    }
-  }, [utilizadorId]); 
+    const id = localStorage.getItem("id");
+    const token = localStorage.getItem("token");
 
-  if (!utilizador) return <p>Carregando perfil...</p>;
+    if (!id || !token) {
+      setError("ID ou token ausente.");
+      setLoading(false);
+      return;
+    }
+
+    fetch(`http://localhost:3000/utilizadores/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Erro ao buscar dados do utilizador");
+        return res.json();
+      })
+      .then((data) => {
+        setUtilizador(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("id");
+    localStorage.removeItem("role");
+    window.location.href = "/";
+  };
+
+  if (loading) return <div className="user-container">Carregando...</div>;
+
+  if (error) return <div className="user-container">Erro: {error}</div>;
 
   return (
-    <div className="perfil-page">
-      <Sidebar />
-      <div className="perfil-container">
-        <div className="perfil-foto-info">
-          <div className="foto-box">
-            <div className="foto-placeholder"><span className="icon"><FaUser /></span></div>
+    <div className="PerfilPage">
+      <SidebarFixed />
+      <div className="user-container">
+        <div className="profile-section">
+          <div className="user-avatar">
+            <FaUserAlt size={120} />
           </div>
-          <div className="info-box">
-            <h1>{utilizador.username}</h1>
-            <strong>{utilizador.nome}</strong>
-            <p>{utilizador.email}</p>
-            <p>{utilizador.telefone}</p>
-            <p>{utilizador.morada}</p>
-            <p>{utilizador.codigo_postal} {utilizador.localidade}</p>
-            <p className="doados">Total Doado: <strong>{utilizador.total_doado || 0}€</strong></p>
+          <div className="user-info">
+            <h2>Nome de Utilizador: {utilizador.username}</h2>
+            <p><strong>Nome:</strong> {utilizador.nome}</p>
+            <p><strong>Email:</strong> {utilizador.email}</p>
+            <p><strong>Telefone:</strong> {utilizador.telefone}</p>
+            <p><strong>Morada:</strong> {utilizador.morada}</p>
           </div>
         </div>
 
-        <div className="botoes-box">
-          <button className="btn-editar">Editar Perfil</button>
-          <button className="btn-terminar">Terminar Sessão</button>
+        <div className="user-actions">
+          <button className="edituser-button">Editar Perfil</button>
         </div>
 
-        <div className="detalhes">
-          <div className="secao">
-            <h3>Candidaturas Voluntariado</h3>
-            {utilizador.voluntariado?.map((item, i) => (
-              <div key={i}>
-                <p>{item.nome}</p>
-                <p><strong>Estado</strong>: {item.estado}</p>
-              </div>
-            )) || <p>Sem candidaturas</p>}
-          </div>
-
-          <div className="secao">
-            <h3>Estado rifas</h3>
-            {utilizador.rifas?.map((rifa, i) => (
-              <div key={i}>
-                <p>{rifa.nome}</p>
-                <p><strong>{rifa.foiVencedor ? 'Vencedor' : 'Não Vencedor'}</strong></p>
-              </div>
-            )) || <p>Sem rifas</p>}
-          </div>
-
-          <div className="secao">
-            <h3>Histórico Doações</h3>
-            {utilizador.doacoes?.length > 0 ? (
-              utilizador.doacoes.map((d, i) => (
-                <p key={i}>{d.data} - {d.descricao} <span className="valor">{d.valor}€</span></p>
-              ))
-            ) : (
-              <p>Sem doações registadas</p>
-            )}
-          </div>
-        </div>
+        <button className="logout-button" onClick={handleLogout}>
+          Terminar Sessão
+        </button>
       </div>
     </div>
   );
-}
+};
 
 export default PerfilUtilizador;

@@ -1,115 +1,102 @@
-.perfil-page {
-  display: flex;
-  min-height: 100vh;
-  background-color: #f4f6f9;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.PerfilPage {
+  background-color: #fff;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 250px; 
 }
 
-.perfil-container {
-  flex: 1;
-  padding: 2rem;
+.body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+}
+
+.user-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-}
-
-.perfil-foto-info {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-  background-color: white;
+  justify-content: space-between;
+  min-height: 100vh;
   padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
 }
 
-.foto-box {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background-color: #ddd;
+.profile-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-left: 180px;
+  margin-top: 190px;
+}
+
+.user-avatar {
+  width: 400px;
+  height: 350px;
+  background-color: #f4cbb8;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 20px;
 }
 
-.foto-placeholder .icon {
-  font-size: 3rem;
-  color: #888;
-}
-
-.info-box h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  color: #333;
-}
-
-.info-box p, .info-box strong {
-  margin: 0.25rem 0;
-  color: #555;
-}
-
-.doados strong {
-  color: #006400;
-}
-
-.botoes-box {
+.user-info {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
   justify-content: flex-start;
+  color: #000;
+  margin-top: 0.5rem;
 }
 
-.botoes-box button {
-  padding: 0.7rem 1.5rem;
+.user-info h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.user-info p {
+  margin: 2px 0;
+  font-size: 0.9rem;
+}
+
+.user-actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+  margin-left: 145px;
+}
+
+.edituser-button {
+  width: 414px;
+  padding: 25px 42px;
+  background-color: #E3C6B5;
   border: none;
-  border-radius: 8px;
-  font-weight: bold;
+  border-radius: 4px;
+  font-weight: 800;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  text-align: center;
+  transition: background 0.3s;
+  margin-bottom: 300px;
+  margin-left: 30px;
 }
 
-.btn-editar {
-  background-color: #007bff;
-  color: white;
+.edituser-button:hover {
+  background-color: #d2b7a9; 
 }
 
-.btn-editar:hover {
-  background-color: #0056b3;
+.logout-button {
+  position: absolute;
+  width: 414px;
+  right: 20px;
+  padding: 12px 42px;
+  background-color: #E3C6B5;
+  border: none;
+  border-radius: 4px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.btn-terminar {
-  background-color: #dc3545;
-  color: white;
-}
-
-.btn-terminar:hover {
-  background-color: #a71d2a;
-}
-
-.detalhes {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.secao {
-  margin-bottom: 2rem;
-}
-
-.secao h3 {
-  color: #333;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 0.5rem;
-}
-
-.secao p {
-  margin: 0.3rem 0;
-  color: #444;
-}
-
-.valor {
-  font-weight: bold;
-  color: #2e8b57;
+.logout-button:hover {
+  background-color: #d2b7a9; 
 }
