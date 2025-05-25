@@ -60,10 +60,34 @@ async function apagarNotificacao(req, res) {
   }
 };
 
+// Get - Contagem de notificações de utilizador
+async function contarNotificacoesUtilizador(req, res) {
+  try {
+    const count = await notificacaoService.contarNotificacoesUtilizador(req.params.id_utilizador);
+    res.json({ totalPorAbrir: count });
+  } catch (error) {
+    console.error("Erro ao contar notificações por abrir:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// Get - Contagem de notificações de administrador
+async function contarNotificacoesAdministrador(req, res) {
+  try {
+    const count = await notificacaoService.contarNotificacoesAdministrador(req.params.id_administrador);
+    res.json({ totalPorAbrir: count });
+  } catch (error) {
+    console.error("Erro ao contar notificações por abrir:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   criarNotificacao,
   listarNotificacoesPorUtilizador,
   listarNotificacoesPorAdministrador,
   abrirNotificacao,
   apagarNotificacao,
+  contarNotificacoesUtilizador,
+  contarNotificacoesAdministrador,
 };

@@ -44,10 +44,32 @@ const apagarNotificacao = async (id) => {
   });
 };
 
+// Conta notificações "Por_abrir" de um utilizador
+const contarNotificacoesUtilizador = async (id_utilizador) => {
+  return await prisma.notificacao.count({
+    where: {
+      id_utilizador: parseInt(id_utilizador),
+      estado: 'Por_abrir',
+    },
+  });
+};
+
+// Conta notificações "Por_abrir" de um administrador
+const contarNotificacoesAdministrador = async (id_administrador) => {
+  return await prisma.notificacao.count({
+    where: {
+      id_administrador: parseInt(id_administrador),
+      estado: 'Por_abrir',
+    },
+  });
+};
+
 module.exports = {
   criarNotificacao,
   listarNotificacoesPorUtilizador,
   listarNotificacoesPorAdministrador,
   abrirNotificacao,
   apagarNotificacao,
+  contarNotificacoesUtilizador,
+  contarNotificacoesAdministrador,
 };

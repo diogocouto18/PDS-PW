@@ -19,13 +19,12 @@ const NotificacoesPage = () => {
     const fetchNotificacoes = async () => {
       try {
         const response = await fetch(`http://localhost:3000/notificacoes/utilizador/${userId}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (!response.ok) {
           const errData = await response.json().catch(() => null);
@@ -44,7 +43,49 @@ const NotificacoesPage = () => {
     fetchNotificacoes();
   }, []);
 
-  if (loading) return <p>Carregando notificações…</p>;
+    const abrirNotificacao = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3000/notificacoes/${id}/abrir`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) throw new Error('Erro ao abrir notificação');
+
+      // Atualiza estado local
+      setNotificacoes((prev) =>
+        prev.map((n) => (n.id === id ? { ...n, estado: 'Aberto' } : n))
+      );
+    } 
+      catch (err) {
+      console.error(err);
+      }
+    };
+
+    const apagarNotificacao = async (id) => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`http://localhost:3000/notificacoes/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) throw new Error('Erro ao apagar notificação');
+
+        setNotificacoes((prev) => prev.filter((n) => n.id !== id));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+  
   if (error)   return <p style={{ color: 'red' }}>{error}</p>;
 
     return (
@@ -52,36 +93,41 @@ const NotificacoesPage = () => {
         <div className="fundo-notificacoes">
             <div className="notificacoes-container">
                 <h1>As Tuas Notificações</h1>
-                {loading && (
-                    <p className="status-mensagem">Carregando notificações…</p>
-                )}
-                {error && (
-                    <p className="status-mensagem erro">{error}</p>
-                )}
-
-                {!loading && !error && notificacoes.length === 0 && (
-                    <p className="status-mensagem">Não tens notificações.</p>
-                )}
-
-                {!loading && !error && notificacoes.length > 0 && (
-                    <ul className="notificacoes-list">
-                        {notificacoes.map((n) => (
-                            <li key={n.id}>
-                                <span className="notificacao-data">
-                                    {new Date(n.data_envio).toLocaleString()}
-                                </span>
-                                <p className="notificacao-mensagem">{n.mensagem}</p>
-                                <span className={`notificacao-estado ${n.estado}`}>
-                                    {n.estado === 'Por_abrir' ? 'Por abrir' : 'Lida'}
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </div>
+                {notificacoes.length === 0 ? (
+            <p className="status-mensagem">Não tens notificações.</p>
+          ) : (
+            <ul className="notificacoes-list">
+              {notificacoes.map((n) => (
+                <li
+                  key={n.id}
+                  className={`notificacao-item ${n.estado === 'Por_abrir' ? 'por-abrir' : 'lida'}`}
+                  onClick={() => abrirNotificacao(n.id)}
+                  style={{ cursor: 'pointer', position: 'relative' }}
+                >
+                  <span className="notificacao-data">
+                    {new Date(n.data_envio).toLocaleString()}
+                  </span>
+                  <p className="notificacao-mensagem">{n.mensagem}</p>
+                  <span className={`notificacao-estado ${n.estado}`}>
+                    {n.estado === 'Por_abrir' ? 'Por abrir' : n.estado === 'Aberto' ? 'Lida' : n.estado}
+                  </span>
+                  <button
+                    className="btn-apagar"
+                    onClick={(e) => {
+                      e.stopPropagation(); 
+                      apagarNotificacao(n.id);
+                    }}
+                  >
+                    🗑️
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-        </SidebarLayout>
-    );
+      </div>
+    </SidebarLayout>
+  );
 }
 
 export default NotificacoesPage;
