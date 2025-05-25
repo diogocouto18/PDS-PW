@@ -17,7 +17,7 @@
 /* Cartão individual de candidatura */
 .anuncio-card {
   background-color: #f9f9f9;
-  padding: 1.5rem;
+  padding: 1rem 1.5rem 1rem 2rem;
   border-radius: 10px;
   border: 1px solid #ddd;
   flex: 1 1 250px;
@@ -26,9 +26,9 @@
   font-size: 0.9rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   box-sizing: border-box;
-  
+  height: 250px;
 }
 
 /* Título h3 (no componente pai) */
@@ -87,18 +87,33 @@
 }
 
 .mensagem-scroll {
-  max-height: 55px;               /* Ajusta conforme o espaço que quiseres */
-  overflow-y: auto;
-  margin: 0.25rem 0;
-  font-size: 0.80rem;
+  display: inline-block;
+  max-height: 55px;          /* altura máxima */
+  max-width: 280px;          /* controla largura */
+  overflow-y: auto;          /* scroll vertical se necessário */
+  vertical-align: bottom;
   line-height: 1.4;
   word-break: break-word;
-
-  scrollbar-width: none;           /* Firefox */
-  -ms-overflow-style: none;        /* IE */
-  padding-right: 5px;
+  padding-left: 0;           /* sem espaço extra */
+  scrollbar-width: thin;
 }
 
 .mensagem-scroll::-webkit-scrollbar {
-  display: none;                   /* Chrome, Safari */
+  width: 4px;
+}
+
+
+.estado-pendente {
+  color: #e6b800; /* amarelo */
+  font-weight: bold;
+}
+
+.estado-aceite {
+  color: #1e6622; /* verde */
+  font-weight: bold;
+}
+
+.estado-rejeitado {
+  color: #c62828; /* vermelho */
+  font-weight: bold;
 }

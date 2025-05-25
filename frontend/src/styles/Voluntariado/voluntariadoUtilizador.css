@@ -1,13 +1,16 @@
 .voluntariado-page {
-  padding: 5rem;
+  padding: 4.5rem;
   background-color: #ffffff;
   min-height: 100vh;
 }
+
 
 .voluntariado-page h2 {
   margin-bottom: 1rem;
   font-size: 1.5rem;
   color: #0d415a;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
 }
 
 .voluntariado-page .anuncios-grid {

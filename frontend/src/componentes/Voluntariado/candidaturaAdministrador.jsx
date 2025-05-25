@@ -41,9 +41,27 @@ const CandidaturasCartazAdministrador = ({ anuncioId }) => {
         <div key={c.id} className="anuncio-card">
           <p><strong>Evento:</strong> {c.Anuncio?.Evento?.titulo || 'Sem nome'}</p>
           <p><strong>Voluntário:</strong> {c.Utilizador?.username || 'Desconhecido'}</p>
-          <p><strong>Mensagem:</strong></p>
-          <div className="mensagem-scroll">{c.mensagem || '—'}</div>
-          <p><strong>Estado:</strong> {c.estado}</p>
+          <p>
+            <span className="mensagem-scroll">
+              <strong>Mensagem:</strong> {c.mensagem || '—'}
+            </span>
+          </p>
+
+            
+          <p>
+            <strong>Estado:</strong>{' '}
+            <span
+              className={
+                c.estado === 'Pendente'
+                  ? 'estado-pendente'
+                  : c.estado === 'Aceite'
+                  ? 'estado-aceite'
+                  : 'estado-rejeitado'
+              }
+            >
+              {c.estado}
+            </span>
+          </p>
           
           {c.estado === 'Pendente' && (
             <div className="candidaturas-grid__botoes">

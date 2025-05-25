@@ -65,21 +65,41 @@ const Voluntariado = () => {
   return (
     <SidebarLayout>
       <div className="voluntariado-page">
+      
+      <h2>Resultados</h2>
+      <div className="candidaturas-grid">
+        {candidaturas.filter(c => c.estado === "Aceite" || c.estado === "Rejeitado").length > 0 ? (
+          candidaturas
+            .filter(c => c.estado === "Aceite" || c.estado === "Rejeitado")
+            .map(c => (
+              <CandidaturaCartazUtilizador
+                key={c.id}
+                candidatura={c}
+                onRemove={c.estado === "Rejeitado" ? () => handleRemove(c.id) : null}
+              />
+            ))
+        ) : (
+          <p>Ainda não tens resultados disponíveis.</p>
+        )}
+      </div>
+
 
       <h2>Candidaturas Enviadas</h2>
-        <div className="candidaturas-grid">
-          {candidaturas.length > 0 ? (
-            candidaturas.map(c => (
+      <div className="candidaturas-grid">
+        {candidaturas.filter(c => c.estado !== "Aceite" && c.estado !== "Rejeitado").length > 0 ? (
+          candidaturas
+            .filter(c => c.estado !== "Aceite" && c.estado !== "Rejeitado")
+            .map(c => (
               <CandidaturaCartazUtilizador
                 key={c.id}
                 candidatura={c}
                 onRemove={() => handleRemove(c.id)}
               />
             ))
-          ) : (
-            <p>Ainda não tens candidaturas enviadas.</p>
-          )}
-        </div>
+        ) : (
+          <p>Não tens candidaturas pendentes.</p>
+        )}
+      </div>
 
 
       <h2>Anúncios Disponíveis</h2>

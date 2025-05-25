@@ -37,3 +37,29 @@
   color: #0d415a;
   margin: 0;
 }
+
+.badge {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-aceite {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-rejeitada {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.badge-pendente {
+  background-color: #fff3cd;
+  color: #856404;
+}
