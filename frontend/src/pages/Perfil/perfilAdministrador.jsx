@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/Perfil/perfilAdministrador.css";
 import SidebarFixed from "../../componentes/Sidebar/sidebarFixed";
+import { FaUserAlt } from "react-icons/fa";
 
 const PerfilAdministrador = () => {
   const [administrador, setAdministrador] = useState(null);
@@ -54,7 +55,9 @@ const PerfilAdministrador = () => {
       <SidebarFixed />
       <div className="admin-container">
         <div className="profile-section">
-          <div className="admin-avatar"></div>
+          <div className="admin-avatar">
+            <FaUserAlt/>
+          </div>
           <div className="admin-info">
             <h2>Nome Utilizador: {administrador.username}</h2>
             <p><strong>Nome: {administrador.nome}</strong></p>
