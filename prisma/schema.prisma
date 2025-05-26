@@ -109,13 +109,13 @@ model MensagemSuporte {
 
 model Notificacao {
   id               Int                 @id @default(autoincrement())
-  id_utilizador    Int
-  id_administrador Int
+  id_utilizador    Int?
+  id_administrador Int?
   mensagem         String              @db.VarChar(700)
   data_envio       DateTime?           @default(now()) @db.Timestamp(0)
   estado           Notificacao_estado  @default(Por_abrir)
-  Utilizador       Utilizador          @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notificacao_ibfk_1")
-  Administrador    Administrador       @relation(fields: [id_administrador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notificacao_ibfk_2")
+  Utilizador       Utilizador?          @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notificacao_ibfk_1")
+  Administrador    Administrador?       @relation(fields: [id_administrador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notificacao_ibfk_2")
 
   @@index([id_administrador], map: "id_administrador")
   @@index([id_utilizador], map: "id_utilizador")

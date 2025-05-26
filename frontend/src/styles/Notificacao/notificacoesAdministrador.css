@@ -72,11 +72,12 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.notificacao-item.por-abrir- {
+.notificacao-item.por-abrir {
   background-color: #f5d1be;
+  font-weight: 500;
 }
 
-.notificacao-item.lidas {
+.notificacao-item.lida {
   background-color: #faf2ee;
 }
 
@@ -103,7 +104,7 @@
 }
 
 .notificacao-estado.Por_abrir {
-  background-color: #ffe5e5;
+  background-color: #f5d1be;
   color: #d9534f;
 }
 

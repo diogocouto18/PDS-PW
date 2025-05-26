@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import SidebarLayout from '../../componentes/Sidebar/sidebarLayout';
-import '../../styles/Notificacao/notificacoes.css';
+import '../../styles/Notificacao/notificacoesAdministrador.css';
 import { FaTrashAlt } from 'react-icons/fa';
 
-const NotificacoesPage = () => {
+const NotificacoesPageAdministrador = () => {
   const [notificacoes, setNotificacoes] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('id');
-    if (!token || !userId) {
+    const administradorId = localStorage.getItem('id');
+    if (!token || !administradorId) {
       setError('Não autenticado');
       setLoading(false);
       return;
@@ -19,7 +19,7 @@ const NotificacoesPage = () => {
 
     const fetchNotificacoes = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/notificacoes/utilizador/${userId}`, {
+        const response = await fetch(`http://localhost:3000/notificacoes/administrador/${administradorId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ const NotificacoesPage = () => {
               {notificacoes.map((n) => (
                 <li
                   key={n.id}
-                  className={`notificacao-item ${n.estado === 'Por_abrir' ? 'por-abrir-' : 'lidas'}`}
+                  className={`notificacao-item ${n.estado === 'Por_abrir' ? 'por-abrir' : 'lida'}`}
                   onClick={() => abrirNotificacao(n.id)}
                 >
                   <div className="notificacao-conteudo">
@@ -132,4 +132,4 @@ const NotificacoesPage = () => {
   );
 }
 
-export default NotificacoesPage;
+export default NotificacoesPageAdministrador;

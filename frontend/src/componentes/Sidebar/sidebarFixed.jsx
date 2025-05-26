@@ -8,20 +8,31 @@ const SidebarFixed = () => {
   const role = localStorage.getItem('role');
   
   useEffect(() => {
+  const fetchNotificacoes = () => {
+  
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('id');
+  const role = localStorage.getItem('role');
 
-  if (token && id) {
-    fetch(`http://localhost:3000/notificacoes/utilizador/${id}/por_abrir`, {
+  if (!token || !id || !role) return;
+
+  
+    const url = role === "Administrador"
+      ? `http://localhost:3000/notificacoes/administrador/${id}/por_abrir`
+      : `http://localhost:3000/notificacoes/utilizador/${id}/por_abrir`;
+
+    fetch(url, {
       headers: { Authorization: `Bearer ${token}`, 'Cache-Control': 'no-cache' }
     })
       .then(res => res.json())
       .then(data => setNotificacoesPorAbrir(data.totalPorAbrir))
       .catch(err => console.error(err));
-  }
-  });
+  };
 
-  
+  fetchNotificacoes();
+  const interval = setInterval(fetchNotificacoes, 3000); 
+  return () => clearInterval(interval);
+}, []);
 
 
   return (

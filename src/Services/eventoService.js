@@ -22,7 +22,6 @@ const criarEvento = async (data) => {
     await Promise.all(utilizadores.map(({ id }) =>
         notificacaoService.criarNotificacao({
             id_utilizador: id,
-            id_administrador: data.id_administrador,
             mensagem: `Novo evento disponível: ${data.titulo}`,
             estado: "Por_abrir"
         })
