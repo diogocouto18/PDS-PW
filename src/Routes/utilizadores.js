@@ -11,7 +11,7 @@ router.get("/", autenticacao, apenasAdministrador, utilizadorController.listarUt
 router.get("/:id", autenticacao, utilizadorController.obterPorId);
 
 // Atualiza um utilizador (próprio utilizador ou administrador)
-router.put("/:id", autenticacao, proprioUtilizadorOuAdministrador, utilizadorController.atualizarUtilizadores);
+router.put("/:id", autenticacao, utilizadorController.atualizarUtilizadores);
 
 // Remove um utilizador (apenas administrador)
 router.delete("/:id", autenticacao, apenasAdministrador, utilizadorController.eliminarUtilizadores);

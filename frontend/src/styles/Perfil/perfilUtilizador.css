@@ -36,6 +36,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 20px;
+  margin-top: 40px;
 }
 
 .user-info {
@@ -100,4 +101,72 @@
 
 .logout-button:hover {
   background-color: #d2b7a9; 
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 400px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.modal-content form label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.modal-content form input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.modal-content form button {
+  background-color: #E3C6B5;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.3s;
+}
+
+.modal-content form button:hover {
+  background-color: #d2b7a9;
 }
