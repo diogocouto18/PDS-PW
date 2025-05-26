@@ -8,14 +8,13 @@
   width: 100%;           /* ou max-width: 100% */
   margin: 0 auto;
   box-sizing: border-box;
-  overflow-y: auto;
-  max-height: 150vh;             /* ou o valor que queiras */
-  scrollbar-width: none;        /* Firefox */
-  -ms-overflow-style: none; 
+  
+  max-height: 145vh;             /* ou o valor que queiras */
+
 }
 
 /* Cartão individual de candidatura */
-.anuncio-card {
+.candidatura-card {
   background-color: #f9f9f9;
   padding: 1rem 1.5rem 1rem 2rem;
   border-radius: 10px;
@@ -43,7 +42,7 @@
 }
 
 /* Parágrafos dentro de cada candidatura */
-.anuncio-card p {
+.candidatura-card p {
   margin: 0.25rem 0;
   font-size: 0.95rem;
   line-height: 1.4;
@@ -88,7 +87,7 @@
 
 .mensagem-scroll {
   display: inline-block;
-  max-height: 55px;          /* altura máxima */
+  max-height: 75px;          /* altura máxima */
   max-width: 280px;          /* controla largura */
   overflow-y: auto;          /* scroll vertical se necessário */
   vertical-align: bottom;

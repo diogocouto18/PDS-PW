@@ -35,7 +35,11 @@ const AnunciosCartaz = ({ anuncio, onEncerrar }) => {
   return (
     <div className="anuncio-card">
       <h3>{cargo}</h3>
-      <p><strong>Descrição:</strong> {descricao}</p>
+      <p>
+        <span className="descricao-scroll">
+          <strong>Descrição: </strong> {descricao|| '—'}
+        </span>
+      </p>
       <p><strong>Evento:</strong> {Evento?.titulo || 'Sem nome'}</p>
       <p><strong>Data de Publicação:</strong> {formatarData(data_publicacao)}</p>
       <p><strong>Estado:</strong> {estado}</p>

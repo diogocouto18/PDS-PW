@@ -21,7 +21,6 @@ const criarAnuncio = async (data) => {
     await Promise.all(utilizadores.map(({ id }) =>
       notificacaoService.criarNotificacao({
         id_utilizador: id,
-        id_administrador: data.id_administrador,
         mensagem: `Novo anúncio publicado: ${data.cargo}`,
         estado: "Por_abrir",
       })

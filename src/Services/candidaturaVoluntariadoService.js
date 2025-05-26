@@ -40,7 +40,6 @@ const criarCandidatura = async (data) => {
     });
 
     await notificacaoService.criarNotificacao({
-        id_utilizador: candidatura.id_utilizador,
         id_administrador: anuncio.id_administrador,
         mensagem: `Nova candidatura para "${anuncio.cargo}"`,
         estado: "Por_abrir",
@@ -62,7 +61,6 @@ const avaliarCandidatura = async (id, novoEstado, idAdministrador) => {
 
     await notificacaoService.criarNotificacao({
         id_utilizador: candidatura.id_utilizador,
-        id_administrador: idAdministrador,
         mensagem: novoEstado === "Aceite"
             ?"A sua candidatura foi aceite! Parabéns!"
             :"A sua candidatura foi rejeitada. Agradecemos o seu interesse.",

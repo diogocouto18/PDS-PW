@@ -38,7 +38,7 @@ const CandidaturasCartazAdministrador = ({ anuncioId }) => {
     <div className="candidaturas-grid">
       
       {candidaturas.map((c) => (
-        <div key={c.id} className="anuncio-card">
+        <div key={c.id} className="candidatura-card">
           <p><strong>Evento:</strong> {c.Anuncio?.Evento?.titulo || 'Sem nome'}</p>
           <p><strong>Voluntário:</strong> {c.Utilizador?.username || 'Desconhecido'}</p>
           <p>

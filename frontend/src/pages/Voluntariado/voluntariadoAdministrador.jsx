@@ -46,14 +46,14 @@ const AnunciosAdministrador = () => {
 
   return (
     <SidebarLayout>
-      <div className="voluntariado-page">
+      <div className="voluntariado-pages">
         <div className="section-header">
-          <h2 className="titulo-azul">Candidaturas Recebidas</h2>
-          {anunciosAtivos.length > MAX_VISIVEIS && (
-            <button className="toggle-btn" onClick={() => setVerMaisCandidaturas(v => !v)}>
-              {verMaisCandidaturas ? 'Mostrar menos' : 'Mostrar todas'}
-            </button>
-          )}
+        <h2>Candidaturas Recebidas</h2>
+        {anunciosAtivos.length > MAX_VISIVEIS && (
+          <button className="toggle-btn" onClick={() => setVerMaisCandidaturas(v => !v)}>
+            {verMaisCandidaturas ? 'Mostrar menos' : 'Mostrar todas'}
+          </button>
+        )}
         </div>
         <div className="candidaturas-container">
           {anunciosAtivos.length > 0 ? (
