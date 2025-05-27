@@ -4,12 +4,21 @@ import SearchBar from "../../componentes/searchbar";
 import Filter from "../../componentes/filters";
 import { FaShareAlt } from 'react-icons/fa';
 import '../../styles/Eventos/ListaEventos.css';
+import DetalhesEvento from '../../componentes/Eventos/detalhesEvento.jsx';
+
 
 const Eventos = () => {
   const [eventos, setEventos] = useState([]);
   const [termoPesquisa, setTermoPesquisa] = useState('');
+  const [copiedEventId, setCopiedEventId] = useState(null);
+  const [mostrarBotao, setMostrarBotao] = useState(false);
+  const [selectedEvento, setSelectedEvento] = useState(null);
 
-  // Função para buscar eventos, pode buscar todos ou filtrar pela pesquisa
+  const handleCardClick = (evento) => {
+    setSelectedEvento(evento);
+  };
+
+
   const fetchEventos = async (termo = '') => {
     try {
       const token = localStorage.getItem('token');
@@ -35,19 +44,34 @@ const Eventos = () => {
     }
   };
 
-  // Carrega todos eventos ao montar o componente
   useEffect(() => {
     fetchEventos();
   }, []);
 
-  // Atualiza eventos sempre que o termo de pesquisa mudar
   useEffect(() => {
     fetchEventos(termoPesquisa);
   }, [termoPesquisa]);
 
+  const copiarLink = async (eventoId) => {
+    const link = `${window.location.origin}/eventos/${eventoId}`;
+    try {
+      await navigator.clipboard.writeText(link);
+      setCopiedEventId(eventoId);
+      setTimeout(() => setCopiedEventId(null), 2000);
+    } catch (err) {
+      console.error("Erro ao copiar o link:", err);
+    }
+  };
+
+  useEffect(() => {
+    const role = localStorage.getItem('role');
+    if (role === 'Administrador') {
+      setMostrarBotao(true);
+    }
+  }, []);
+
   return (
     <SidebarLayout>
-    <div className="eventos-page">
       <div className="lista-eventos">
         <div className="search-container">
           <SearchBar onSearch={setTermoPesquisa} />
@@ -62,7 +86,7 @@ const Eventos = () => {
         ) : (
           <div className="eventos-container">
             {eventos.map((evento) => (
-              <div className="evento-card" key={evento.id}>
+              <div className="evento-card" key={evento.id} onClick={() => handleCardClick(evento)}>
                 <div className="evento-header">
                   <span className="evento-nome">{evento.titulo}</span>
                   <span className="evento-data">
@@ -79,18 +103,25 @@ const Eventos = () => {
                 )}
 
                 <div className="evento-footer">
-                  <button className="evento-share-btn">
-                    <FaShareAlt />
-                  </button>
+                  <button className="evento-share-btn" onClick={() => copiarLink(evento.id)}><FaShareAlt /></button>
+                  {copiedEventId === evento.id && (
+                    <span className="copied-alert">✅ Link copiado!</span>
+                  )}
+
+                  {mostrarBotao && (
+                    <button className='eventoEditButton'>Editar</button>
+                  )}
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
-    </div>    
+      <DetalhesEvento  isOpen={!!selectedEvento}  onClose={() => setSelectedEvento(null)}  evento={selectedEvento}/>
+
     </SidebarLayout>
   );
+
 };
 
 export default Eventos;
