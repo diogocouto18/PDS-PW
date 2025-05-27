@@ -8,12 +8,13 @@ import MenuAdministrador from "./pages/Menu/menuAdministradores";
 import EventosAdministrador from "./pages/Eventos/eventosAdministrador";
 import AnunciosAdministrador from "./pages/Voluntariado/voluntariadoAdministrador";
 import SuporteAdministrador from "./pages/Suporte/suporteAdministrador";
-import PerfilAdministrador from "./pages/perfilAdministrador";
+import PerfilAdministrador from "./pages/Perfil/perfilAdministrador";
 import Suporte from "./pages/Suporte/suporte";
 import Suporte3 from "./pages/Suporte/suporte3";
 import PerfilUtilizador from "./pages/Perfil/perfilUtilizador";
 import Voluntariado from "./pages/Voluntariado/voluntariadoUtilizador";
 import NotificacoesPage from "./pages/Notificacao/notificacoes"
+import NotificacoesPageAdministrador from "./pages/Notificacao/notificacoesAdministrador";
 import Eventos from "./pages/Eventos/eventos";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="/suporte" element={<Suporte />} />
           <Route path="/perfil" element={<PerfilUtilizador />} />
           <Route path="/notificacao" element={<NotificacoesPage />} />
+          <Route path="/notificacaoAdministrador" element={<NotificacoesPageAdministrador />} />
           <Route path="/suporte3" element={<Suporte3 />} />
         </Routes>
       </div>

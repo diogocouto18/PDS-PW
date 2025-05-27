@@ -32,6 +32,7 @@
 .admin-avatar {
   width: 400px;
   height: 350px;
+  font-size: 150px;
   background-color: #f4cbb8;
   display: flex;
   align-items: center;

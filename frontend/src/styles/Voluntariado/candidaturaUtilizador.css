@@ -23,7 +23,7 @@
 }
 
 .dados-candidatura {
-  margin-top: 1.5rem;
+  margin-top:0.5rem;
 }
 
 .cargo {
@@ -44,7 +44,7 @@
   font-size: 0.8rem;
   font-weight: 600;
   border-radius: 8px;
-  margin-top: 0.5rem;
+  margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }

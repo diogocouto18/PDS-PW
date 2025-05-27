@@ -30,9 +30,9 @@ const CandidaturaCartazUtilizador = ({ candidatura, onRemove }) => {
                 </button>
             )}
             <div className="dados-candidatura">
+                <span className={getBadgeClass(estado)}>{estado}</span>
                 <p className="cargo">{cargo}</p>
                 <p className="evento"><strong>Evento:</strong> {nomeEvento}</p>
-                <span className={getBadgeClass(estado)}>{estado}</span>
             </div>
         </div>
     );

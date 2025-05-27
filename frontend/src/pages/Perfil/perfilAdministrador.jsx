@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import "../../styles/Perfil/perfilAdministrador.css";
 import SidebarFixed from "../../componentes/Sidebar/sidebarFixed";
 import { FaUserAlt } from "react-icons/fa";
+import SorteiosRifasCartaz from "../../componentes/SorteioRifas/sorteioRifasLista";
 
 const PerfilAdministrador = () => {
   const [administrador, setAdministrador] = useState(null);
   const [error, setError] = useState(null);
+  const [mostrarCartazSorteios, setMostrarCartazSorteios] = useState(false);
 
   useEffect(() => {
     const id = localStorage.getItem("id");
@@ -47,7 +49,7 @@ const PerfilAdministrador = () => {
   }
 
   if (!administrador) {
-    return <div className="admin-container">Carregando...</div>;
+    return <div className="admin-container"></div>;
   }
 
   return (
@@ -55,9 +57,7 @@ const PerfilAdministrador = () => {
       <SidebarFixed />
       <div className="admin-container">
         <div className="profile-section">
-          <div className="admin-avatar">
-            <FaUserAlt/>
-          </div>
+          <div className="admin-avatar"><FaUserAlt/></div>
           <div className="admin-info">
             <h2>Nome Utilizador: {administrador.username}</h2>
             <p><strong>Nome: {administrador.nome}</strong></p>
@@ -66,12 +66,14 @@ const PerfilAdministrador = () => {
         </div>
 
         <div className="admin-actions">
-          <button className="admin-button">Sortear Rifas</button>
+          <button className="admin-button" onClick={() => setMostrarCartazSorteios(true)}>
+            Sortear Rifas
+          </button>
         </div>
 
-        <button className="logout-button" onClick={handleLogout}>
-          Terminar Sessão
-        </button>
+        <button className="logout-button" onClick={handleLogout}>Terminar Sessão</button>
+
+        <SorteiosRifasCartaz show={mostrarCartazSorteios} onClose={() => setMostrarCartazSorteios(false)} />         
       </div>
     </div>  
   );

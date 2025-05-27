@@ -1,7 +1,8 @@
 .voluntariado-page {
   padding: 4.5rem;
   background-color: #ffffff;
-  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 

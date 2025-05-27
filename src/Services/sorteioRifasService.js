@@ -90,7 +90,6 @@ const sortearVencedor = async (id_sorteio) => {
 
   await notificacaoService.criarNotificacao({
     id_utilizador: atualizarVencedor.id_utilizador,
-    id_administrador: atualizarVencedor.id_sorteio,
     mensagem: `Parabéns! A rifa ${atualizarVencedor.id} foi sorteada como vencedora no sorteio ${id_sorteio}. O código para levantar o seu prémio é 2543`,
     estado: "Por_abrir",
   });
@@ -120,7 +119,6 @@ const sortearSegundoLugar = async (id_sorteio) => {
 
   await notificacaoService.criarNotificacao({
     id_utilizador: atualizarVencedor.id_utilizador,
-    id_administrador: atualizarVencedor.id_sorteio,
     mensagem: `Parabéns! A rifa ${atualizarVencedor.id} foi sorteada como segundo lugar no sorteio ${id_sorteio}. O código para levantar o seu prémio é 5467`,
     estado: "Por_abrir",
   });
@@ -149,7 +147,6 @@ const sortearTerceiroLugar = async (id_sorteio) => {
 
   await notificacaoService.criarNotificacao({
     id_utilizador: atualizarVencedor.id_utilizador,
-    id_administrador: atualizarVencedor.id_sorteio,
     mensagem: `Parabéns! A rifa ${atualizarVencedor.id} foi sorteada como terceiro lugar no sorteio ${id_sorteio}. O código para levantar o seu prémio é 8659`,
     estado: "Por_abrir",
   });
