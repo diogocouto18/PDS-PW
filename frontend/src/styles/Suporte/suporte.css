@@ -1,64 +1,80 @@
-.Topbar{
-    background-color: #E3C6B5;
-    width: 100%;
-    height: 340px;
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 2rem 2rem 2rem;
+  font-family: 'Arial', sans-serif;
+  position: relative;
 }
 
-.Topbar-tittle{
-    color: #fff;
-    font-size: 20px;
-    font-weight: bold;
-    vertical-align: top;
+/* Título centralizado e maior */
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 3rem;
+  margin-bottom: 7rem;
 }
 
-.artigos-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 24px;
-    background-color: white;
+/* Conteúdo do FAQ mais abaixo */
+.faq-content {
+  margin-top: 2rem;
 }
-.support-title {
-    font-weight: bold;
-    margin-bottom: 50px;
-  }
-.article-list {
-    display: flex;
-    gap: 100px;
-  }
-  
-  .article-card {
-    width: 400px;
-    height: 300px;
-    font-size: large;
-    border: none;
-    background-color: #e5e5e5;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-  }
-  
-  .article-card:hover {
-    transform: translateY(-5px);
-    cursor: pointer;
-    background-color: #e5e5e5;
-  }
 
-.criar-ticket{
-  position: fixed;
-  bottom: 40px;
-  right:  40px;
-  padding: 20px 25px;
-  background-color: #114B6E;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 30px;
-  font-weight: 400;
+.faq-category h2 {
+  font-size: 1.2rem;
+  color: #c19a00;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.faq-item {
+  border-top: 1px solid #ccc;
+  padding: 1rem 0;
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.faq-question:hover {
+  color: #555;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+  padding-left: 1rem;
+}
+
+.faq-answer.open {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 0.5rem;
+}
+
+/* Botão fixo no canto inferior direito */
+.support-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #222;
+  color: white;
+  padding: 14px 22px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.support-button:hover {
+  background-color: #444;
 }

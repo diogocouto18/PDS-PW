@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/Perfil/perfilAdministrador.css";
+import "../../styles/Perfil/perfilUtilizador.css";
 import SidebarFixed from "../../componentes/Sidebar/sidebarFixed";
 import { FaUserAlt } from "react-icons/fa";
 
