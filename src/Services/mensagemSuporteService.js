@@ -24,7 +24,6 @@ const criarMensagemInicial = async (data) => {
 
   await Promise.all(administradores.map(({ id }) =>
     notificacaoService.criarNotificacao({
-      id_utilizador: data.id_utilizador,
       id_administrador: id,
       mensagem: "Novo ticket de suporte recebido.",
       estado: "Por_abrir"

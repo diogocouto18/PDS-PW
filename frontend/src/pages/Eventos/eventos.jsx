@@ -47,6 +47,7 @@ const Eventos = () => {
 
   return (
     <SidebarLayout>
+    <div className="eventos-page">
       <div className="lista-eventos">
         <div className="search-container">
           <SearchBar onSearch={setTermoPesquisa} />
@@ -87,6 +88,7 @@ const Eventos = () => {
           </div>
         )}
       </div>
+    </div>    
     </SidebarLayout>
   );
 };

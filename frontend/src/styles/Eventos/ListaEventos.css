@@ -1,12 +1,20 @@
+.eventos-page{
+    padding: 5rem;
+  background-color: #fff;
+  height: 100vh; /* ocupa altura total da janela */
+  overflow-y: auto; /* ativa scroll interno */
+
+}
+
+
 /* estilos gerais */
 .lista-eventos {
   width: 800px;
   margin: 220px auto;
-  margin-top:0;
+  margin-top: -50px;
   padding: 0 15px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
-  overflow-y: auto;
   height: 100vh;
   scrollbar-width: thin; /* Firefox: scrollbar mais fina */
   scrollbar-color: #000000 #ffffff; /* Firefox: cor da barra */

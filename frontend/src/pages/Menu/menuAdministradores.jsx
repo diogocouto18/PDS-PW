@@ -4,8 +4,8 @@ import SidebarFixed from "../../componentes/Sidebar/sidebarFixed";
 
 const images = [
     '/imagens/imagem carrosel 1.jpg',
-    '/imagens/imagem carrosel 2.jpg',
-    '/imagens/imagem carrosel 3.jpg'
+    '/imagens/imagem carrosel 3.jpg',
+    '/imagens/imagem carrosel 4.jpg'
   ];
 
   const MenuAdministrador = () => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/Perfil/perfilUtilizador.css";
+import "../../styles/Perfil/perfilAdministrador.css";
 import SidebarFixed from "../../componentes/Sidebar/sidebarFixed";
 import { FaUserAlt } from "react-icons/fa";
 import SorteiosRifasCartaz from "../../componentes/SorteioRifas/sorteioRifasLista";

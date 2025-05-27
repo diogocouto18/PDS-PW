@@ -4,29 +4,19 @@ import SidebarLayout from "../../componentes/Sidebar/sidebarLayout";
 import SearchBar from "../../componentes/searchbar";
 import Filter from "../../componentes/filters";
 import CriarEvento from '../../componentes/Eventos/criarEvento';
+import Eventos from './eventos.jsx';
 
 const EventosAdministrador = () => {
     const [showModal, setShowModal] = useState(false);
 
     return (
-        <SidebarLayout >
-            <div>
-                <div className="search-container">
-                    <SearchBar />
-                </div>
-                <Filter />
-                <div className="eventos-container">
-                    <div className="Evento"></div>
-                    
-                    <button className="criar-evento-btn" onClick={() => setShowModal(true)}>
-                        +
-                    </button>
-
-                    {/* Passando o setShowModal como uma prop para o CriarEvento */}
-                    {showModal && (<CriarEvento setShowModal={setShowModal} />)}
-                </div>
-            </div>
-        </SidebarLayout>
+        <div>
+            <Eventos/>;            
+                <button className="criar-evento-btn" onClick={() => setShowModal(true)}>
+                    +
+                </button>         
+            {showModal && (<CriarEvento setShowModal={setShowModal} />)}
+        </div>
     );
 };
 
