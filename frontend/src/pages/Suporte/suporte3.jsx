@@ -6,6 +6,7 @@ import { FaHeadset } from "react-icons/fa";
 function Suporte3() {
   const [mensagem, setMensagem] = useState('');
   const [popupVisible, setPopupVisible] = useState(false);
+  const [erroMensagem, setErroMensagem] = useState('');
   const [nome, setNome] = useState('Utilizador');
 
   useEffect(() => {
@@ -25,16 +26,38 @@ function Suporte3() {
       .catch(() => setNome('Utilizador'));
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (mensagem.trim().length < 10) return;
 
-    setPopupVisible(true);
-    setMensagem('');
+    if (mensagem.trim().length < 10) {
+      setErroMensagem('A mensagem deve conter pelo menos 10 caracteres.');
+      return;
+    }
 
-    setTimeout(() => {
-      setPopupVisible(false);
-    }, 3000);
+    setErroMensagem('');
+    const token = localStorage.getItem('token');
+    if (!token) return alert("Sessão inválida. Inicie sessão novamente.");
+
+    try {
+      const res = await fetch('http://localhost:3000/mensagem-suporte/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ mensagem }),
+      });
+
+      if (!res.ok) throw new Error("Erro ao enviar a mensagem");
+
+      setPopupVisible(true);
+      setMensagem('');
+
+      setTimeout(() => setPopupVisible(false), 3000);
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao enviar a mensagem de suporte.");
+    }
   };
 
   return (
@@ -59,6 +82,9 @@ function Suporte3() {
               onChange={(e) => setMensagem(e.target.value)}
               required
             />
+            {erroMensagem && (
+              <div className="erro-mensagem">{erroMensagem}</div>
+            )}
             <button className="send-support-button" type="submit">
               Enviar Mensagem
             </button>
