@@ -34,6 +34,7 @@
   height: 350px;
   background-color: #f4cbb8;
   display: flex;
+  font-size: 150px;
   align-items: center;
   justify-content: center;
   border-radius: 20px;

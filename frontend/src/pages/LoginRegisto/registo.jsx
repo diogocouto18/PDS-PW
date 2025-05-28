@@ -48,8 +48,8 @@ function Registo() {
         email: formData.email,
         password: formData.password,
         passphrase: formData.passphrase,
-        }
-      :{
+      }
+      : {
         nome: formData.nome,
         username: formData.username,
         email: formData.email,
@@ -58,8 +58,8 @@ function Registo() {
         morada: formData.morada,
       };
 
-      console.log("Payload enviado:", payload);
-      
+    console.log("Payload enviado:", payload);
+
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -74,12 +74,12 @@ function Registo() {
         setTimeout(() => {
           window.location.href = '/';
         }, 2500);
-        
+
       } else {
         alert(data.error);
       }
     } catch (err) {
-       setMensagem('Erro ao conectar ao servidor.');
+      setMensagem('Erro ao conectar ao servidor.');
     }
   };
 
@@ -91,7 +91,7 @@ function Registo() {
           <form onSubmit={handleSubmit}>
             <h2 className='title-register'>Registar</h2>
             <div className="input-group">
-              <input type="text" name="passphrase" placeholder="Frase-passe (Administradores)" onChange={handleChange} value={formData.passphrase}/>
+              <input type="text" name="passphrase" placeholder="Frase-passe (Administradores)" onChange={handleChange} value={formData.passphrase} />
               <input type="text" name="nome" placeholder="Nome *" onChange={handleChange} required />
               <input type="text" name="username" placeholder="Nome de Utilizador *" onChange={handleChange} required />
               <input type="email" name="email" placeholder="Email *" onChange={handleChange} required />
@@ -107,8 +107,13 @@ function Registo() {
             </div>
 
             <div className="terms">
-              <input type="checkbox" id="terms" checked={termsAccepted} onChange={() => setTermsAccepted(!termsAccepted)}/>
-              <label htmlFor="terms"> Li e aceito os termos e condições</label>
+              <input type="checkbox" id="terms" checked={termsAccepted} onChange={() => setTermsAccepted(!termsAccepted)} />
+              <label htmlFor="terms">
+                Li e aceito os{' '}
+                <a href="/termos.pdf" target="_blank" rel="noopener noreferrer">
+                  termos e condições
+                </a>
+              </label>
             </div>
 
             <button type="submit" className="register-btn">
@@ -125,7 +130,6 @@ function Registo() {
               </p>
             )}
 
-
           </form>
         </div>
       </div>
@@ -134,3 +138,5 @@ function Registo() {
 };
 
 export default Registo;
+
+
