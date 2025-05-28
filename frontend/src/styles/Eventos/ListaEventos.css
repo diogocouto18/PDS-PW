@@ -1,13 +1,10 @@
-.eventos-page{
-    padding: 5rem;
+.eventos-page {
+  padding: 5rem;
   background-color: #fff;
-  height: 100vh; /* ocupa altura total da janela */
-  overflow-y: auto; /* ativa scroll interno */
-
+  height: 100vh;
+  overflow-y: auto;
 }
 
-
-/* estilos gerais */
 .lista-eventos {
   width: 800px;
   margin: 220px auto;
@@ -16,36 +13,24 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   height: 100vh;
-  scrollbar-width: thin; /* Firefox: scrollbar mais fina */
-  scrollbar-color: #000000 #ffffff; /* Firefox: cor da barra */
+  scrollbar-width: thin;
+  scrollbar-color: #000000 #ffffff;
 }
 
-/* Search container */
 .search-container {
   margin-bottom: 20px;
 }
 
-/* título da página 
-h2 {
-  font-size: 2rem;
-  margin-bottom: 15px;
-  color: #222;
-}*/
-
-/* filtro */
 .Filtro {
   margin-bottom: 25px;
 }
 
-/* Container dos cards */
 .eventos-container {
   display: block;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
-  
 }
 
-/* card do evento */
 .evento-card {
   background-color: #fff;
   border-radius: 8px;
@@ -63,7 +48,6 @@ h2 {
   box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-/* header do card */
 .evento-header {
   display: flex;
   justify-content: space-between;
@@ -85,7 +69,6 @@ h2 {
   white-space: nowrap;
 }
 
-/* imagem do evento */
 .evento-imagem {
   width: 100%;
   height: 400px;
@@ -96,13 +79,27 @@ h2 {
   pointer-events: none;
 }
 
-/* footer do card */
+/* NOVO: Rodapé com estrelas e botões */
 .evento-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
 }
 
-/* botão compartilhar */
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Botão de partilha */
 .evento-share-btn {
   background-color: #007bff;
   border: none;
@@ -120,23 +117,26 @@ h2 {
   background-color: #0056b3;
 }
 
-/* mensagem quando não há eventos */
+.eventoEditButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.eventoEditButton:hover {
+  background-color: #0056b3;
+}
+
 .lista-eventos p {
   text-align: center;
   color: #777;
   font-style: italic;
   margin-top: 40px;
-}
-
-/* Responsividade simples */
-@media (max-width: 480px) {
-  .eventos-container {
-    grid-template-columns: 1fr;
-  }
-
-  .evento-imagem {
-    height: 140px;
-  }
 }
 
 .copied-alert {
@@ -151,18 +151,12 @@ h2 {
   100% { opacity: 0; }
 }
 
-.eventoEditButton {
-  background-color: #007bff; /* Azul */
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  margin-left: 8px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
+@media (max-width: 480px) {
+  .eventos-container {
+    grid-template-columns: 1fr;
+  }
 
-.eventoEditButton:hover {
-  background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+  .evento-imagem {
+    height: 140px;
+  }
 }

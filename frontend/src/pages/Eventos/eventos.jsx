@@ -5,7 +5,7 @@ import Filter from "../../componentes/filters";
 import { FaShareAlt } from 'react-icons/fa';
 import '../../styles/Eventos/ListaEventos.css';
 import DetalhesEvento from '../../componentes/Eventos/detalhesEvento.jsx';
-
+import EstrelasAvaliacao from '../../componentes/Eventos/EstrelasAvaliacao.jsx';
 
 const Eventos = () => {
   const [eventos, setEventos] = useState([]);
@@ -17,7 +17,6 @@ const Eventos = () => {
   const handleCardClick = (evento) => {
     setSelectedEvento(evento);
   };
-
 
   const fetchEventos = async (termo = '') => {
     try {
@@ -103,25 +102,40 @@ const Eventos = () => {
                 )}
 
                 <div className="evento-footer">
-                  <button className="evento-share-btn" onClick={() => copiarLink(evento.id)}><FaShareAlt /></button>
-                  {copiedEventId === evento.id && (
-                    <span className="copied-alert">✅ Link copiado!</span>
-                  )}
+                  <div className="footer-left">
+                    <EstrelasAvaliacao idEvento={evento.id} />
+                  </div>
 
-                  {mostrarBotao && (
-                    <button className='eventoEditButton'>Editar</button>
-                  )}
+                  <div className="footer-right">
+                    <button
+                      className="evento-share-btn"
+                      onClick={(e) => { e.stopPropagation(); copiarLink(evento.id); }}
+                    >
+                      <FaShareAlt />
+                    </button>
+
+                    {copiedEventId === evento.id && (
+                      <span className="copied-alert">✅ Link copiado!</span>
+                    )}
+
+                    {mostrarBotao && (
+                      <button className='eventoEditButton'>Editar</button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
-      <DetalhesEvento  isOpen={!!selectedEvento}  onClose={() => setSelectedEvento(null)}  evento={selectedEvento}/>
 
+      <DetalhesEvento
+        isOpen={!!selectedEvento}
+        onClose={() => setSelectedEvento(null)}
+        evento={selectedEvento}
+      />
     </SidebarLayout>
   );
-
 };
 
 export default Eventos;
