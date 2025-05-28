@@ -1,14 +1,30 @@
 import React, { useState } from 'react';
 import '../../styles/Suporte/suporte.css';
+import '../../styles/Suporte/popupChat.css'; // importa o CSS do novo popup
 import { useNavigate } from 'react-router-dom';
 import SidebarLayout from '../../componentes/Sidebar/sidebarLayout';
+import { FaBell } from 'react-icons/fa';
 
 export default function Suporte() {
   const [openIndex, setOpenIndex] = useState(null);
-  const navigate = useNavigate();
+  const [popupAberto, setPopupAberto] = useState(false);
+  const [mensagem, setMensagem] = useState('');
+  const [conversa, setConversa] = useState([
+    { remetente: 'admin', texto: 'Olá! Como posso ajudar?' }
+  ]);
 
   const toggleQuestion = (index) => {
     setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const togglePopup = () => setPopupAberto(!popupAberto);
+
+  const enviarMensagem = (e) => {
+    e.preventDefault();
+    if (mensagem.trim() === '') return;
+
+    setConversa([...conversa, { remetente: 'utilizador', texto: mensagem }]);
+    setMensagem('');
   };
 
   const faqData = [
@@ -68,6 +84,45 @@ export default function Suporte() {
             </div>
           ))}
         </div>
+
+        {/* Novo botão com popup tipo mini WhatsApp */}
+        <div className="notificacao-wrapper" onClick={togglePopup}>
+          <button className="notificacao-button">
+            <FaBell /> Mensagem do Suporte
+            <span className="bolinha-vermelha" />
+          </button>
+        </div>
+
+        {popupAberto && (
+          <div className="chat-popup">
+            <div className="chat-header">
+              <h3>Suporte Online</h3>
+              <button className="close-chat" onClick={togglePopup}>×</button>
+            </div>
+
+            <div className="chat-mensagens">
+              {conversa.map((msg, idx) => (
+                <div
+                  key={idx}
+                  className={`chat-msg ${msg.remetente === 'utilizador' ? 'me' : 'them'}`}
+                >
+                  {msg.texto}
+                </div>
+              ))}
+            </div>
+
+            <form className="chat-input" onSubmit={enviarMensagem}>
+              <input
+                type="text"
+                value={mensagem}
+                onChange={(e) => setMensagem(e.target.value)}
+                placeholder="Escreve a tua mensagem..."
+              />
+              <button type="submit">Enviar</button>
+            </form>
+          </div>
+        )}
+
         <button className="support-button" onClick={() => navigate('/suporte3')}>
           💬 Falar com Suporte
         </button>
