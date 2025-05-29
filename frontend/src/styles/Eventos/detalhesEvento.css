@@ -65,7 +65,7 @@
 
 .label {
   font-weight: 600;
-  color: #0d3b66;
+  color: #0d3b66 !important;
   font-size: 16px;
 }
 

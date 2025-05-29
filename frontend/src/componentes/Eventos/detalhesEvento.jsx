@@ -63,7 +63,7 @@ const DetalhesEvento = ({ isOpen, onClose, evento, token }) => {
             <p className="label">{new Date(evento.data_evento).toLocaleDateString('pt-PT')}</p>
           </div>
 
-          <p className="label">Localizacao: {evento.localizacao}</p>
+          <p className="label">Localização: {evento.localizacao}</p>
           <p className="label">Categoria: {categoria ? categoria.nome : evento.id_categoria}</p>
         </div>
 

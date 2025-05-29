@@ -65,15 +65,8 @@ const PerfilAdministrador = () => {
           </div>
         </div>
 
-        <div className="admin-actions">
-          <button className="admin-button" onClick={() => setMostrarCartazSorteios(true)}>
-            Sortear Rifas
-          </button>
-        </div>
-
         <button className="logout-button" onClick={handleLogout}>Terminar Sessão</button>
-
-        <SorteiosRifasCartaz show={mostrarCartazSorteios} onClose={() => setMostrarCartazSorteios(false)} />         
+   
       </div>
     </div>  
   );

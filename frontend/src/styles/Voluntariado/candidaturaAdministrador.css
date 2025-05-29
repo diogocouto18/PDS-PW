@@ -87,7 +87,7 @@
 
 .mensagem-scroll {
   display: inline-block;
-  max-height: 75px;          /* altura máxima */
+  max-height: 150px;          /* altura máxima */
   max-width: 280px;          /* controla largura */
   overflow-y: auto;          /* scroll vertical se necessário */
   vertical-align: bottom;

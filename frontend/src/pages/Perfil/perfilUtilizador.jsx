@@ -86,7 +86,7 @@ const PerfilUtilizador = () => {
     }
   };
 
-  if (loading) return <div className="user-container">Carregando...</div>;
+
 
   return (
     <div className="PerfilPage">

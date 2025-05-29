@@ -10,7 +10,7 @@
   max-width: 100%;            /* responsivo em telas pequenas */
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
-  height: 335px;
+  height: 450px;
 }
 
 /* título */
@@ -55,7 +55,7 @@
 
 .descricao-scroll {
   display: inline-block;
-  max-height: 100px;          /* altura máxima */
+  max-height: 200px;          /* altura máxima */
   max-width: 280px;          /* controla largura */
   overflow-y: auto;          /* scroll vertical se necessário */
   vertical-align: bottom;

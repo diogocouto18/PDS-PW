@@ -50,11 +50,6 @@ const enviarRespostaUtilizador = async (data) => {
     },
   });
 
-  await notificacaoService.criarNotificacao({
-    id_administrador: ticket.id_administrador,
-    mensagem: "Utilizador respondeu ao ticket de suporte.",
-    estado: "Por_abrir",
-  });
 
   return novaMensagem;
 };
@@ -76,12 +71,6 @@ const enviarRespostaAdministrador = async (data) => {
       estado: "Aberto",
       data_abertura: new Date(),
     },
-  });
-
-  await notificacaoService.criarNotificacao({
-    id_utilizador: ticket.id_utilizador,
-    mensagem: "Resposta ao seu ticket de suporte.",
-    estado: "Por_abrir",
   });
 
   return novaMensagem;
