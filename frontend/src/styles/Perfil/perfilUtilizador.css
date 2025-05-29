@@ -158,3 +158,18 @@
 .modal-content form button:hover {
   background-color: #d2b7a9;
 }
+
+.CachPhrase{
+  font-size: 56px;
+  font-weight: 700;
+  color: #083c52;
+  position: absolute;
+  bottom: -250px;
+  text-align: center;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 10px;
+  background-color: #E3C6B5;
+  border-radius: 13px;
+}

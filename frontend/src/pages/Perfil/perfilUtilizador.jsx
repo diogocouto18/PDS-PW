@@ -125,10 +125,9 @@ const PerfilUtilizador = () => {
           <button className="edituser-button" onClick={() => { setEditing(true); setMsg({ text: "", type: "" }); }}>
             Editar Perfil
           </button> 
-          
         </div>
 
-       
+       <span className="CachPhrase"> Mais que vizinhos, uma comunidade!</span>
 
         {editing && (
           <div className="modal-overlay">
