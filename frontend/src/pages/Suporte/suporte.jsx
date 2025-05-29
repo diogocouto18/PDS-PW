@@ -29,11 +29,6 @@ export default function Suporte() {
             'Apenas administradores têm permissão para criar, editar ou eliminar eventos.',
         },
         {
-          question: '🎟️ Como posso participar numa rifa?',
-          answer:
-            'Acede à secção de rifas, escolhe uma ativa e segue os passos para participar. Se ganhares, serás notificado diretamente na plataforma.',
-        },
-        {
           question: '🧑‍🤝‍🧑 Quero ser voluntário, o que preciso de fazer?',
           answer:
             'Vai à página de voluntariado, escolhe um evento disponível e submete a tua candidatura. Irás receber uma notificação com a resposta da equipa.',
