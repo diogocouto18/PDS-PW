@@ -85,8 +85,8 @@ const Eventos = () => {
         ) : (
           <div className="eventos-container">
             {eventos.map((evento) => (
-              <div className="evento-card" key={evento.id} onClick={() => handleCardClick(evento)}>
-                <div className="evento-header">
+              <div className="evento-card">
+                <div className="evento-header" key={evento.id} onClick={() => handleCardClick(evento)}>
                   <span className="evento-nome">{evento.titulo}</span>
                   <span className="evento-data">
                     {new Date(evento.data_evento).toLocaleDateString('pt-PT')}
