@@ -58,7 +58,11 @@ const EstrelasAvaliacao = ({ idEvento }) => {
   };
 
   return (
-    <div style={{ display: "flex", gap: "5px", marginLeft: "auto" }}>
+    <div
+      className="estrelas-interativas"
+      onClick={(e) => e.stopPropagation()}
+      onMouseDown={(e) => e.stopPropagation()}
+    >
       {[1, 2, 3, 4, 5].map((estrela) => (
         <FaStar
           key={estrela}

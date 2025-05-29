@@ -85,21 +85,23 @@ const Eventos = () => {
         ) : (
           <div className="eventos-container">
             {eventos.map((evento) => (
-              <div className="evento-card">
-                <div className="evento-header" key={evento.id} onClick={() => handleCardClick(evento)}>
-                  <span className="evento-nome">{evento.titulo}</span>
-                  <span className="evento-data">
-                    {new Date(evento.data_evento).toLocaleDateString('pt-PT')}
-                  </span>
-                </div>
+              <div className="evento-card" key={evento.id}>
+                <div onClick={() => handleCardClick(evento)}>
+                  <div className="evento-header">
+                    <span className="evento-nome">{evento.titulo}</span>
+                    <span className="evento-data">
+                      {new Date(evento.data_evento).toLocaleDateString('pt-PT')}
+                    </span>
+                  </div>
 
-                {evento.fotografia && (
-                  <img
-                    src={`http://localhost:3000/uploads/${evento.fotografia}`}
-                    alt={evento.titulo}
-                    className="evento-imagem"
-                  />
-                )}
+                  {evento.fotografia && (
+                    <img
+                      src={`http://localhost:3000/uploads/${evento.fotografia}`}
+                      alt={evento.titulo}
+                      className="evento-imagem"
+                    />
+                  )}
+                </div>
 
                 <div className="evento-footer">
                   <div className="footer-left">
@@ -109,7 +111,10 @@ const Eventos = () => {
                   <div className="footer-right">
                     <button
                       className="evento-share-btn"
-                      onClick={(e) => { e.stopPropagation(); copiarLink(evento.id); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        copiarLink(evento.id);
+                      }}
                     >
                       <FaShareAlt />
                     </button>

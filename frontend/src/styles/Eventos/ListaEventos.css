@@ -160,3 +160,19 @@
     height: 140px;
   }
 }
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  z-index: 2;
+}
+
+.estrelas-interativas {
+  display: flex;
+  gap: 5px;
+  margin-left: auto;
+  position: relative;
+  z-index: 3;
+}
