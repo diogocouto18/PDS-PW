@@ -15,12 +15,13 @@
   background: white;
   border-radius: 16px;
   padding: 32px;
-  width: 600px;
-  max-width: 90%;
+  width: 100%;
+  max-width: 700px; /* ← REDUZIDO DE 600px */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   position: relative;
   text-align: center;
 }
+
 
 .close-btn {
   position: absolute;
@@ -45,12 +46,12 @@
   background-color: #cc0000;
 }
 .modal h1 {
-  font-size: 20px;
-  margin-bottom: 16px;
-  position: absolute;
-  top: 12px;
-  left: 30px;
+  font-size: 24px;
+  margin-bottom: 24px;
+  font-weight: bold;
+  color: #0d415a;
 }
+
 
 .modal p {
   text-align: left;

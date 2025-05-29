@@ -14,7 +14,7 @@ export default function TicketList({ tickets, onSelectTicket, ticketSelecionado 
           >
             <strong>ID:</strong> {ticket.id_ticket} <br />
             <small>{ticket.resumo}...</small> <br />
-            <small>Utilizador: {ticket.username}</small>
+            <small><strong>Utilizador:</strong> {ticket.username}</small>
           </li>
         ))}
       </ul>

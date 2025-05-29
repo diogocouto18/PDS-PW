@@ -95,7 +95,7 @@ const CriarEvento = ({ setShowModal }) => {
   return (
     <div className="overlay">
       <div className="modal">
-        <h1>Criar Evento</h1>
+        <h1 className="form-title">Criar Evento</h1>
         <form className="formulario" onSubmit={handleSubmit}>
           <input
             placeholder="Nome do Evento"

@@ -21,7 +21,7 @@
 .ticket-list h2 {
     margin-top: 0;
     margin-bottom: 1rem;
-    color: #007bff;
+    color: #555;
     font-weight: 700;
 }
 
@@ -46,14 +46,14 @@
 }
 
 .ticket-list li.selecionado {
-    background-color: #007bff;
+    background-color: #e9c7b5;
     color: white;
     font-weight: 600;
     border-color: #0056b3;
 }
 
 .ticket-list small {
-    color: #555;
+    color: #000000;
     font-size: 0.85rem;
 }
 
@@ -88,7 +88,7 @@
 }
 
 .mensagem.admin {
-    background-color: #007bff;
+    background-color: #e9c7b5;
     color: white;
     align-self: flex-end;
     border-bottom-right-radius: 0;
@@ -98,7 +98,7 @@
 }
 
 .mensagem.utilizador {
-    background-color: #f1f0f0;
+    background-color: #d6d6d6;
     color: #333;
     align-self: flex-start;
     border-bottom-left-radius: 0;
@@ -114,8 +114,6 @@
 .mensagem.utilizador small {
     color: #666;
 }
-
-
 
 .chatbox-form {
     display: flex;
@@ -140,7 +138,7 @@
 }
 
 .chatbox-form button[type="submit"] {
-    background-color: #007bff;
+    background-color: #083c52;
     color: white;
     border: none;
     padding: 0 1.5rem;
@@ -157,8 +155,6 @@
 .chatbox-form button[type="submit"]:hover {
     background-color: #0056b3;
 }
-
-
 
 .nenhum-ticket-selecionado {
     flex: 1;
