@@ -38,7 +38,7 @@ const utilizadorRoutes = require('./Routes/utilizadores');
 app.use('/administradores', administradorRoutes);
 app.use('/anuncios', anuncioRoutes);
 app.use('/auth', authRoutes);
-app.use('/avaliacao-evento', avaliacaoEventoRoutes);
+app.use('/avaliacoesEvento', avaliacaoEventoRoutes);
 app.use('/candidaturaVoluntariado', candidaturaVoluntariado);
 app.use('/categoria-evento', categoriaEventoRoutes);
 app.use('/eventos', eventoRoutes);

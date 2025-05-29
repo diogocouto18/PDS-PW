@@ -9,7 +9,7 @@ const { autenticacao, apenasAdministrador, apenasUtilizadores, apenasProprioUtil
 router.post("/", autenticacao, apenasUtilizadores, avaliacaoController.criarAvaliacao);
 
 // Listar avaliações de um evento (apenas administradores)
-router.get("/evento/:id_evento", autenticacao, apenasAdministrador, avaliacaoController.listarPorEvento);
+router.get("/evento/:id_evento", autenticacao, avaliacaoController.listarPorEvento);
 
 // Atualizar avaliação de um evento (próprio utilizador)
 router.put("/:id", autenticacao, apenasProprioUtilizador, avaliacaoController.atualizarAvaliacao);
