@@ -1,31 +1,17 @@
 .PerfilPage {
   background-color: #fff;
-  flex-direction: column;
-  align-items: center;
-  margin-left: 250px; 
+  height: 100%; 
 }
-
-.body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #fff;
-}
-
 .user-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-  padding: 2rem;
   position: relative;
+  z-index: 1;
 }
-
 .profile-section {
   display: flex;
   align-items: flex-start;
   gap: 2rem;
   margin-left: 180px;
-  margin-top: 190px;
+  margin-top: 0px !important;
 }
 
 .user-avatar {
@@ -44,7 +30,8 @@
   flex-direction: column;
   justify-content: flex-start;
   color: #000;
-  margin-top: 0.5rem;
+  margin-top: 40px;
+
 }
 
 .user-info h2 {
@@ -97,6 +84,7 @@
   font-weight: 800;
   cursor: pointer;
   transition: background 0.3s;
+  top:50px !important;
 }
 
 .logout-button:hover {

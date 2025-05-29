@@ -121,12 +121,14 @@ const PerfilUtilizador = () => {
         </div>
 
         <div className="user-actions">
+          <button className="logout-button" onClick={handleLogout}>Terminar Sessão</button>
           <button className="edituser-button" onClick={() => { setEditing(true); setMsg({ text: "", type: "" }); }}>
             Editar Perfil
-          </button>
+          </button> 
+          
         </div>
 
-        <button className="logout-button" onClick={handleLogout}>Terminar Sessão</button>
+       
 
         {editing && (
           <div className="modal-overlay">
