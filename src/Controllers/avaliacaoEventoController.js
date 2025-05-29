@@ -1,26 +1,27 @@
 const avaliacaoService = require("../Services/avaliacaoEventoService");
 
-// Post - Cria uma avaliação
+// Post - Cria uma avaliação (uma por utilizador/evento) e retorna média atualizada
 async function criarAvaliacao(req, res) {
   try {
     const { id } = req.utilizador;
-    const { id_evento, nota } = req.body;
+    const data = {
+      id_utilizador: id,
+      id_evento: req.body.id_evento,
+      nota: req.body.nota,
+    };
 
-    // Verifica se o utilizador já avaliou este evento
-    const avaliacoes = await avaliacaoService.listarPorEvento(id_evento);
-    const existente = avaliacoes.find(av => av.id_utilizador === id);
+    // Verifica se já avaliou
+    const avaliacoesDoEvento = await avaliacaoService.listarPorEvento(data.id_evento);
+    const jaAvaliou = avaliacoesDoEvento.find(a => a.id_utilizador === id);
 
-    if (existente) {
-      return res.status(400).json({ error: "Já avaliaste este evento." });
+    if (jaAvaliou) {
+      return res.status(400).json({ error: "Já avaliou este evento." });
     }
 
-    // Cria a avaliação
-    const avaliacao = await avaliacaoService.criarAvaliacao({ id_utilizador: id, id_evento, nota });
+    const novaAvaliacao = await avaliacaoService.criarAvaliacao(data);
+    const media = await avaliacaoService.mediaDoEvento(data.id_evento);
 
-    // Calcula a média atualizada
-    const media = await avaliacaoService.mediaDoEvento(id_evento);
-
-    res.status(201).json({ avaliacao, media });
+    res.status(201).json({ avaliacao: novaAvaliacao, media });
   } catch (error) {
     console.error("Erro ao criar avaliação:", error.message);
     res.status(400).json({ error: error.message });
@@ -49,8 +50,11 @@ async function atualizarAvaliacao(req, res) {
     if (existente.id_utilizador !== req.utilizador.id) {
       return res.status(403).json({ error: "Só podes atualizar a tua própria avaliação" });
     }
+
     const atualizacao = await avaliacaoService.atualizarAvaliacao(idAvaliacao, req.body);
-    res.json(atualizacao);
+    const media = await avaliacaoService.mediaDoEvento(atualizacao.id_evento);
+
+    res.json({ avaliacao: atualizacao, media });
   } catch (error) {
     console.error("Erro ao atualizar avaliação:", error.message);
     res.status(400).json({ error: error.message });
