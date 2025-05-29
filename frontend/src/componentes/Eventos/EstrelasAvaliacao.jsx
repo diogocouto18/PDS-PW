@@ -4,29 +4,47 @@ import { FaStar } from "react-icons/fa";
 const EstrelasAvaliacao = ({ idEvento }) => {
   const [avaliacao, setAvaliacao] = useState(0);
   const [avaliacaoExistente, setAvaliacaoExistente] = useState(null);
+  const [media, setMedia] = useState(null);
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const fetchAvaliacao = async () => {
+    const fetchDados = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/avaliacoesEvento/evento/${idEvento}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          const minha = data.find(av => av.id_utilizador === parseInt(localStorage.getItem("id")));
+        const resAvaliacoes = await fetch(
+          `http://localhost:3000/avaliacoesEvento/evento/${idEvento}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        const resMedia = await fetch(
+          `http://localhost:3000/avaliacoesEvento/evento/${idEvento}/media`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        if (resAvaliacoes.ok) {
+          const avaliacoes = await resAvaliacoes.json();
+          const minha = avaliacoes.find(
+            (av) => av.id_utilizador === parseInt(localStorage.getItem("id"))
+          );
           if (minha) {
             setAvaliacao(minha.nota);
             setAvaliacaoExistente(minha.id);
           }
+        }
+
+        if (resMedia.ok) {
+          const { media } = await resMedia.json();
+          setMedia(media?.toFixed(1));
         }
       } catch (err) {
         console.error("Erro ao buscar avaliação:", err);
       }
     };
 
-    fetchAvaliacao();
+    fetchDados();
   }, [idEvento]);
 
   const handleClick = async (nota) => {
@@ -50,7 +68,9 @@ const EstrelasAvaliacao = ({ idEvento }) => {
       });
 
       if (res.ok) {
+        const result = await res.json();
         setAvaliacao(nota);
+        if (result.media) setMedia(result.media.toFixed(1));
       }
     } catch (err) {
       console.error("Erro ao avaliar:", err);
@@ -62,19 +82,27 @@ const EstrelasAvaliacao = ({ idEvento }) => {
       className="estrelas-interativas"
       onClick={(e) => e.stopPropagation()}
       onMouseDown={(e) => e.stopPropagation()}
+      style={{ textAlign: "left" }}
     >
-      {[1, 2, 3, 4, 5].map((estrela) => (
-        <FaStar
-          key={estrela}
-          size={20}
-          onClick={(e) => {
-            e.stopPropagation();
-            handleClick(estrela);
-          }}
-          color={estrela <= avaliacao ? "#FFD700" : "#ccc"}
-          style={{ cursor: "pointer" }}
-        />
-      ))}
+      <div style={{ display: "flex", gap: "5px", marginBottom: "4px" }}>
+        {[1, 2, 3, 4, 5].map((estrela) => (
+          <FaStar
+            key={estrela}
+            size={20}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClick(estrela);
+            }}
+            color={estrela <= avaliacao ? "#FFD700" : "#ccc"}
+            style={{ cursor: "pointer" }}
+          />
+        ))}
+      </div>
+      {media !== null && (
+        <div style={{ fontSize: "0.85rem", color: "#666", marginTop: "2px" }}>
+          Média: {media} ⭐
+        </div>
+      )}
     </div>
   );
 };
