@@ -112,3 +112,8 @@ h1 {
   border-radius: 50%;
   border: 2px solid white;
 }
+
+.faq-container.com-chat-aberto {
+  margin-right: 470px; /* largura do chat + margem */
+  transition: margin-right 0.3s ease;
+}

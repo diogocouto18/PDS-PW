@@ -8,6 +8,7 @@ import ChatPopup from './popupChat';
 
 export default function Suporte() {
   const [openIndex, setOpenIndex] = useState(null);
+  const [mostrarPopup, setMostrarPopup] = useState(false);
   const navigate = useNavigate();
 
   const toggleQuestion = (index) => {
@@ -49,7 +50,7 @@ export default function Suporte() {
 
   return (
     <SidebarLayout>
-      <div className="faq-container">
+      <div className={`faq-container ${mostrarPopup ? 'com-chat-aberto' : ''}`}>
         <h1>Centro de Apoio</h1>
         <div className="faq-content">
           {faqData.map((category, i) => (
@@ -77,8 +78,7 @@ export default function Suporte() {
           ))}
         </div>
 
-        {/* Chat de suporte com popup separado */}
-        <ChatPopup />
+        <ChatPopup onChatToggle={setMostrarPopup} />
 
         <button
           className="support-button"

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../styles/Suporte/popupChat.css';
 
-export default function ChatPopup() {
+export default function ChatPopup({ onChatToggle }) {
   const [mensagens, setMensagens] = useState([]);
   const [novaMensagem, setNovaMensagem] = useState('');
   const [mostrarPopup, setMostrarPopup] = useState(false);
@@ -11,8 +11,10 @@ export default function ChatPopup() {
   const token = localStorage.getItem('token'); // Ajusta se guardas o token noutro local
 
   const togglePopup = () => {
-    setOpen(!open);
+    const novoEstado = !mostrarPopup;
+    setMostrarPopup((prev) => !prev);
     setMostrarNotificacao(false);
+    if (onChatToggle) onChatToggle(novoEstado);
   };
 
   const verificarTicket = async () => {
@@ -79,7 +81,7 @@ export default function ChatPopup() {
         </div>
       )}
 
-      {open && (
+      {mostrarPopup && (
         <div className="chat-popup">
           <div className="chat-header">
             <h3>Suporte Online</h3>
