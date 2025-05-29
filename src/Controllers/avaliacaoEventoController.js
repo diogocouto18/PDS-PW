@@ -1,78 +1,83 @@
 const avaliacaoService = require("../Services/avaliacaoEventoService");
 
-// Post - Cria uma avaliaçao
+// Post - Cria uma avaliação
 async function criarAvaliacao(req, res) {
   try {
     const { id } = req.utilizador;
-    const data = {
-      id_utilizador: id,
-      id_evento: req.body.id_evento,
-      nota: req.body.nota,
-    };
-    const avaliacao = await avaliacaoService.criarAvaliacao(data);
-    res.status(201).json(avaliacao);
-  } 
-    catch (error) {
+    const { id_evento, nota } = req.body;
+
+    // Verifica se o utilizador já avaliou este evento
+    const avaliacoes = await avaliacaoService.listarPorEvento(id_evento);
+    const existente = avaliacoes.find(av => av.id_utilizador === id);
+
+    if (existente) {
+      return res.status(400).json({ error: "Já avaliaste este evento." });
+    }
+
+    // Cria a avaliação
+    const avaliacao = await avaliacaoService.criarAvaliacao({ id_utilizador: id, id_evento, nota });
+
+    // Calcula a média atualizada
+    const media = await avaliacaoService.mediaDoEvento(id_evento);
+
+    res.status(201).json({ avaliacao, media });
+  } catch (error) {
     console.error("Erro ao criar avaliação:", error.message);
     res.status(400).json({ error: error.message });
   }
-};
+}
 
 // Get - Lista avaliações de um evento
 async function listarPorEvento(req, res) {
   try {
     const avaliacoes = await avaliacaoService.listarPorEvento(req.params.id_evento);
     res.json(avaliacoes);
-  } 
-    catch (error) {
+  } catch (error) {
     console.error("Erro ao listar avaliações:", error.message);
     res.status(500).json({ error: "Erro ao listar avaliações" });
   }
-};
+}
 
 // Put - Atualiza a avaliação de um evento
 async function atualizarAvaliacao(req, res) {
   try {
     const idAvaliacao = req.params.id;
     const existente = await avaliacaoService.obterPorId(idAvaliacao);
-    if (!existente){
+    if (!existente) {
       return res.status(404).json({ error: "Avaliação não encontrada" });
     }
-    if(existente.id_utilizador !== req.utilizador.id){
+    if (existente.id_utilizador !== req.utilizador.id) {
       return res.status(403).json({ error: "Só podes atualizar a tua própria avaliação" });
     }
     const atualizacao = await avaliacaoService.atualizarAvaliacao(idAvaliacao, req.body);
     res.json(atualizacao);
-  } 
-    catch (error) {
+  } catch (error) {
     console.error("Erro ao atualizar avaliação:", error.message);
     res.status(400).json({ error: error.message });
   }
-};
+}
 
 // Delete - Remove uma avaliação de um evento
 async function eliminarAvaliacao(req, res) {
   try {
     await avaliacaoService.eliminarAvaliacao(req.params.id);
     res.json({ message: "Avaliação removida com sucesso" });
-  } 
-    catch (error) {
+  } catch (error) {
     console.error("Erro ao apagar avaliação:", error.message);
     res.status(500).json({ error: error.message });
   }
-};
+}
 
 // Get - Calcula a média de avaliações de um evento
 async function mediaDoEvento(req, res) {
   try {
     const media = await avaliacaoService.mediaDoEvento(req.params.id_evento);
     res.json({ media });
-  } 
-    catch (error) {
+  } catch (error) {
     console.error("Erro ao calcular média:", error.message);
     res.status(500).json({ error: "Erro ao calcular média" });
   }
-};
+}
 
 module.exports = {
   criarAvaliacao,
