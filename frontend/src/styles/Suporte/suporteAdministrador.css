@@ -1,53 +1,171 @@
-.admin-suporte-page{
-    position: relative;
-    height: 100%;
+.suporte-admin-container {
+    display: flex;
+    height: 100vh;
+    gap: 1rem;
+    padding: 4rem;
+    background-color: #f5f7fa;
+    font-family: Arial, sans-serif;
 }
 
-.admin-suporte-page .Topbar{
-    background-color: #E3C6B5;
-    width: 100%;
-    height: 100px;
+/* --- Ticket List --- */
+
+.ticket-list {
+    width: 300px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgb(0 0 0 / 0.1);
+    padding: 1rem;
+    overflow-y: auto;
 }
 
-.admin-suporte-page .Topbar-tittle{
-    color: #fff;
-    font-size: 20px;
-    font-weight: bold;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    vertical-align: top;
+.ticket-list h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #007bff;
+    font-weight: 700;
 }
 
-.admin-suporte-page .container-msg{
+.ticket-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ticket-list li {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.ticket-list li:hover {
+    background-color: #e9f2ff;
+    border-color: #007bff;
+}
+
+.ticket-list li.selecionado {
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    border-color: #0056b3;
+}
+
+.ticket-list small {
+    color: #555;
+    font-size: 0.85rem;
+}
+
+
+
+.chatbox {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin: 60px;
-    position: absolute;
-    justify-content: center;
-    align-items: center;
-    left: 50%;
-    transform: translate(-50%);
-    background-color: none;
-}
-.admin-suporte-page .support-msg-btn{
-    width: 1000px;
-    display: flex;
-    font-weight: bold;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: #D9D9D9;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-}
-.support-msg-btn:hover{
-    background-color: #AAA;
-}
-.support-msg-btn .left{
-    text-align: left;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgb(0 0 0 / 0.1);
+    padding: 1rem;
 }
 
-.support-msg-btn .right{
-    text-align: right;
+.mensagens-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.mensagem {
+    margin-bottom: 1rem;
+    max-width: 70%;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    position: relative;
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+.mensagem.admin {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+    margin-left: auto;
+    margin-right: 0;
+    padding: 0.5rem 0.75rem;
+}
+
+.mensagem.utilizador {
+    background-color: #f1f0f0;
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+}
+
+.mensagem small {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.mensagem.utilizador small {
+    color: #666;
+}
+
+
+
+.chatbox-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.chatbox-form textarea {
+    flex-grow: 1;
+    resize: none;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 0.6rem 0.8rem;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.chatbox-form textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.chatbox-form button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: auto;
+    height: 60px;
+    align-self: stretch;
+    padding: 0 1.5rem;
+}
+
+.chatbox-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+
+.nenhum-ticket-selecionado {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-size: 1.2rem;
+    font-style: italic;
 }

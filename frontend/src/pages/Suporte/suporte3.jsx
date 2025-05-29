@@ -8,6 +8,7 @@ function Suporte3() {
   const [popupVisible, setPopupVisible] = useState(false);
   const [erroMensagem, setErroMensagem] = useState('');
   const [nome, setNome] = useState('Utilizador');
+  const [idTicket, setIdTicket] = useState(null);
 
   useEffect(() => {
     const id = localStorage.getItem('id');
@@ -39,7 +40,7 @@ function Suporte3() {
     if (!token) return alert("Sessão inválida. Inicie sessão novamente.");
 
     try {
-      const res = await fetch('http://localhost:3000/mensagem-suporte/', {
+      const res = await fetch('http://localhost:3000/mensagens-suporte/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,6 +51,8 @@ function Suporte3() {
 
       if (!res.ok) throw new Error("Erro ao enviar a mensagem");
 
+      const data = await res.json();
+      setIdTicket(data.id_ticket);
       setPopupVisible(true);
       setMensagem('');
 
@@ -94,6 +97,11 @@ function Suporte3() {
         {popupVisible && (
           <div className="popup-sucesso">
             ✅ Mensagem enviada com sucesso!
+            {idTicket && (
+              <div className="ticket-id">
+                ID do Ticket: <strong>{idTicket}</strong>
+              </div>
+            )}
           </div>
         )}
       </div>

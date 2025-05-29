@@ -44,8 +44,3 @@ function App() {
 }
 
 export default App;
-
-       
-
-// <Route path="/eventos" element={<Eventos />} />
-// <Route path="/voluntariado" element={<Voluntariado />} />

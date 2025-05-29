@@ -5,18 +5,24 @@ const mensagemSuporteController = require("../Controllers/mensagemSuporteControl
 const { autenticacao, proprioUtilizadorOuAdministrador, apenasUtilizadores, apenasAdministrador } = require("../Middlewares/authMiddlewares");
 
 // Abre o ticket/cria a primeira mensagem (apenas utilizadores)
-router.post("/", autenticacao, apenasUtilizadores, mensagemSuporteController.criarMensagemInicial);
+router.post("/", autenticacao,  mensagemSuporteController.criarMensagemInicial);
 
 // Responder a um ticket (próprio utilizador ou administrador)
-router.post("/:id_ticket/responder", autenticacao, proprioUtilizadorOuAdministrador, mensagemSuporteController.enviarResposta);
+router.post("/:id_ticket/responder", autenticacao,  mensagemSuporteController.enviarResposta);
 
 // Fechar ticket (próprio utilizador)
-router.put("/:id_ticket/fechar", autenticacao, proprioUtilizadorOuAdministrador, mensagemSuporteController.fecharTicket);
+router.put("/:id_ticket/fechar", autenticacao, mensagemSuporteController.fecharTicket);
 
 // Listar mensagens de um ticket (próprio utilizador ou administrador)
-router.get("/:id_ticket", autenticacao, proprioUtilizadorOuAdministrador, mensagemSuporteController.listarMensagensDoTicket);
+router.get("/:id_ticket", autenticacao, mensagemSuporteController.listarMensagensDoTicket);
 
 // Remover ticket existente (apenas administradores)
-router.delete("/suporte/:id_ticket", autenticacao, apenasAdministrador, mensagemSuporteController.eliminarTicket);
+router.delete("/suporte/:id_ticket", autenticacao, mensagemSuporteController.eliminarTicket);
+
+router.get("/aberto", autenticacao,  mensagemSuporteController.verificarTicket);
+
+router.get("/", autenticacao, mensagemSuporteController.listarTickets);
+
+router.get("/detalhes/utilizador", autenticacao, mensagemSuporteController.getTicketDetalhadoUtilizador);
 
 module.exports = router;

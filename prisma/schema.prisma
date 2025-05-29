@@ -93,14 +93,14 @@ model Evento {
 
 model MensagemSuporte {
   id                Int                     @id @default(autoincrement())
-  id_ticket         Int
-  id_utilizador     Int
+  id_ticket         String
+  id_utilizador     Int?
   id_administrador  Int?
   mensagem          String                  @db.VarChar(700)
   data_abertura     DateTime?               @default(now()) @db.Timestamp(0)
   data_encerramento DateTime?
   estado            MensagemSuporte_estado  @default(Aberto)
-  Utilizador        Utilizador              @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "mensagemsuporte_ibfk_1")
+  Utilizador        Utilizador?             @relation(fields: [id_utilizador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "mensagemsuporte_ibfk_1")
   Administrador     Administrador?          @relation(fields: [id_administrador], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "mensagemsuporte_ibfk_2")
 
   @@index([id_administrador], map: "id_administrador")
